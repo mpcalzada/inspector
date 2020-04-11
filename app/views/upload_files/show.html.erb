@@ -1,0 +1,47 @@
+<div class="row" id="Panel" xmlns="http://www.w3.org/1999/html">
+  <div class="col-md-12">
+  <div class="ibox float-e-margins">
+
+    <div class="ibox-title">
+      <h1>Show Uploaded Files</h1>
+    </div>
+    <div class="ibox-content">
+
+      <div class="block-area" id="tableBordered">
+        <div class="table-responsive overflow">
+
+          <table class="table table-bordered tile">
+            <thead>
+            <tr>
+              <th class="text-center">Author</th>
+              <th class="text-center">File:</th>
+              <th class="text-center">Created Date:</th>
+            </tr>
+            </thead>
+          <tbody>
+          <td class="text-center">
+            <% if @upload_file.user.present? %>
+                <% if @upload_file.user.name.present? %>
+                    <%= @upload_file.user.name %> <%= @upload_file.user.last_name %>
+                <% end %>
+            <% else %>
+                N/A
+            <% end %>
+          </td>
+          <% if @upload_file.file.present? %>
+              <td  class="text-center"><%= link_to (@upload_file.file_file_name), @upload_file.file.url, target: '_blank' %></td>
+          <% end %>
+          <td  class="text-center"><%= @upload_file.created_at %></td>
+          </tbody>
+          </table>
+<%#= link_to 'Edit', edit_upload_file_path(@upload_file) %>
+          <%= link_to 'Back', upload_files_path, :class => "btn btn-s-m btn-info dim" %>
+        </div>
+      </div>
+      <div class="col-md-12 hr-line-dashed">
+        <p id="notice"><%= notice %></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

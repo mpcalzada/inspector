@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Salary:</strong>
+  <%= @employer.salary %>
+</p>
+
+<p>
+  <strong>Contract number:</strong>
+  <%= @employer.contract_number %>
+</p>
+
+<p>
+  <strong>Degree:</strong>
+  <%= @employer.degree_id %>
+</p>
+
+<%= link_to 'Edit', edit_employer_path(@employer) %> |
+<%= link_to 'Back', employers_path %>

@@ -1,0 +1,22 @@
+<%= form_with(model: degree, local: true) do |form| %>
+  <% if degree.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(degree.errors.count, "error") %> prohibited this degree from being saved:</h2>
+
+      <ul>
+        <% degree.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
