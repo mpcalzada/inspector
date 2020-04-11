@@ -14,3 +14,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( upload_files/indicator.js )
 Rails.application.config.assets.precompile += %w( home.js )
+
+Rails.application.config.assets.precompile += %w( employers.css )
+Rails.application.config.assets.precompile += %w( employers.js )

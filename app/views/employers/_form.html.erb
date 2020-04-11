@@ -12,6 +12,36 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birthday %>
+    <%= form.date_select :birthday %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rfc %>
+    <%= form.text_field :rfc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone_number %>
+    <%= form.text_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
     <%= form.label :salary %>
     <%= form.text_field :salary %>
   </div>
@@ -22,11 +52,36 @@
   </div>
 
   <div class="field">
-    <%= form.label :degree_id %>
-    <%= form.number_field :degree_id %>
+    <%= form.label :street %>
+    <%= form.text_field :street %>
   </div>
 
-  <div class="actions">
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country %>
+    <%= form.text_field :country %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cp %>
+    <%= form.text_field :cp %>
+  </div>
+
+    <div class="field">
+      <%= form.label :degree_id %>
+      <%= form.collection_select :degree_id, Degree.order(:description), :id, :description, {:include_blank => 'NA' } %>
+    </div>
+
+    <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>

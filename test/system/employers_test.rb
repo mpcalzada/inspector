@@ -14,9 +14,19 @@ class EmployersTest < ApplicationSystemTestCase
     visit employers_url
     click_on "New Employer"
 
+    fill_in "Birthday", with: @employer.birthday
+    fill_in "City", with: @employer.city
     fill_in "Contract number", with: @employer.contract_number
-    fill_in "Degree", with: @employer.degree_id
+    fill_in "Country", with: @employer.country
+    fill_in "Cp", with: @employer.cp
+    fill_in "Email", with: @employer.email
+    fill_in "First name", with: @employer.first_name
+    fill_in "Last name", with: @employer.last_name
+    fill_in "Phone number", with: @employer.phone_number
+    fill_in "Rfc", with: @employer.rfc
     fill_in "Salary", with: @employer.salary
+    fill_in "State", with: @employer.state
+    fill_in "Street", with: @employer.street
     click_on "Create Employer"
 
     assert_text "Employer was successfully created"
@@ -27,9 +37,19 @@ class EmployersTest < ApplicationSystemTestCase
     visit employers_url
     click_on "Edit", match: :first
 
+    fill_in "Birthday", with: @employer.birthday
+    fill_in "City", with: @employer.city
     fill_in "Contract number", with: @employer.contract_number
-    fill_in "Degree", with: @employer.degree_id
+    fill_in "Country", with: @employer.country
+    fill_in "Cp", with: @employer.cp
+    fill_in "Email", with: @employer.email
+    fill_in "First name", with: @employer.first_name
+    fill_in "Last name", with: @employer.last_name
+    fill_in "Phone number", with: @employer.phone_number
+    fill_in "Rfc", with: @employer.rfc
     fill_in "Salary", with: @employer.salary
+    fill_in "State", with: @employer.state
+    fill_in "Street", with: @employer.street
     click_on "Update Employer"
 
     assert_text "Employer was successfully updated"

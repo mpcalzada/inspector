@@ -32,8 +32,8 @@ class Read
           first_name = first_name.nil? ? '' : first_name.downcase
           last_name = last_name.nil? ? '' : last_name.downcase
 
-          @user = User.where(
-              'REPLACE(lower(firstName), \' \', \'\') = ? and REPLACE(lower(lastName), \' \', \'\') = ?',
+          @user = Employer.where(
+              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(last_name), \' \', \'\') = ?',
               first_name,
               last_name
           ).first

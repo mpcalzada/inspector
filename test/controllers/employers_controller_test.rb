@@ -17,7 +17,7 @@ class EmployersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create employer" do
     assert_difference('Employer.count') do
-      post employers_url, params: { employer: { contract_number: @employer.contract_number, degree_id: @employer.degree_id, salary: @employer.salary } }
+      post employers_url, params: { employer: { birthday: @employer.birthday, city: @employer.city, contract_number: @employer.contract_number, country: @employer.country, cp: @employer.cp, email: @employer.email, first_name: @employer.first_name, last_name: @employer.last_name, phone_number: @employer.phone_number, rfc: @employer.rfc, salary: @employer.salary, state: @employer.state, street: @employer.street } }
     end
 
     assert_redirected_to employer_url(Employer.last)
@@ -34,7 +34,7 @@ class EmployersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update employer" do
-    patch employer_url(@employer), params: { employer: { contract_number: @employer.contract_number, degree_id: @employer.degree_id, salary: @employer.salary } }
+    patch employer_url(@employer), params: { employer: { birthday: @employer.birthday, city: @employer.city, contract_number: @employer.contract_number, country: @employer.country, cp: @employer.cp, email: @employer.email, first_name: @employer.first_name, last_name: @employer.last_name, phone_number: @employer.phone_number, rfc: @employer.rfc, salary: @employer.salary, state: @employer.state, street: @employer.street } }
     assert_redirected_to employer_url(@employer)
   end
 

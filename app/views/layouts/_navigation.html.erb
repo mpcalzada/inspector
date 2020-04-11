@@ -7,7 +7,7 @@
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <span class="clear">
               <span class="block m-t-xs">
-                <strong class="font-bold"><%= current_user.firstName %> <%= current_user.lastName %></strong>
+                <strong class="font-bold"><%= current_user.username %></strong>
               </span>
             </span>
           </a>
@@ -24,27 +24,32 @@
           </ul>
         </div>
         <div class="logo-element">
-          i 21
+          XXI
         </div>
       </li>
       <li class="<%= is_active_controller('home') %>">
-        <%= link_to 'Inicio', home_index_path %>
+        <%= link_to home_index_path do %>
+            <i class="fa fa-home"></i> <span class="nav-label">Home</span>
+        <% end %>
       </li>
-      <li class="<%= is_active_controller('employers') %>">
-        <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Administración</span>
+      <li class="<%= is_active_controller('employers') %> <%= is_active_controller('degrees') %>">
+        <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Human Resources</span>
           <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level <%= is_active_controller('employers') %>">
-          <li class="<%= is_active_action('employers') %>">
-            <%= link_to 'Empleados', employers_path %>
+          <li class="<%= is_active_controller('employers') %>">
+            <%= link_to 'Employers', employers_path %>
+          </li>
+          <li class="<%= is_active_controller('degrees') %>">
+            <%= link_to 'Degrees', degrees_path %>
           </li>
         </ul>
       </li>
       <li class="<%= is_active_controller('upload_files') %>">
-        <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Administración</span>
+        <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Files Readers</span>
           <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
           <li class="<%= is_active_action('upload_files') %>">
-            <%= link_to 'Upload', upload_files_path %>
+            <%= link_to 'Attendance', upload_files_path %>
           </li>
         </ul>
       </li>

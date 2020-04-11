@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_042117) do
-
-  create_table "addresses", force: :cascade do |t|
-    t.string "address"
-    t.string "city"
-    t.string "state"
-    t.string "country"
-    t.string "cp"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+ActiveRecord::Schema.define(version: 2020_04_11_015714) do
 
   create_table "attendance_trackers", force: :cascade do |t|
     t.integer "users_id"
@@ -34,15 +24,6 @@ ActiveRecord::Schema.define(version: 2020_04_10_042117) do
     t.index ["users_id"], name: "index_attendance_trackers_on_users_id"
   end
 
-  create_table "clients", force: :cascade do |t|
-    t.string "office_number"
-    t.date "member_since"
-    t.integer "person_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["person_id"], name: "index_clients_on_person_id"
-  end
-
   create_table "degrees", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
@@ -50,27 +31,25 @@ ActiveRecord::Schema.define(version: 2020_04_10_042117) do
   end
 
   create_table "employers", force: :cascade do |t|
-    t.float "salary"
-    t.string "contract_number"
-    t.integer "degree_id"
-    t.integer "person_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["degree_id"], name: "index_employers_on_degree_id"
-    t.index ["person_id"], name: "index_employers_on_person_id"
-  end
-
-  create_table "people", force: :cascade do |t|
-    t.string "surname"
-    t.string "lastname"
+    t.string "first_name"
+    t.string "last_name"
     t.date "birthday"
     t.string "rfc"
     t.string "phone_number"
     t.string "email"
-    t.integer "address_id"
+    t.float "salary"
+    t.string "contract_number"
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "cp"
+    t.integer "user_id"
+    t.integer "degree_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["address_id"], name: "index_people_on_address_id"
+    t.index ["degree_id"], name: "index_employers_on_degree_id"
+    t.index ["user_id"], name: "index_employers_on_user_id"
   end
 
   create_table "upload_files", force: :cascade do |t|
@@ -86,11 +65,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_042117) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "firstName", default: "", null: false
-    t.string "lastName", default: "", null: false
-    t.date "birthday", null: false
     t.string "username", default: "", null: false
-    t.string "phone", default: ""
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

@@ -8,26 +8,12 @@ class UploadFilesController < ApplicationController
   def index
 
     @page = "Upload Files"
-    @user = current_user.firstName
-    @userl = current_user.lastName
     @action = "3"
     @account = "not yet"
     @lasac = "not available"
     @cli_id = 0
     @description = UploadFile.all.count.to_i
     @date = Time.now
-
-    # @historic = Historic.new
-    # @historic.page = @page
-    # @historic.user = @user + " " + @userl
-    # @historic.user_id = @user_id
-    # @historic.action = @action
-    # @historic.account = @account
-    # @historic.last_account = @lasac
-    # @historic.date = @date
-    # @historic.description = @description
-    # @historic.save
-
 
     @users = User.all
 
@@ -42,23 +28,11 @@ class UploadFilesController < ApplicationController
 
 
     @page = "Upload Files"
-    @user = current_user.firstName
-    @userl = current_user.lastName
     @action = "5"
     @account = "not yet"
     @lasac = "not available"
     @cli_id = 0
     @date = Time.now
-
-    @historic = Historic.new
-    @historic.page = @page
-    @historic.user = @user + " " + @userl
-    @historic.user_id = @user_id
-    @historic.action = @action
-    @historic.account = @account
-    @historic.last_account = @lasac
-    @historic.date = @date
-    @historic.save
 
 
     if @cu != 0
@@ -160,8 +134,6 @@ class UploadFilesController < ApplicationController
   def create
 
       @page = "Upload Files"
-      @user = current_user.firstName
-      @userl = current_user.lastName
       @action = "1"
       @account = "not yet"
       @lasac = "not available"
@@ -192,8 +164,6 @@ class UploadFilesController < ApplicationController
     if current_user
 
       @page = "Upload Files"
-      @user = current_user.firstName
-      @userl = current_user.lastName
       @action = "2"
       @account = "not yet"
       @lasac = "not available"
@@ -232,8 +202,6 @@ class UploadFilesController < ApplicationController
   def destroy
 
     @page = "Upload Files"
-    @user = current_user.firstName
-    @userl = current_user.lastName
     @action = "4"
     @account = "not yet"
     @lasac = "not available"

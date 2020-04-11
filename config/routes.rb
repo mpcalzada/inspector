@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :employers
   devise_for :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -9,11 +10,8 @@ Rails.application.routes.draw do
 
       resources :upload_files
       resources :home
-      resources :employers
+      resource :employers
       resources :degrees
-      resources :clients
-      resources :people
-      resources :addresses
 
       # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
       root to: 'home#index'

@@ -67,8 +67,8 @@ class EmployersController < ApplicationController
       @employer = Employer.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def employer_params
-      params.require(:employer).permit(:salary, :contract_number, :degree_id)
+      params.require(:employer).permit(:first_name, :last_name, :birthday, :rfc, :phone_number, :email, :salary, :contract_number, :street, :city, :state, :country, :cp, :degree_id)
     end
 end
