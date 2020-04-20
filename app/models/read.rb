@@ -2,7 +2,7 @@ class Read
 
   require 'roo'
 
-  def self.process(ruta, upload_file)
+  def self.processFileData(ruta, upload_file)
     file = Roo::Excelx.new(ruta)
 
     row_number = 1
@@ -38,15 +38,16 @@ class Read
               last_name
           ).first
 
-          user_id = @user.nil? ? 0 : @user.id
+          unless @user.nil?
+            AttendanceTracker.new(
+                :name => employer_name.downcase,
+                :description => description.downcase,
+                :user_id => @user.id,
+                :registered_datetime => registered_time,
+                :internal_id => employer_id
+            ).save
+          end
 
-          AttendanceTracker.new(
-              :name => employer_name.downcase,
-              :description => description.downcase,
-              :user_id => user_id,
-              :registered_datetime => registered_time,
-              :internal_id => employer_id
-          ).save
         rescue Exception => e
           puts('Unable to write AttendanceTracker for '+
                    "Employer Name: #{(employer_name)}"+

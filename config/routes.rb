@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :employers
   devise_for :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -10,7 +9,7 @@ Rails.application.routes.draw do
 
       resources :upload_files
       resources :home
-      resource :employers
+      resources :employers
       resources :degrees
 
       # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

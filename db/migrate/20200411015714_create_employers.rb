@@ -14,10 +14,16 @@ class CreateEmployers < ActiveRecord::Migration[6.0]
       t.string :state
       t.string :country
       t.string :cp
+      t.attachment :avatar
+
 
       t.belongs_to :user, index:true
       t.belongs_to :degree, index:true
       t.timestamps
+    end
+
+    def self.down
+      drop_attached_file :employers, :avatar
     end
   end
 end

@@ -7,3 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Degree.create(description: 'Director')
+Degree.create(description: 'Developer')
+Degree.create(description: 'Analyst')

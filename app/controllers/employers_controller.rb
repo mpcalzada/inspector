@@ -10,6 +10,7 @@ class EmployersController < ApplicationController
   # GET /employers/1
   # GET /employers/1.json
   def show
+    @attendance_report = AttendanceTracker.perform_attendance_analysis
   end
 
   # GET /employers/new
@@ -69,6 +70,6 @@ class EmployersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def employer_params
-      params.require(:employer).permit(:first_name, :last_name, :birthday, :rfc, :phone_number, :email, :salary, :contract_number, :street, :city, :state, :country, :cp, :degree_id)
+      params.require(:employer).permit(:first_name, :last_name, :birthday, :rfc, :phone_number, :email, :salary, :contract_number, :street, :city, :state, :country, :cp, :degree_id, :avatar)
     end
 end

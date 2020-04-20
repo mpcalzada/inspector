@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(version: 2020_04_11_015714) do
     t.string "state"
     t.string "country"
     t.string "cp"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.bigint "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.integer "user_id"
     t.integer "degree_id"
     t.datetime "created_at", precision: 6, null: false

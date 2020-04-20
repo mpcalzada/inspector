@@ -147,7 +147,7 @@ class UploadFilesController < ApplicationController
       respond_to do |format|
         if @upload_file.save
 
-          Read.process(@upload_file.file.path, @upload_file)
+          Read.processFileData(@upload_file.file.path, @upload_file)
 
           format.html { redirect_to @upload_file, notice: 'Upload file was successfully created.' }
           format.json { render :show, status: :created, location: @upload_file }
