@@ -37,9 +37,9 @@ CodeMirror.defineMode("puppet", function () {
     'nagios_hostescalation nagios_hostextinfo nagios_hostgroup nagios_service ' +
     'nagios_servicedependency nagios_serviceescalation nagios_serviceextinfo ' +
     'nagios_servicegroup nagios_timeperiod name notify outiface package proto reject ' +
-    'tc_redimidos router schedule scheduled_task selboolean selmodule service source ' +
+    'resources router schedule scheduled_task selboolean selmodule service source ' +
     'sport ssh_authorized_key sshkey stage state table tidy todest toports tosource ' +
-    'users vlan yumrepo zfs zone zpool');
+    'user vlan yumrepo zfs zone zpool');
 
   // After finding a start of a string ('|") this function attempts to find the end;
   // If a variable is encountered along the way, we display it differently when it
@@ -73,7 +73,7 @@ CodeMirror.defineMode("puppet", function () {
     // Matches non-builtin resource declarations
     // (i.e. "apache::vhost {" or "mycustomclasss {" would be matched)
     var resource = stream.match(/(\s+)?[\w:_]+(\s+)?{/, false);
-    // Matches virtual and exported tc_redimidos (i.e. @@users { ; and the like)
+    // Matches virtual and exported resources (i.e. @@user { ; and the like)
     var special_resource = stream.match(/(\s+)?[@]{1,2}[\w:_]+(\s+)?{/, false);
 
     // Finally advance the stream

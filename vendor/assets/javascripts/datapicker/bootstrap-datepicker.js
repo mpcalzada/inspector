@@ -1,4 +1,3 @@
-
 /* =========================================================
  * bootstrap-datepicker.js
  * Repo: https://github.com/eternicode/bootstrap-datepicker/
@@ -22,7 +21,8 @@
  * ========================================================= */
 
 (function($, undefined){
-    var $window = $(window);
+
+	var $window = $(window);
 
 	function UTCDate(){
 		return new Date(Date.UTC.apply(Date, arguments));
@@ -1388,7 +1388,6 @@
 			return this;
 	};
 
-
 	var defaults = $.fn.datepicker.defaults = {
 		autoclose: false,
 		beforeShowDay: $.noop,
@@ -1397,11 +1396,9 @@
 		daysOfWeekDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		// format: 'mm/dd/yyyy',
+		format: 'mm/dd/yyyy',
 		keyboardNavigation: true,
-		//language: 'en',
-        //language: 'es',
-        // language: 'en',
+		language: 'en',
 		minViewMode: 0,
 		multidate: false,
 		multidateSeparator: ',',
@@ -1409,8 +1406,8 @@
 		rtl: false,
 		startDate: -Infinity,
 		startView: 0,
-		todayBtn: true,
-		todayHighlight: true,
+		todayBtn: false,
+		todayHighlight: false,
 		weekStart: 0
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
@@ -1428,16 +1425,7 @@
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear"
-		},
-		es: {
-			days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
-			daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
-			daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"],
-			months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-            monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-			today: "Hoy",
-			clear: "Limpiar"
-		},
+		}
 	};
 
 	var DPGlobal = {
