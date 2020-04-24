@@ -20,14 +20,3 @@
 //= require daterangepicker/daterangepicker-bs3.css
 //= require clockpicker/clockpicker.css
 //= require awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css
-
-.index-profile-photo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.show-profile-photo {
-  @extend .index-profile-photo;
-  border-radius: 25%;
-}

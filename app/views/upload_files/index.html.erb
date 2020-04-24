@@ -65,11 +65,11 @@
                 <tr>
                   <td class="text-center">
                     <% if upload_file.user.present? %>
-                        <% if upload_file.user.name.present? %>
-                            <%= upload_file.user.name %> <%= upload_file.user.last_name %>
+                        <% if upload_file.user.username.present? %>
+                             <%= upload_file.user.username %>
                         <% end %>
                     <% else %>
-                        N/A
+                       Unknown
                     <% end %>
                   </td>
                   <% if upload_file.file.present? %>

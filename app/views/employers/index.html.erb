@@ -10,16 +10,16 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <% @employers.each do |employer| %>
-        <div class="col-lg-4">
+        <div class="col-md-6">
           <div class="contact-box">
             <a href="<%= url_for employer %>">
-              <div class="col-sm-4">
+              <div class="col-md-6">
                 <div class="text-center">
-                  <img alt="image" class="img-circle m-t-xs img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
+                  <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
                   <div class="m-t-xs font-bold"><%= employer.degree.description %></div>
                 </div>
               </div>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <h3><strong><%= employer.first_name %>  <%= employer.last_name %></strong></h3>
                 <p><i class="fa fa-map-marker"></i> <%= employer.degree.description %></p>
                 <address>

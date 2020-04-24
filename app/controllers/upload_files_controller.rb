@@ -79,9 +79,7 @@ class UploadFilesController < ApplicationController
 
   # GET /upload_files/new
   def new
-
     @upload_file = UploadFile.new
-    @upload_files = UploadFile.all
   end
 
   # GET /upload_files/1/edit

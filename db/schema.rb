@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2020_04_11_015714) do
 
   create_table "attendance_trackers", force: :cascade do |t|
-    t.integer "users_id"
     t.integer "user_id"
     t.string "name"
     t.integer "internal_id"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_015714) do
     t.datetime "registered_datetime"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["users_id"], name: "index_attendance_trackers_on_users_id"
+    t.index ["user_id"], name: "index_attendance_trackers_on_user_id"
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -57,7 +56,6 @@ ActiveRecord::Schema.define(version: 2020_04_11_015714) do
   end
 
   create_table "upload_files", force: :cascade do |t|
-    t.integer "users_id"
     t.integer "user_id"
     t.string "file_file_name"
     t.string "file_content_type"
@@ -65,7 +63,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_015714) do
     t.datetime "file_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_upload_files_on_users_id"
+    t.index ["user_id"], name: "index_upload_files_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
