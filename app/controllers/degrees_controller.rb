@@ -28,8 +28,8 @@ class DegreesController < ApplicationController
 
     respond_to do |format|
       if @degree.save
-        format.html { redirect_to @degree, notice: 'Degree was successfully created.' }
-        format.json { render :show, status: :created, location: @degree }
+        format.html { redirect_to degrees_path, notice: 'Degree was successfully created.' }
+        format.json { render :index, status: :created, location: @degree }
       else
         format.html { render :new }
         format.json { render json: @degree.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class DegreesController < ApplicationController
   def update
     respond_to do |format|
       if @degree.update(degree_params)
-        format.html { redirect_to @degree, notice: 'Degree was successfully updated.' }
-        format.json { render :show, status: :ok, location: @degree }
+        format.html { redirect_to degrees_path, notice: 'Degree was successfully updated.' }
+        format.json { render :index, status: :ok, location: @degree }
       else
         format.html { render :edit }
         format.json { render json: @degree.errors, status: :unprocessable_entity }

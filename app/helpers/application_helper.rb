@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def current_employer(user_id)
+    Employer.current_employer(user_id)
+  end
+
   def is_active_controller(controller_name)
     params[:controller] == controller_name ? 'active' : nil
   end

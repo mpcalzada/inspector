@@ -8,4 +8,8 @@ class Employer < ApplicationRecord
                     :default_url => '/images/:style/missing_user.jpg'
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  def self.current_employer(user_id)
+    Employer.find_by_user_id(user_id)
+  end
+
 end
