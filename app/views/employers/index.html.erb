@@ -16,17 +16,28 @@
               <div class="col-md-6">
                 <div class="text-center">
                   <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
+                  <br>
                   <div class="m-t-xs font-bold"><%= employer.degree.description %></div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <h3><strong><%= employer.first_name %>  <%= employer.last_name %></strong></h3>
-                <p><i class="fa fa-map-marker"></i> <%= employer.degree.description %></p>
+                <i class="fa fa-envelope"></i>
+                <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
+                <br>
+                <br>
                 <address>
-                  <strong><%= employer.email %></strong><br>
-                  Solución XXI, Tlalnepantla. Estado de México<br>
-                  Contract Number: <%= employer.contract_number %><br>
-                  Phone: <%= employer.phone_number %>
+                  <i class="fa fa-map-marker"></i>
+                  <%= (employer.street.empty? ? '-' : employer.street) %>,
+                  <%= (employer.city.empty? ? '-' : employer.city) %>.
+                  <%= (employer.state.empty? ? '-' : employer.state) %>.
+                  <%= (employer.cp.empty? ? '-' : employer.cp) %>.
+                  <br>
+                  <i class="fa fa-phone"></i>
+                  <%= employer.phone_number %>
+                  <br>
+                  <br>
+                  Contract Number: <%= employer.contract_number %>
                 </address>
               </div>
               <div class="clearfix"></div>

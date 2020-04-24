@@ -1,93 +1,54 @@
-<% javascript_include_tag 'upload_files/indicator' %>
+<div class="ibox float-e-margins">
+  <div class="ibox-title">
+    <h1>Upload Files</h1>
+  </div>
+  <div class="ibox-content">
 
-<div class="row">
-  <div class="col-md-12">
-
-    <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <h1>Upload Files</h1>
-      </div>
-      <div class="ibox-content">
-
-        <% if @error.present? %>
-            <script>
-                swal({
-                    title: "<%= t('all.no_filter')%>",
-                    type: "warning"
-
-                }); // swal
-            </script>
-        <% end %>
-
-        <%= form_tag({:controller => "upload_files", :action => "index"}, :method => "get") do %>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Make your search">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="btn-group">
-                    <%= submit_tag :search, :class => "btn btn-w-m btn-info dim", :data => {:no_turbolink => true} %>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-        <% end %>
-
-
-        <br>
-        <div style="margin-bottom: 2em;">
-          <div class="pag_right">
-            <%= paginate @upload_files %>
-          </div>
-        </div>
-
-        <div class="table-responsive overflow" tabindex="5005" style="overflow: hidden; outline: none;">
-          <table class="tile table table-bordered table-hover">
-            <thead>
-            <tr>
-              <th class="text-center">Usuario Add</th>
-              <th class="text-center">File Name</th>
-              <th class="text-center">Date Create</th>
-              <% if @editar == 4 %>
-                  <th class="text-center">Edit</th>
-              <% end %>
-            </tr>
-            </thead>
-
-            <tbody>
-            <% @upload_files.each do |upload_file| %>
-                <tr>
-                  <td class="text-center">
-                    <% if upload_file.user.present? %>
-                        <% if upload_file.user.username.present? %>
-                             <%= upload_file.user.username %>
-                        <% end %>
-                    <% else %>
-                       Unknown
-                    <% end %>
-                  </td>
-                  <% if upload_file.file.present? %>
-                      <td class="text-center"><%= link_to (upload_file.file_file_name), upload_file.file.url, target: '_blank' %></td>
-                  <% end %>
-
-                  <td class="text-center"><%= upload_file.created_at %></td>
-                  <td class="text-center"><%= link_to '<button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i></button>'.html_safe, upload_file, method: :delete, data: {confirm: 'Are you sure?'} %> </td>
-                </tr>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
-        <%= link_to 'New Upload file', new_upload_file_path, :data => {:no_turbolink => true}, :class => "btn btn-w-m btn-info dim" %>
-      </div>
-      <div class="ibox-footer">
-        <h1><%= notice %></h1>
+    <br>
+    <div style="margin-bottom: 2em;">
+      <div class="pag_right">
+        <%= paginate @upload_files %>
       </div>
     </div>
+
+    <div class="table-responsive overflow" tabindex="5005" style="overflow: hidden; outline: none;">
+      <table class="tile table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th class="text-center">Username</th>
+          <th class="text-center">File</th>
+          <th class="text-center">Creation Date</th>
+          <th class="text-center">Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @upload_files.each do |upload_file| %>
+            <tr>
+              <td class="text-center">
+                <% if upload_file.user.present? %>
+                    <% if upload_file.user.username.present? %>
+                        <%= upload_file.user.username %>
+                    <% end %>
+                <% else %>
+                    Unknown
+                <% end %>
+              </td>
+              <% if upload_file.file.present? %>
+                  <td class="text-center"><%= link_to (upload_file.file_file_name), upload_file.file.url, target: '_blank' %></td>
+              <% end %>
+
+              <td class="text-center"><%= upload_file.created_at %></td>
+              <td class="text-center"><%= link_to '<button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i></button>'.html_safe, upload_file, method: :delete, data: {confirm: 'Are you sure?'} %> </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ibox-footer">
+    <%= link_to 'Upload New File', new_upload_file_path, :data => {:no_turbolink => true}, :class => 'btn btn-w-m btn-primary dim' %>
+
+    <h1><%= notice %></h1>
   </div>
 </div>

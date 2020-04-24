@@ -3,10 +3,10 @@
     <h2>File upload</h2>
     <ol class="breadcrumb">
       <li>
-        <a>Forms</a>
+        <a href="<%= url_for :controller => 'upload_files', :action => 'index' %>">Uploaded Files</a>
       </li>
       <li class="active">
-        <strong>File upload</strong>
+        <strong>New Upload</strong>
       </li>
     </ol>
   </div>
@@ -44,7 +44,7 @@
           <%= form_for @upload_file, html: {multipart: true, class: 'dropzone', id: 'my-awesome-dropzone'} do |f| %>
               <div class="dropzone-previews"></div>
 
-              <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
+              <button type="submit" class="btn btn-primary pull-right">Submit</button>
 
               </div>
           <% end %>

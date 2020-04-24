@@ -48,7 +48,7 @@
         <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Files Readers</span>
           <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
-          <li class="<%= is_active_action('upload_files') %>">
+          <li class="<%= is_active_controller('upload_files') %>">
             <%= link_to 'Attendance', upload_files_path %>
           </li>
         </ul>
