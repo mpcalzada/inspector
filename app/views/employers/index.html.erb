@@ -1,50 +1,54 @@
 <p id="notice"><%= notice %></p>
-
-<div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-9">
-    <h2>Employers</h2>
+<div class="ibox float-e-margins">
+  <div class="ibox-title">
+    <h1>Employers</h1>
   </div>
-</div>
-<%= link_to 'New Employer', new_employer_path, :class => 'btn btn-primary btn-sm btn-block' %>
-
-<div class="wrapper wrapper-content animated fadeInRight">
-  <div class="row">
-    <% @employers.each do |employer| %>
-        <div class="col-md-6">
-          <div class="contact-box">
-            <a href="<%= url_for employer %>">
+  <div class="ibox-content">
+    <div class="container">
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+          <% @employers.each do |employer| %>
               <div class="col-md-6">
-                <div class="text-center">
-                  <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
-                  <br>
-                  <div class="m-t-xs font-bold"><%= employer.degree.description %></div>
+                <div class="contact-box">
+                  <a href="<%= url_for employer %>">
+                    <div class="col-md-6">
+                      <div class="text-center">
+                        <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
+                        <br>
+                        <div class="m-t-xs font-bold"><%= employer.degree.description %></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <h3><strong><%= employer.first_name %>  <%= employer.last_name %></strong></h3>
+                      <i class="fa fa-envelope"></i>
+                      <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
+                      <br>
+                      <br>
+                      <address>
+                        <i class="fa fa-map-marker"></i>
+                        <%= (employer.street.empty? ? '-' : employer.street) %>,
+                        <%= (employer.city.empty? ? '-' : employer.city) %>.
+                        <%= (employer.state.empty? ? '-' : employer.state) %>.
+                        <%= (employer.cp.empty? ? '-' : employer.cp) %>.
+                        <br>
+                        <i class="fa fa-phone"></i>
+                        <%= employer.phone_number %>
+                        <br>
+                        <br>
+                        Contract Number: <%= employer.contract_number %>
+                      </address>
+                    </div>
+                    <div class="clearfix"></div>
+                  </a>
                 </div>
               </div>
-              <div class="col-sm-6">
-                <h3><strong><%= employer.first_name %>  <%= employer.last_name %></strong></h3>
-                <i class="fa fa-envelope"></i>
-                <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
-                <br>
-                <br>
-                <address>
-                  <i class="fa fa-map-marker"></i>
-                  <%= (employer.street.empty? ? '-' : employer.street) %>,
-                  <%= (employer.city.empty? ? '-' : employer.city) %>.
-                  <%= (employer.state.empty? ? '-' : employer.state) %>.
-                  <%= (employer.cp.empty? ? '-' : employer.cp) %>.
-                  <br>
-                  <i class="fa fa-phone"></i>
-                  <%= employer.phone_number %>
-                  <br>
-                  <br>
-                  Contract Number: <%= employer.contract_number %>
-                </address>
-              </div>
-              <div class="clearfix"></div>
-            </a>
-          </div>
+          <% end %>
         </div>
-    <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="ibox-footer">
+    <%= link_to 'New Employer', new_employer_path, :class => 'btn btn-primary' %>
   </div>
 </div>
 
