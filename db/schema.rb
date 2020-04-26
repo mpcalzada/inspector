@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2020_04_11_015714) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attendance_trackers", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "name"
     t.integer "internal_id"
     t.string "description"
@@ -47,15 +50,15 @@ ActiveRecord::Schema.define(version: 2020_04_11_015714) do
     t.string "avatar_content_type"
     t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer "user_id"
-    t.integer "degree_id"
+    t.bigint "user_id"
+    t.bigint "degree_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["degree_id"], name: "index_employers_on_degree_id"
     t.index ["user_id"], name: "index_employers_on_user_id"
   end
 
-  create_table "upload_files", force: :cascade do |t|
+  create_table "upload_files", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "file_file_name"
     t.string "file_content_type"

@@ -67,7 +67,7 @@
     <div class="col-md-8">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>Attendance</h5>
+          <h5>Attendance Tracker Graph</h5>
           <div class="ibox-tools">
             <a class="collapse-link">
               <i class="fa fa-chevron-up"></i>
@@ -127,6 +127,39 @@
         </div>
       </div>
 
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Attendance Tracker Table</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="table-responsive">
+                <table class="table table-striped" id="attendance-table">
+                  <thead>
+                  <tr>
+
+                    <th>Date</th>
+                    <th>Entrance Time</th>
+                    <th>Exit Time</th>
+                    <th>Worked Hours</th>
+                    <th>Comply</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -235,25 +268,51 @@
 
         }
 
+        function modifyAttendanceTable(jsonDataSet) {
+
+            console.log(jsonDataSet)
+            for (var i in jsonDataSet) {
+                var table = document.getElementById("attendance-table");
+                var row = table.insertRow(-1);
+
+                var dateCell = row.insertCell(0);
+                var entranceCell = row.insertCell(1);
+                var exitCell = row.insertCell(2);
+                var workedHoursCell = row.insertCell(3);
+                var complyCell = row.insertCell(4);
+
+                dateCell.innerHTML = jsonDataSet[i].date;
+                entranceCell.innerHTML = jsonDataSet[i].entrance_time;
+                exitCell.innerHTML = jsonDataSet[i].finished_time;
+                workedHoursCell.innerHTML = jsonDataSet[i].worked_hours;
+
+                if (jsonDataSet[i].entrance_time < '09:10:00') {
+                    complyCell.innerHTML = '<i class="fa fa-check text-navy"></i>';
+                }
+                else {
+                    complyCell.innerHTML = '<i class="fa fa-times" style="color: #ed5565"></i>';
+                }
+            }
+        }
+
         function gatherData() {
             var json = JSON.parse($('#attendance-graph-data').text());
             var plotArray = [];
             var delays = 0;
 
+
             for (var i in json) {
                 var date = new Date(json[i].date).getTime();
                 var workedHours = json[i].worked_hours;
 
-                if (plotArray.filter((function (n) {
-                        return n[0] == date;
-                    })).length == 0) {
-                    if (json[i].entrance_time > '09:10:00') {
-                        delays++;
-                    }
+                if (json[i].entrance_time > '09:10:00') {
+                    delays++;
                 }
+
                 plotArray.push([date, workedHours]);
             }
 
+            modifyAttendanceTable(json);
             modifyAttendanceIndicators(plotArray, delays);
             plotGraph(plotArray);
         }
