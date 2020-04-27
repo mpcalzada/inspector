@@ -1,6 +1,6 @@
 class LandingController < ApplicationController
   def index
-    render :layout => "empty"
+    render :layout => 'empty'
   end
 
 end

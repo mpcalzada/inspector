@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
     unauthenticated :user do
       #root :to => 'devise/sessions#new', as: :unauthenticated_root
+
+      resources :landing
+
       root :to => 'landing#index', as: :unauthenticated_root
     end
   end
