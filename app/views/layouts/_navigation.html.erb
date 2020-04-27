@@ -3,13 +3,15 @@
     <ul class="nav metismenu" id="side-menu">
       <li class="nav-header">
         <div class="dropdown profile-element">
-
+          <span>
+            <img alt="image" style="max-width: 50%" class="img-circle img-responsive" src="https://image.shutterstock.com/image-photo/unknown-male-person-silhouetteback-lit-260nw-235132504.jpg"/>
+          </span>
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <span class="clear">
-              <span class="block m-t-xs">
-                <strong class="font-bold"><%= current_employer(current_user.id) %></strong>
-              </span>
-            </span>
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold"><%= current_employer_name(current_user.id) %></strong>
+                            </span> <span class="text-muted text-xs block">Admin <b class="caret"></b></span>
+                        </span>
           </a>
           <ul class="dropdown-menu animated fadeInRight m-t-xs">
             <li><a href="">Profile</a>
@@ -19,7 +21,8 @@
             <li><a href="">Mailbox</a>
             </li>
             <li class="divider"></li>
-            <li><a href="">Logout</a>
+            <li>
+              <%= link_to "<i class='fa fa-sign-out'></i>Logout".html_safe, destroy_user_session_path, :method => :delete %>
             </li>
           </ul>
         </div>
@@ -58,6 +61,18 @@
             <%= link_to '<i class="fa fa-check-circle-o"></i>Attendance'.html_safe, upload_files_path %>
           </li>
         </ul>
+      </li>
+      <li>
+        <%= link_to home_index_path do %>
+            <i class="fa fa-diamond"></i> <span class="nav-label">Accountancy</span>
+            <span class="label label-primary pull-right">Soon</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to home_index_path do %>
+            <i class="fa fa-diamond"></i> <span class="nav-label">Reports</span>
+            <span class="label label-primary pull-right">Soon</span>
+        <% end %>
       </li>
     </ul>
 
