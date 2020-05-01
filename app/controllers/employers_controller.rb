@@ -63,13 +63,18 @@ class EmployersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employer
-      @employer = Employer.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employer
+    @employer = Employer.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def employer_params
-      params.require(:employer).permit(:first_name, :last_name, :birthday, :rfc, :phone_number, :email, :salary, :contract_number, :street, :city, :state, :country, :cp, :degree_id, :avatar)
-    end
+  # Only allow a list of trusted parameters through.
+  def employer_params
+    params.require(:employer).permit(:first_name, :paternal_last_name, :maternal_last_name, :gender, :birthday, :avatar,
+                                     :curriculum_vitae, :rfc, :curp, :scholarship, :courses_description, :phone_number,
+                                     :home_number, :email, :personal_email, :contract_number, :gross_salary, :net_salary,
+                                     :entry_date, :validity, :insurance_number, :street, :city, :state, :country, :postal_code,
+                                     :chief_id, :user_id, :degree_id
+    )
+  end
 end
