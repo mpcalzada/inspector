@@ -10,7 +10,8 @@
     </div>
 <% end %>
 
-<%= form_with(model: employer, local: true, :class => 'wizard-big', :id => 'form') do |form| %>
+<%= form_for employer, :html => {:class => 'wizard-big', :id => 'form'} do |form| %>
+
     <h1>Personal</h1>
     <fieldset>
       <h2>Información Personal</h2>
@@ -170,10 +171,10 @@
 
           <div class="form-group col-md-4">
             <div class="col-md-4">
-              <%= form.label :home_phone, 'Telefono De Casa', class: 'control-label' %>
+              <%= form.label :home_number, 'Telefono De Casa', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.text_field :home_phone, class: 'form-control' %>
+              <%= form.text_field :home_number, class: 'form-control' %>
             </div>
           </div>
 
@@ -324,7 +325,7 @@
               <%= form.label :chief_id, ' ', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.collection_select :chief_id, Employer.order(:paternal_last_name), :id, :paternal_last_name,
+              <%= form.collection_select :chief_id_id, Employer.order(:paternal_last_name), :id, :paternal_last_name,
                                          {:prompt => true}, {:class => 'chosen-select', :style => 'width:350px;', :tabindex => '2'} %>
             </div>
           </div>

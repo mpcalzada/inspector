@@ -34,7 +34,7 @@ class CreateEmployers < ActiveRecord::Migration[6.0]
       t.string :postal_code
 
 
-      t.belongs_to :employers, :chief_id, index: true
+      t.belongs_to :employers, :chief, index: true
       t.belongs_to :user, index: true
       t.belongs_to :degree, index: true
       t.timestamps

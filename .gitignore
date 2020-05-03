@@ -405,3 +405,5 @@ build-iPhoneSimulator/
 # Markdown Navigator plugin
 
 # End of https://www.gitignore.io/api/node,ruby,rails,macos,rubymine,database,jetbrains
+
+app.standard.yaml
