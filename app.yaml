@@ -1,4 +1,4 @@
-# Copyright 2015 Google, Inc
+# Copyright 2020 Google, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START gae_flex_quickstart_yaml]
-runtime: ruby
-env: flex
-#entrypoint: bundle exec ruby app.rb
 entrypoint: bundle exec rackup --port $PORT
+env: flex
+runtime: ruby
 
 env_variables:
-  SECRET_KEY_BASE: b5aa931688bef85b44ce583dd2d1e6fbe832789da0c7f86980534b501b29fb0bea21b2c156be5db6b1d95ae996499bcb957dd4c846c7042f9e6bac6cdf9a9db6
+  RAILS_ENV: production
+  SECRET_KEY_BASE: 8e973a4548faf5c48336270f27998f396950a4878ac21bb5855c3664fff2b5a46a654f0f3d51cf2f4637ae988b0b7cc0b736feb1dcac3c687dfa0534039111c7
+  DB_USER: postgres
+  DB_PASS: 9pR5n3k%@3yu9JNV$2Y
+  DB_NAME: insp-internetxxi-produccion
+  INSTANCE_CONNECTION_NAME: internet-xxi:us-central1:inspector-produccion
 
 beta_settings:
-  cloud_sql_instances: internet-xxi:us-central1:internetxxi-produccion
+  cloud_sql_instances: internet-xxi:us-central1:inspector-produccion
 
 # This sample incurs costs to run on the App Engine flexible environment.
 # The settings below are to reduce costs during testing and are not appropriate

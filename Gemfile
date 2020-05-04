@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails' , '~> 5.0.7.2'
 gem 'autoprefixer-rails'
 
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3', '~> 1.3.6'
+
 # Use postgres as the database for Active Record
 gem 'pg', '~> 0.21.0'
 gem 'appengine', '~> 0.4.1'

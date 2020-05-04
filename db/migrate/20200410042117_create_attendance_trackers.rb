@@ -1,4 +1,4 @@
-class CreateAttendanceTrackers < ActiveRecord::Migration[6.0]
+class CreateAttendanceTrackers < ActiveRecord::Migration[5.0]
   def change
     create_table :attendance_trackers do |t|
       t.belongs_to :user , index:true
