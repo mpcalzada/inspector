@@ -14,15 +14,11 @@
                         </span>
           </a>
           <ul class="dropdown-menu animated fadeInRight m-t-xs">
-            <li><a href="">Profile</a>
-            </li>
-            <li><a href="">Contacts</a>
-            </li>
-            <li><a href="">Mailbox</a>
+            <li><a href="">Perfil</a>
             </li>
             <li class="divider"></li>
             <li>
-              <%= link_to "<i class='fa fa-sign-out'></i>Logout".html_safe, destroy_user_session_path, :method => :delete %>
+              <%= link_to "<i class='fa fa-sign-out'></i>Cerrar Sesión".html_safe, destroy_user_session_path, :method => :delete %>
             </li>
           </ul>
         </div>
@@ -32,46 +28,49 @@
       </li>
       <li class="<%= is_active_controller('home') %>">
         <%= link_to home_index_path do %>
-            <i class="fa fa-home"></i> <span class="nav-label">Home</span>
+            <i class="fa fa-home"></i> <span class="nav-label">Inicio</span>
         <% end %>
       </li>
-      <li class="<%= is_active_controller('employers') %> <%= is_active_controller('degrees') %>">
-        <a href=""><i class="fa fa-users"></i> <span class="nav-label">Human Resources</span>
+      <li class="<%= is_active_controller('employers') %> <%= is_active_controller('degrees') %> <%= is_active_controller('departments') %>">
+        <a href=""><i class="fa fa-users"></i> <span class="nav-label">Recursos Humanos</span>
           <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level <%= is_active_controller('employers') %>">
           <li class="<%= is_active_controller('employers') %>">
 
-            <%= link_to '<i class="fa fa-user"></i>Employers'.html_safe, employers_path %>
+            <%= link_to '<i class="fa fa-user"></i>Empleados'.html_safe, employers_path %>
           </li>
-          <li class="<%= is_active_controller('degrees') %>">
-            <a href="#"><i class="fa fa-gear"></i>Configuration <span class="fa arrow"></span></a>
+          <li class="<%= is_active_controller('degrees') %> <%= is_active_controller('departments') %>">
+            <a href="#"><i class="fa fa-gear"></i>Organigrama <span class="fa arrow"></span></a>
             <ul class="nav nav-third-level">
               <li class="<%= is_active_controller('degrees') %>">
-                <%= link_to '<i class="fa fa-sitemap"></i>Degrees'.html_safe, degrees_path %>
+                <%= link_to '<i class="fa fa-sitemap"></i>Puestos'.html_safe, degrees_path %>
+              </li>
+              <li class="<%= is_active_controller('departments') %>">
+                <%= link_to '<i class="fa fa-sitemap"></i>Departamentos'.html_safe, departments_path %>
               </li>
             </ul>
           </li>
         </ul>
       </li>
       <li class="<%= is_active_controller('upload_files') %>">
-        <a href=""><i class="fa fa-upload"></i> <span class="nav-label">Files Readers</span>
+        <a href=""><i class="fa fa-upload"></i> <span class="nav-label">Manejo de Archivos</span>
           <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
           <li class="<%= is_active_controller('upload_files') %>">
-            <%= link_to '<i class="fa fa-check-circle-o"></i>Attendance'.html_safe, upload_files_path %>
+            <%= link_to '<i class="fa fa-check-circle-o"></i>Asistencia'.html_safe, upload_files_path %>
           </li>
         </ul>
       </li>
       <li>
         <%= link_to home_index_path do %>
-            <i class="fa fa-diamond"></i> <span class="nav-label">Accountancy</span>
-            <span class="label label-primary pull-right">Soon</span>
+            <i class="fa fa-diamond"></i> <span class="nav-label">Contabilidad</span>
+            <span class="label label-primary pull-right">Pronto</span>
         <% end %>
       </li>
       <li>
         <%= link_to home_index_path do %>
-            <i class="fa fa-diamond"></i> <span class="nav-label">Reports</span>
-            <span class="label label-primary pull-right">Soon</span>
+            <i class="fa fa-diamond"></i> <span class="nav-label">Reportes</span>
+            <span class="label label-primary pull-right">Pronto</span>
         <% end %>
       </li>
     </ul>

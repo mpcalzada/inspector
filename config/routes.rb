@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+  resources :departments
   devise_for :users
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_scope :user do
     resources :landing
 
@@ -12,15 +12,10 @@ Rails.application.routes.draw do
       resources :employers
       resources :degrees
 
-      # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-      root to: 'home#index'
+      root to: 'home#index', as: :authenticated_root
     end
 
     unauthenticated :user do
-      #root :to => 'devise/sessions#new', as: :unauthenticated_root
-
-      resources :landing
-
       root :to => 'landing#index', as: :unauthenticated_root
     end
   end

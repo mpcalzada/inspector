@@ -27,13 +27,16 @@
 //= require fullcalendar/moment.min.js
 //= require clockpicker/clockpicker.js
 //= require daterangepicker/daterangepicker.js
+//= require bootstrap/bootstrap-tagsinput
 
 
-$(function () {
-
-    $("#wizard").steps();
+function initWizard() {
     $("#form").steps({
         bodyTag: "fieldset",
+        onCanceled: function ()
+        {
+            window.history.back();
+        },
         onStepChanging: function (event, currentIndex, newIndex) {
             // Always allow going backward even if the current step contains invalid fields!
             if (currentIndex > newIndex) {
@@ -97,16 +100,23 @@ $(function () {
             }
         }
     });
+}
 
+function initClockPicker() {
+    $('.clockpicker').clockpicker();
+}
 
-    $('#birthday_datepicker').find('.input-group.date').datepicker({
+function initDatepicker() {
+    $('.form_datepicker').find('.input-group.date').datepicker({
         startView: 2,
         todayBtn: "linked",
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true
     });
+}
 
+function initChosen() {
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': {allow_single_deselect: true},
@@ -114,8 +124,178 @@ $(function () {
         '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
         '.chosen-select-width': {width: "95%"}
     }
+
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
+}
+
+initWizard();
+initDatepicker();
+initClockPicker();
+initChosen();
+
+
+$(function () {
+
+    $("span.pie").peity("pie", {
+        fill: ['#1ab394', '#d7d7d7', '#ffffff']
+    })
+
+    $(".line").peity("line", {
+        fill: '#1ab394',
+        stroke: '#169c81',
+    })
+
+    $(".bar").peity("bar", {
+        fill: ["#1ab394", "#d7d7d7"]
+    })
+
+
 });
 
+
+function plotGraph(data) {
+    var dataset = [
+        {
+            label: "Worked Hours",
+            data: data,
+            color: "#1ab394",
+            bars: {
+                show: true,
+                align: "center",
+                barWidth: 24 * 60 * 60 * 600,
+                lineWidth: 0
+            }
+
+        }
+    ];
+
+
+    var options = {
+        xaxis: {
+            mode: "time",
+            tickSize: [1, "day"],
+            tickLength: 0,
+            axisLabel: "Date",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Arial',
+            axisLabelPadding: 10,
+            color: "#d5d5d5"
+        },
+        yaxes: [{
+            position: "left",
+            max: 15,
+            color: "#d5d5d5",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Arial',
+            axisLabelPadding: 3
+        }, {
+            position: "right",
+            clolor: "#d5d5d5",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: ' Arial',
+            axisLabelPadding: 67
+        }
+        ],
+        legend: {
+            noColumns: 1,
+            labelBoxBorderColor: "#000000",
+            position: "nw"
+        },
+        grid: {
+            hoverable: false,
+            borderWidth: 0
+        }
+    };
+
+    $.plot($("#flot-dashboard-chart"), dataset, options);
+}
+
+function modifyAttendanceIndicators(workedHoursArray, delays) {
+    let totalWorkedHours = 0;
+
+    for (let i in workedHoursArray) {
+        totalWorkedHours += workedHoursArray[i][1];
+    }
+
+    $('#total-worked-hours-label').text(Math.round((totalWorkedHours + Number.EPSILON) * 100) / 100);
+    $('#delays-label').text(delays);
+    $('#average-per-day-label').text(Math.round((totalWorkedHours / workedHoursArray.length + Number.EPSILON) * 100) / 100);
+
+    let delaysPercentage = ((delays / workedHoursArray.length) * 100) + "%";
+    let totalWorkedPercentage = ((Math.round((totalWorkedHours / (workedHoursArray.length * 8)) * 100) / 100) * 100) + '%';
+
+    $('#total-worked-hours-stat').text(totalWorkedPercentage);
+    $('#delays-stat').text(delaysPercentage);
+
+}
+
+function modifyAttendanceTable(jsonDataSet) {
+
+    for (let i in jsonDataSet) {
+        let table = document.getElementById("attendance-table");
+        let row = table.insertRow(-1);
+
+        let dateCell = row.insertCell(0);
+        let entranceCell = row.insertCell(1);
+        let exitCell = row.insertCell(2);
+        let workedHoursCell = row.insertCell(3);
+
+        let options = {weekday: 'short', year: 'numeric', month: 'short', day: '2-digit'};
+        let date = new Date(jsonDataSet[i].date);
+
+        let tick = '  <i class="fa fa-check text-navy"></i>';
+        let strike = '  <i class="fa fa-times" style="color: #ed5565"></i>';
+
+
+        dateCell.innerHTML = date.toLocaleDateString("es", options);
+        entranceCell.innerHTML = jsonDataSet[i].entrance_time;
+
+        entranceCell.innerHTML = jsonDataSet[i].entrance_time + ((jsonDataSet[i].entrance_time < '09:10:00') ? tick : strike);
+        exitCell.innerHTML = jsonDataSet[i].finished_time + ((jsonDataSet[i].finished_time > '18:00:00') ? tick : strike);
+        workedHoursCell.innerHTML = jsonDataSet[i].worked_hours + ((jsonDataSet[i].worked_hours > 8) ? tick : strike);
+    }
+}
+
+function gatherData() {
+    let jsonText = $('#attendance-graph-data').text();
+    if (jsonText) {
+        let json = JSON.parse();
+        let plotArray = [];
+
+        if (json.length > 0) {
+            let delays = 0;
+
+            for (let i in json) {
+                let date = new Date(json[i].date).getTime();
+                let workedHours = json[i].worked_hours;
+
+                if (json[i].entrance_time > '09:10:00') {
+                    delays++;
+                }
+
+                plotArray.push([date, workedHours]);
+            }
+
+            modifyAttendanceTable(json);
+            modifyAttendanceIndicators(plotArray, delays);
+        }
+        plotGraph(plotArray);
+    }
+}
+
+gatherData();
+
+
+var $inputImage = $("#inputImage");
+if (window.FileReader) {
+    $inputImage.change(function () {
+        $("#avatarIcon").show();
+    });
+} else {
+    $inputImage.addClass("hide");
+}

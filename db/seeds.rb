@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Degree.create(description: 'Director')
-Degree.create(description: 'Developer')
-Degree.create(description: 'Analyst')
+Department.create(description: 'Dirección General')
+Department.create(description: 'Sistemas')
+Department.create(description: 'Recursos Humanos')
+
+#Degree.create(description: 'Director General')
+#Degree.create(description: 'Director Sistemas')
+#Degree.create(description: 'Analista de Datos')
+#Degree.create(description: 'Desarrollador')

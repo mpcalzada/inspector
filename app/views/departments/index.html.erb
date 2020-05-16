@@ -1,6 +1,6 @@
 <div class="ibox float-e-margins">
   <div class="ibox-title">
-    <h1>Puestos</h1>
+    <h1>Departamentos</h1>
   </div>
   <div class="ibox-content">
     <div class="container">
@@ -14,11 +14,11 @@
           </thead>
 
           <tbody>
-          <% @degrees.each do |degree| %>
+          <% @departments.each do |department| %>
               <tr>
-                <td><%= degree.description %></td>
-                <td style="text-align: center"><%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_degree_path(degree), {class: 'btn btn-warning btn-xs'} %></td>
-                <td style="text-align: center"><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, degree, {class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: 'Are you sure?'}} %></td>
+                <td><%= department.description %></td>
+                <td style="text-align: center"><%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_department_path(department), {class: 'btn btn-warning btn-xs'} %></td>
+                <td style="text-align: center"><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, department, {class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: 'Are you sure?'}} %></td>
               </tr>
           <% end %>
           </tbody>
@@ -29,18 +29,18 @@
   <div class="ibox-footer">
     <div>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Crear Puesto
+        Crear Departamento
       </button>
     </div>
     <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
-          <%= form_for Degree.new do |form| %>
+          <%= form_for Department.new do |form| %>
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                   <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <i class="fa fa-sitemap modal-icon"></i>
-                <h4 class="modal-title">Crear Puesto</h4>
+                <h4 class="modal-title">Crear Departamento</h4>
               </div>
               <div class="modal-body">
 
@@ -51,15 +51,6 @@
                     </div>
                     <div class="col-md-6">
                       <%= form.text_field :description, autocomplete: 'off', class: 'form-control required', placeholder: 'Descripción' %>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                      <%= form.label :department_id, 'Departamento' %>
-                    </div>
-                    <div class="col-md-6">
-                      <%= form.collection_select :department_id, Department.order(:description), :id, :description,
-                                                 {:prompt => 'Departamento...'}, {:class => 'form-control m-b required'} %>
                     </div>
                   </div>
                 </div>

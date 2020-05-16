@@ -20,8 +20,7 @@
 //= require daterangepicker/daterangepicker-bs3.css
 //= require clockpicker/clockpicker.css
 //= require awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css
-
-
+//= require bootstrap-rtl/bootstrap-tagsinput
 
 .index-profile-photo {
   display: block;
@@ -32,4 +31,27 @@
 .show-profile-photo {
   @extend .index-profile-photo;
   border-radius: 25%;
+}
+
+.employer-information {
+  text-align: center;
+}
+
+.employer-data {
+  height: 75vh;
+}
+
+/*.wizard > .steps > ul > li, .wizard > .actions > ul > li {
+  width: 20%;
+}*/
+
+.navy-line {
+  width: 150px;
+  height: 1px;
+  margin: 0 auto 15px;
+  border-bottom: 2px solid #3A9AB3;
+}
+
+fieldset > h2 {
+  text-align: center;
 }

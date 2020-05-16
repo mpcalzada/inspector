@@ -20,6 +20,11 @@
 <% if user_signed_in? %>
 
     <body>
+    <% if notice %>
+        <div id="noticeDiv" style="display: none"><%= notice %></div>
+    <% elsif alert %>
+        <div id="alertDiv" style="display: none"><%= alert %></div>
+    <% end %>
 
     <!-- Skin configuration box -->
     <%#= render 'layouts/skinconfig' %>
@@ -62,21 +67,6 @@
 
 <% else %>
     <body style="background-color: #f3f3f4;">
-    <% if notice %>
-        <div class="container">
-          <div class="alert alert-success alert-dismissable">
-            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-            <p><%= notice %></p>
-          </div>
-        </div>
-    <% elsif alert %>
-        <div class="container">
-          <div class="alert alert-danger alert-dismissable">
-            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-            <p><%= alert %></p>
-          </div>
-        </div>
-    <% end %>
     <div class="row">
       <%= yield %>
 

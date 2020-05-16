@@ -1,6 +1,6 @@
 <div class="ibox float-e-margins">
   <div class="ibox-title">
-    <h1>Upload Files</h1>
+    <h1>Archivos de Asistencia</h1>
   </div>
   <div class="ibox-content">
 
@@ -15,10 +15,10 @@
       <table class="tile table table-bordered table-hover">
         <thead>
         <tr>
-          <th class="text-center">Username</th>
-          <th class="text-center">File</th>
-          <th class="text-center">Creation Date</th>
-          <th class="text-center">Delete</th>
+          <th class="text-center">Propietario</th>
+          <th class="text-center">Archivo</th>
+          <th class="text-center">Fecha de Subida</th>
+          <th class="text-center">Eliminar</th>
         </tr>
         </thead>
 
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="ibox-footer">
-    <%= link_to 'Upload New File', new_upload_file_path, :data => {:no_turbolink => true}, :class => 'btn btn-w-m btn-primary dim' %>
+    <%= link_to 'Subir Archivo', new_upload_file_path, :data => {:no_turbolink => true}, :class => 'btn btn-w-m btn-primary dim' %>
 
     <h1><%= notice %></h1>
   </div>

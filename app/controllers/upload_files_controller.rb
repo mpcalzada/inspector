@@ -131,29 +131,29 @@ class UploadFilesController < ApplicationController
   # POST /upload_files.json
   def create
 
-      @page = "Upload Files"
-      @action = "1"
-      @account = "not yet"
-      @lasac = "not available"
-      @cli_id = 0
-      @date = Time.now
+    @page = "Upload Files"
+    @action = "1"
+    @account = "not yet"
+    @lasac = "not available"
+    @cli_id = 0
+    @date = Time.now
 
 
-      @upload_file = UploadFile.create(upload_file_params)
-      @upload_file.user = current_user
+    @upload_file = UploadFile.create(upload_file_params)
+    @upload_file.user = current_user
 
-      respond_to do |format|
-        if @upload_file.save
+    respond_to do |format|
+      if @upload_file.save
 
-          Read.processFileData(@upload_file.file.path, @upload_file)
+        Read.processFileData(@upload_file.file.path, @upload_file)
 
-          format.html { redirect_to @upload_file, notice: 'Upload file was successfully created.' }
-          format.json { render :show, status: :created, location: @upload_file }
-        else
-          format.html { render :new }
-          format.json { render json: @upload_file.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to @upload_file, notice: 'Upload file was successfully created.' }
+        format.json { render :show, status: :created, location: @upload_file }
+      else
+        format.html { render :new }
+        format.json { render json: @upload_file.errors, status: :unprocessable_entity }
       end
+    end
   end
 
   # PATCH/PUT /upload_files/1
@@ -198,72 +198,10 @@ class UploadFilesController < ApplicationController
   # DELETE /upload_files/1
   # DELETE /upload_files/1.json
   def destroy
-
-    @page = "Upload Files"
-    @action = "4"
-    @account = "not yet"
-    @lasac = "not available"
-    @cli_id = 0
-    @date = Time.now
-
-    @historic = Historic.new
-    @historic.page = @page
-    @historic.user = @user + " " + @userl
-    @historic.user_id = @user_id
-    @historic.action = @action
-    @historic.account = @account
-    @historic.last_account = @lasac
-    @historic.date = @date
-    @historic.save
-
-    if @cu != 0
-
-      @per = Profile.where("name = 'Upload Files' and nameProfile_id = ?", @cu)
-
-      if @per.nil?
-        @per.each do |permisos|
-          @uno = permisos.name
-          @crearUpload = permisos.crear
-          @editarUpload = permisos.editar
-          @leerUpload = permisos.leer
-          @eliminarUpload = permisos.eliminar
-
-          if permisos.name == @@byUpload
-
-            @@crear = permisos.crear
-            @@editar = permisos.editar
-            @@leer = permisos.leer
-            @@eliminar = permisos.eliminar
-
-            @crear = permisos.name
-            @editar = permisos.editar
-            @leer = permisos.leer
-            @eliminar = permisos.eliminar
-          end
-
-        end
-
-        if ((@@eliminar == 1))
-
-          @upload_file.destroy
-          respond_to do |format|
-            @historic.detail = @upload_file.to_json
-            @historic.save
-            format.html { redirect_to upload_files_url, notice: 'Upload file was successfully destroyed.' }
-            format.json { head :no_content }
-          end
-        else
-          @Without_Permission = 100
-          redirect_to home_index_path, :alert => t('all.not_access')
-        end
-
-      else
-        @Without_Permission = 100
-        redirect_to home_index_path, :alert => t('all.not_access')
-      end
-    else
-      @Without_Permission = 100
-      redirect_to new_user_session_path, :alert => t('all.please_continue')
+    @upload_file.destroy
+    respond_to do |format|
+      format.html { redirect_to upload_files_url, notice: 'Upload file was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 

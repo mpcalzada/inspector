@@ -74,7 +74,12 @@ class EmployersController < ApplicationController
                                      :curriculum_vitae, :rfc, :curp, :scholarship, :courses_description, :phone_number,
                                      :home_number, :email, :personal_email, :contract_number, :gross_salary, :net_salary,
                                      :entry_date, :validity, :insurance_number, :street, :city, :state, :country, :postal_code,
-                                     :chief_id, :user_id, :degree_id
+                                     :chief_id, :user_id, :degree_id, :nationality, :marital_status, :personal_phone_number,
+                                     :home_type, :home_financial_type, :entrance_time, :exit_time, :travel_capability,
+                                     :dependents_number, :blood_type, :allergies, :contact1_full_name, :contact1_relationship,
+                                     :contact1_home_phone_number, :contact1_cellphone_number, :contact2_full_name,
+                                     :contact2_relationship, :contact2_home_phone_number, :contact2_cellphone_number,
+                                     :masters_description, :phd_description, :birthplace_country, :birthplace_city
     )
   end
 end

@@ -33,7 +33,7 @@ class Read
           last_name = last_name.nil? ? '' : last_name.downcase
 
           @user = Employer.where(
-              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(last_name), \' \', \'\') = ?',
+              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(paternal_last_name), \' \', \'\') = ?',
               first_name,
               last_name
           ).first
