@@ -30,57 +30,58 @@
             </h2>
             <div class="navy-line" style="margin-bottom: 15px"></div>
 
-            <table class="table table-hover">
-              <tr>
-                <td><i class="fa fa-address-book"></i>
-                  <strong>Puesto: </strong></td>
-                <td><%= @employer.degree.nil? ? 'Puesto Desconocido' : @employer.degree.description %></td>
-              </tr>
-              <tr>
-                <td><i class="fa fa-map-marker"></i> <strong>E-Mail</strong></td>
-                <td><%= @employer.email.empty? ? ' Email Desconocido ' : @employer.email %></td>
-              </tr>
-              <tr>
-                <td>
-                  <i class="fa fa-map-marker"></i> <strong>Dirección</strong>
-                </td>
-                <td>
-                  <%= (@employer.street.empty? ? '-' : @employer.street) %>,
-                  <%= (@employer.city.empty? ? '-' : @employer.city) %>.
-                  <%= (@employer.state.empty? ? '-' : @employer.state) %>.
-                  <%= (@employer.postal_code.empty? ? '-' : @employer.postal_code) %>
-                </td>
-              </tr>
-              <tr>
-                <td><i class="fa fa-map-marker"></i> <strong>E-Mail</strong></td>
-                <td> </td>
-              </tr>
-              <tr>
-                <td><i class="fa fa-map-marker"></i> <strong>E-Mail</strong></td>
-                <td> </td>
-              </tr>
-              <tr>
-                <td><i class="fa fa-map-marker"></i> <strong>E-Mail</strong></td>
-                <td> </td>
-              </tr>
-              <tr>
-                <td><i class="fa fa-map-marker"></i> <strong>E-Mail</strong></td>
-                <td> </td>
-              </tr>
-            </table>
-            <div class="employer-information">
-
-              <p><i class="fa fa-phone"></i><%= @employer.phone_number %></p>
-              <p><%= (@employer.contract_number.empty? ? '-' : @employer.contract_number) %></p>
-              <p><%= (@employer.entry_date.nil? ? '-' : @employer.entry_date) %></p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
+            <div style="max-height: 380px; overflow: scroll">
+              <table class="table table-hover">
+                <tr>
+                  <td><i class="fa fa-sitemap"></i>
+                    <strong>Puesto: </strong></td>
+                  <td><%= @employer.degree.nil? ? 'Puesto Desconocido' : @employer.degree.description %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-map-marker"></i> <strong>Numero de Contrato</strong></td>
+                  <td><%= @employer.contract_number %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-institution"></i> <strong>Fecha de Ingreso</strong></td>
+                  <td><%= @employer.entry_date %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-check"></i> <strong>Validez de Contrato</strong></td>
+                  <td><%= @employer.validity %></td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-map-marker"></i> <strong>Dirección</strong>
+                  </td>
+                  <td>
+                    <%= (@employer.street.empty? ? '-' : @employer.street) %>,
+                    <%= (@employer.city.empty? ? '-' : @employer.city) %>.
+                    <%= (@employer.state.empty? ? '-' : @employer.state) %>.
+                    <%= (@employer.postal_code.empty? ? '-' : @employer.postal_code) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-envelope"></i> <strong>Correo Corporativo</strong></td>
+                  <td><%= @employer.email %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-phone"></i> <strong>Telefono Corporativo</strong></td>
+                  <td><%= @employer.phone_number %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-envelope"></i> <strong>Correo Personal</strong></td>
+                  <td><%= @employer.personal_email.empty? ? ' Email Desconocido ' : @employer.email %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-phone"></i> <strong>Telefono Personal</strong></td>
+                  <td><%= @employer.personal_phone_number %></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-map-marker"></i> <strong>Currículum Vitae</strong></td>
+                  <td><%= @employer.curriculum_vitae %></td>
+                </tr>
+              </table>
             </div>
-
-
             <div class="user-button" style="text-align: center">
               <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
               <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>

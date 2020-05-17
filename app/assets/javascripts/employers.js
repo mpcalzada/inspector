@@ -33,8 +33,7 @@
 function initWizard() {
     $("#form").steps({
         bodyTag: "fieldset",
-        onCanceled: function ()
-        {
+        onCanceled: function () {
             window.history.back();
         },
         onStepChanging: function (event, currentIndex, newIndex) {
@@ -291,11 +290,22 @@ function gatherData() {
 gatherData();
 
 
-var $inputImage = $("#inputImage");
+var avatarImage = $("#avatarImage");
 if (window.FileReader) {
-    $inputImage.change(function () {
-        $("#avatarIcon").show();
+    avatarImage.change(function () {
+        $("#avatar-button").css('background-color', '#1AB394');
+        $("#avatar-button").css('border-color', '#1AB394');
     });
 } else {
-    $inputImage.addClass("hide");
+    avatarImage.addClass("hide");
+}
+
+var curriculumInput = $("#curriculumInput");
+if (window.FileReader) {
+    curriculumInput.change(function () {
+        $("#curriculum-button").css('background-color', '#1AB394');
+        $("#curriculum-button").css('border-color', '#1AB394');
+    });
+} else {
+    curriculumInput.addClass("hide");
 }

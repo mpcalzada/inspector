@@ -2,7 +2,7 @@
   <%= form_for @degree do |form| %>
 
       <div class="ibox-title">
-        <h1>Edit Degree</h1>
+        <h1>Editar Puesto</h1>
       </div>
       <div class="ibox-content">
 
@@ -19,12 +19,23 @@
                 </ul>
               </div>
           <% end %>
-          <div class="form-group col-md-6">
-            <div class="col-md-2">
-              <%= form.label :description, class: 'control-label' %>
+          <div class="col-md-6">
+            <div class="form-group col-md-12">
+              <div class="col-md-3">
+                <%= form.label :description, class: 'control-label' %>
+              </div>
+              <div class="col-md-8">
+                <%= form.text_field :description, class: 'form-control' %>
+              </div>
             </div>
-            <div class="col-md-8">
-              <%= form.text_field :description, class: 'form-control' %>
+            <div class="form-group col-md-12">
+              <div class="col-md-3">
+                <%= form.label :department_id, 'Departamento' %>
+              </div>
+              <div class="col-md-8">
+                <%= form.collection_select :department_id, Department.order(:description), :id, :description,
+                                           {:prompt => 'Departamento...'}, {:class => 'form-control m-b required'} %>
+              </div>
             </div>
           </div>
         </div>
@@ -32,10 +43,10 @@
       <div class="ibox-footer">
         <div class="container">
           <div class="col-md-3">
-            <%= link_to 'Back', degrees_path, class: 'btn btn-warning btn-block' %>
+            <%= link_to 'Volver', degrees_path, class: 'btn btn-warning btn-block' %>
           </div>
           <div class="actions col-md-3">
-            <%= form.submit 'Save', :class => 'btn btn-primary btn-block' %>
+            <%= form.submit 'Guardar', :class => 'btn btn-primary btn-block' %>
           </div>
         </div>
       </div>

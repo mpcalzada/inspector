@@ -24,7 +24,7 @@
                 <%= form.label :first_name, 'Nombre*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :first_name, class: 'form-control reqqqq', autocomplete: 'off', placeholder: 'Nombre' %>
+                <%= form.text_field :first_name, class: 'form-control required', autocomplete: 'off', placeholder: 'Nombre' %>
               </div>
             </div>
 
@@ -33,7 +33,7 @@
                 <%= form.label :paternal_last_name, 'Apellido Paterno*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :paternal_last_name, class: 'form-control reqqqq', placeholder: 'Apellido Paterno' %>
+                <%= form.text_field :paternal_last_name, class: 'form-control required', placeholder: 'Apellido Paterno' %>
               </div>
             </div>
 
@@ -42,7 +42,7 @@
                 <%= form.label :maternal_last_name, 'Apellido Materno*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :maternal_last_name, class: 'form-control reqqqq', placeholder: 'Apellido Materno' %>
+                <%= form.text_field :maternal_last_name, class: 'form-control required', placeholder: 'Apellido Materno' %>
               </div>
             </div>
 
@@ -56,7 +56,7 @@
               <div class="col-md-8 form_datepicker" id="birthday_datepicker">
                 <div class="input-group date">
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <%= form.text_field :birthday, class: 'form-control reqqqq', value: '01/01/1990' %>
+                  <%= form.text_field :birthday, class: 'form-control required', value: '01/01/1990' %>
                 </div>
               </div>
             </div>
@@ -66,8 +66,8 @@
                 <%= form.label :gender, 'Género*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.select :gender, options_for_select([%w(Masculino 1), %w(Femenino 2)]),
-                                {:prompt => 'Genero...'}, {:class => 'form-control m-b'} %>
+                <%= form.select :gender, [%w(Masculino 1), %w(Femenino 2)],
+                                {:selected => @employer.gender, :prompt => 'Genero...'}, {:class => 'form-control m-b'} %>
               </div>
             </div>
 
@@ -76,7 +76,7 @@
                 <%= form.label :marital_status, 'Estado Civil*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.select :marital_status, options_for_select([%w(Soltero/a 1), %w(Casado/a 2), %w(Divorciado/a 3), %w(Viudo/a 4)]),
+                <%= form.select :marital_status, [%w(Soltero/a 1), %w(Casado/a 2), %w(Divorciado/a 3), %w(Viudo/a 4)],
                                 {:prompt => 'Estado Civil'}, {:class => 'form-control m-b'} %>
               </div>
             </div>
@@ -89,7 +89,7 @@
                 <%= form.label :rfc, 'RFC*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :rfc, class: 'form-control reqqqq', placeholder: 'RFC' %>
+                <%= form.text_field :rfc, class: 'form-control required', placeholder: 'RFC' %>
               </div>
             </div>
 
@@ -98,7 +98,7 @@
                 <%= form.label :curp, 'CURP*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :curp, class: 'form-control reqqqq', placeholder: 'CURP' %>
+                <%= form.text_field :curp, class: 'form-control required', placeholder: 'CURP' %>
               </div>
             </div>
 
@@ -107,7 +107,7 @@
                 <%= form.label :nationality, 'Nacionalidad*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :nationality, class: 'form-control reqqqq', placeholder: 'Nacionalidad', value: 'Mexicana' %>
+                <%= form.text_field :nationality, class: 'form-control required', placeholder: 'Nacionalidad', value: 'Mexicana' %>
               </div>
             </div>
 
@@ -120,7 +120,7 @@
                 <%= form.label :birthplace_country, 'País de Nacimiento*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :birthplace_country, class: 'form-control reqqqq', placeholder: 'País de Nacimiento', value: 'México' %>
+                <%= form.text_field :birthplace_country, class: 'form-control required', placeholder: 'País de Nacimiento', value: 'México' %>
               </div>
             </div>
 
@@ -129,7 +129,29 @@
                 <%= form.label :birthplace_city, 'Ciudad de Nacimiento*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :birthplace_city, class: 'form-control reqqqq', placeholder: 'Ciudad de Nacimiento' %>
+                <%= form.text_field :birthplace_city, class: 'form-control required', placeholder: 'Ciudad de Nacimiento' %>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <div class="col-md-4">
+                <%= form.label :blood_type, 'Tipo de Sangre*', class: 'control-label' %>
+              </div>
+              <div class="col-md-8">
+                <%= form.select :blood_type, [%w(A+ 1), %w(A- 2), %w(B+ 3), %w(B- 4), %w(AB+ 5), %w(AB- 6), %w(O+ 6), %w(O- 6)],
+                                {:prompt => 'Tipo de Sangre...'}, {:class => 'form-control m-bt'} %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-4">
+              <div class="col-md-4">
+                <%= form.label :allergies, 'Alergias', class: 'control-label' %>
+              </div>
+              <div class="col-md-8">
+                <%= form.text_field :allergies, class: 'form-control', placeholder: 'Alergias...',
+                                    id: 'tags', :data => {:role => 'tagsinput'} %>
               </div>
             </div>
 
@@ -138,9 +160,8 @@
                 <%= form.label :avatar, 'Foto de Perfil', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <i id="avatarIcon" class="fa fa-pencil fa-2x" style="display: none"></i>
-                <label title="Upload image file" for="inputImage" class="btn btn-info">
-                  <%= form.file_field :avatar, id: 'inputImage', class: 'hide' %>
+                <label id="avatar-button" title="Upload image file" for="avatarImage" class="btn btn-danger">
+                  <%= form.file_field :avatar, id: 'avatarImage', class: 'hide' %>
                   Select Image
                 </label>
               </div>
@@ -167,7 +188,7 @@
               <div class="col-md-8 form_datepicker" id="birthday_datepicker">
                 <div class="input-group date">
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <%= form.text_field :entry_date, class: 'form-control reqqqq', value: '01/01/2020' %>
+                  <%= form.text_field :entry_date, class: 'form-control required', value: '01/01/2020' %>
                 </div>
               </div>
             </div>
@@ -177,7 +198,7 @@
                 <%= form.label :contract_number, 'No. Contrato*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :contract_number, class: 'form-control reqqqq', placeholder: 'No. Contrato' %>
+                <%= form.text_field :contract_number, class: 'form-control required', placeholder: 'No. Contrato' %>
               </div>
             </div>
 
@@ -187,8 +208,8 @@
               </div>
               <div class="col-md-8 form_datepicker" id="birthday_datepicker">
                 <div class="input-group date">
+                  <%= form.text_field :validity, class: 'form-control required', value: '01/01/2020' %>
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <%= form.text_field :validity, class: 'form-control reqqqq', value: '01/01/2020' %>
                 </div>
               </div>
             </div>
@@ -202,7 +223,7 @@
                 <%= form.label :insurance_number, 'No. Seguro Social*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :insurance_number, class: 'form-control reqqqq', placeholder: 'No. Seguro Social' %>
+                <%= form.text_field :insurance_number, class: 'form-control required', placeholder: 'No. Seguro Social' %>
               </div>
             </div>
 
@@ -211,7 +232,7 @@
                 <%= form.label :gross_salary, 'Sueldo Bruto*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :gross_salary, class: 'form-control reqqqq', placeholder: 'Sueldo Bruto', :data => {:mask => '$ 999,999.99'} %>
+                <%= form.text_field :gross_salary, class: 'form-control required', placeholder: 'Sueldo Bruto', :data => {:mask => '$ 999,999.99'} %>
               </div>
             </div>
 
@@ -220,22 +241,21 @@
                 <%= form.label :net_salary, 'Sueldo Neto*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :net_salary, class: 'form-control reqqqq', placeholder: 'Sueldo Neto', :data => {:mask => '$ 999,999.99'} %>
+                <%= form.text_field :net_salary, class: 'form-control required', placeholder: 'Sueldo Neto', :data => {:mask => '$ 999,999.99'} %>
               </div>
             </div>
 
           </div>
           <div class="row">
-
             <div class="form-group col-md-4">
               <div class="col-md-4">
                 <%= form.label :entrance_time, 'Hora de Entrada*', class: 'control-label' %>
               </div>
 
-              <div class="col-md-8 input-group clockpicker">
-                <div class="input-group date">
+              <div class="col-md-8">
+                <div class="input-group clockpicker" data-autoclose="true">
+                  <%= form.text_field :entrance_time, class: 'form-control required', value: '09:00' %>
                   <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                  <%= form.text_field :entrance_time, class: 'form-control reqqqq', value: '09:00' %>
                 </div>
               </div>
             </div>
@@ -245,10 +265,10 @@
                 <%= form.label :exit_time, 'Hora de Salida*', class: 'control-label' %>
               </div>
 
-              <div class="col-md-8 input-group clockpicker">
-                <div class="input-group date">
+              <div class="col-md-8">
+                <div class="input-group clockpicker" data-autoclose="true">
+                  <%= form.text_field :exit_time, class: 'form-control required', value: '18:00' %>
                   <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                  <%= form.text_field :exit_time, class: 'form-control reqqqq', value: '18:00' %>
                 </div>
               </div>
             </div>
@@ -258,8 +278,8 @@
                 <%= form.label :degree_id, 'Puesto*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.collection_select :degree_id, Degree.order(:description), :id, :description, {:prompt => true},
-                                           {:class => 'form-control m-breqqqq'} %>
+                <%= form.collection_select :degree_id, Degree.order(:description), :id, :description, {:prompt => 'Puesto...'},
+                                           {:class => 'form-control m-b required'} %>
               </div>
             </div>
 
@@ -272,7 +292,16 @@
               </div>
               <div class="col-md-8">
                 <%= form.collection_select :chief_id, Employer.order(:paternal_last_name), :id, :paternal_last_name,
-                                           {:prompt => true}, {:class => 'form-control m-b'} %>
+                                           {:prompt => 'Jefe Directo...'}, {:class => 'form-control m-b'} %>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <div class="checkbox checkbox-info checkbox-circle">
+                <input name="employer[travel_capability]" id="travel_capability" type="checkbox">
+                <label for="travel_capability">
+                  Disponibilidad Para Viajar
+                </label>
               </div>
             </div>
 
@@ -290,7 +319,7 @@
               <%= form.label :scholarship, 'Profesión*', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.text_field :scholarship, class: 'form-control reqqqq', placeholder: 'Escolaridad',
+              <%= form.text_field :scholarship, class: 'form-control required', placeholder: 'Profesión...',
                                   id: 'tags', :data => {:role => 'tagsinput'} %>
             </div>
           </div>
@@ -300,7 +329,7 @@
               <%= form.label :masters_description, 'Maestrías', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.text_field :masters_description, class: 'form-control reqqqq', placeholder: 'Maestrías',
+              <%= form.text_field :masters_description, class: 'form-control', placeholder: 'Maestrías...',
                                   id: 'tags', :data => {:role => 'tagsinput'} %>
             </div>
           </div>
@@ -310,7 +339,7 @@
               <%= form.label :phd_description, 'Doctorados', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.text_field :phd_description, class: 'form-control reqqqq', placeholder: 'Doctorados',
+              <%= form.text_field :phd_description, class: 'form-control', placeholder: 'Doctorados...',
                                   id: 'tags', :data => {:role => 'tagsinput'} %>
             </div>
           </div>
@@ -320,7 +349,8 @@
               <%= form.label :courses_description, 'Cursos', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <%= form.text_area :courses_description, class: 'form-control' %>
+              <%= form.text_field :courses_description, class: 'form-control', placeholder: 'Cursos...',
+                                  id: 'tags', :data => {:role => 'tagsinput'} %>
             </div>
           </div>
 
@@ -329,7 +359,7 @@
               <%= form.label :curriculum_vitae, 'Curriculum Vitae', class: 'control-label' %>
             </div>
             <div class="col-md-8">
-              <label title="Upload image file" for="curriculumInput" class="btn btn-info">
+              <label id="curriculum-button" title="Upload image file" for="curriculumInput" class="btn btn-danger">
                 <%= form.file_field :curriculum_vitae, id: 'curriculumInput', class: 'hide' %>
                 Select File
               </label>
@@ -362,7 +392,7 @@
                 <%= form.label :email, 'Correo Insitucional*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :email, class: 'form-control reqqqq', placeholder: 'Correo Institucional' %>
+                <%= form.text_field :email, class: 'form-control required', placeholder: 'Correo Institucional' %>
               </div>
             </div>
 
@@ -371,7 +401,7 @@
                 <%= form.label :personal_phone_number, 'Celular Personal*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :personal_phone_number, class: 'form-control reqqqq', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Celular Personal' %>
+                <%= form.text_field :personal_phone_number, class: 'form-control required', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Celular Personal' %>
               </div>
             </div>
 
@@ -392,7 +422,7 @@
                 <%= form.label :personal_email, 'Correo Personal*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :personal_email, class: 'form-control reqqqq', placeholder: 'Correo Personal' %>
+                <%= form.text_field :personal_email, class: 'form-control required', placeholder: 'Correo Personal' %>
               </div>
             </div>
 
@@ -411,8 +441,8 @@
                 <%= form.label :home_type, 'Tipo de Domicilio*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.select :home_type, options_for_select([%w(Casa 1), %w(Departamento 2), %w(Otro 3)]),
-                                {:prompt => true}, {:class => 'reqqqq form-control m-bt'} %>
+                <%= form.select :home_type, [%w(Casa 1), %w(Departamento 2), %w(Otro 3)],
+                                {:prompt => 'Tipo de Domicilio...'}, {:class => 'required form-control m-bt'} %>
               </div>
             </div>
 
@@ -421,10 +451,8 @@
                 <%= form.label :home_financial_type, 'Estado de Domicilio*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <div class="col-md-8">
-                  <%= form.select :home_type, options_for_select([%w(Propio 1), %w(Rentado 2), %w(Familiar 3), %w(Otro 4)]),
-                                  {:prompt => true}, {:class => 'form-control reqqqq form-control m-bt'} %>
-                </div>
+                <%= form.select :home_financial_type, [%w(Propio 1), %w(Rentado 2), %w(Familiar 3), %w(Otro 4)],
+                                {:prompt => 'Estado de Domicilio...'}, {:class => 'required form-control m-bt'} %>
               </div>
             </div>
 
@@ -433,7 +461,7 @@
                 <%= form.label :street, 'Calle*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :street, class: 'form-control reqqqq', placeholder: 'Calle' %>
+                <%= form.text_field :street, class: 'form-control required', placeholder: 'Calle' %>
               </div>
             </div>
 
@@ -445,7 +473,7 @@
                 <%= form.label :city, 'Ciudad*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :city, class: 'form-control reqqqq', placeholder: 'Ciudad' %>
+                <%= form.text_field :city, class: 'form-control required', placeholder: 'Ciudad' %>
               </div>
             </div>
 
@@ -454,7 +482,7 @@
                 <%= form.label :state, 'Estado*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :state, class: 'form-control reqqqq', placeholder: 'Estado' %>
+                <%= form.text_field :state, class: 'form-control required', placeholder: 'Estado' %>
               </div>
             </div>
 
@@ -463,7 +491,7 @@
                 <%= form.label :country, 'Pais*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :country, class: 'form-control reqqqq', value: 'México' %>
+                <%= form.text_field :country, class: 'form-control required', value: 'México' %>
               </div>
             </div>
 
@@ -485,7 +513,7 @@
       </div>
     </fieldset>
 
-    <h1>Información Adicional</h1>
+    <h1>Familia y Relaciones</h1>
     <fieldset>
       <h2>Familia y Relaciones</h2>
       <div class="navy-line"></div>
@@ -502,7 +530,7 @@
                 <%= form.label :contact1_full_name, 'Nombre*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :contact1_full_name, class: 'form-control reqqqq', placeholder: 'Nombre' %>
+                <%= form.text_field :contact1_full_name, class: 'form-control required', placeholder: 'Nombre' %>
               </div>
             </div>
             <div class="form-group col-md-3">
@@ -511,9 +539,8 @@
               </div>
               <div class="col-md-8">
                 <div class="col-md-8">
-                  <%= form.select :home_type, options_for_select([%w(Padre 1), %w(Madre 2), %w(Hermano/a 3), %w(Hijo/a 4),
-                                                                  %w(Amigo/a 5), %w(Otro 6)]),
-                                  {:prompt => true}, {:class => 'reqqqq form-control m-bt'} %>
+                  <%= form.select :contact1_relationship, [%w(Padre 1), %w(Madre 2), %w(Hermano/a 3), %w(Hijo/a 4), %w(Amigo/a 5), %w(Otro 6)],
+                                  {:prompt => true}, {:class => 'required form-control m-bt'} %>
                 </div>
               </div>
             </div>
@@ -522,7 +549,7 @@
                 <%= form.label :contact1_home_phone_number, 'Telefono de Casa*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :contact1_home_phone_number, class: 'form-control reqqqq', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Telefono Casa' %>
+                <%= form.text_field :contact1_home_phone_number, class: 'form-control required', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Telefono Casa' %>
               </div>
             </div>
             <div class="form-group col-md-2">
@@ -530,7 +557,7 @@
                 <%= form.label :contact1_cellphone_number, 'Telefono Celular*', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.text_field :contact1_cellphone_number, class: 'form-control reqqqq', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Telefono Celular' %>
+                <%= form.text_field :contact1_cellphone_number, class: 'form-control required', :data => {:mask => '(99) 9999-9999'}, placeholder: 'Telefono Celular' %>
               </div>
             </div>
 
@@ -560,9 +587,8 @@
                 <%= form.label :contact2_relationship, 'Parentesco', class: 'control-label' %>
               </div>
               <div class="col-md-8">
-                <%= form.select :home_type, options_for_select([%w(Padre 1), %w(Madre 2), %w(Hermano/a 3), %w(Hijo/a 4),
-                                                                %w(Amigo/a 5), %w(Otro 6)]),
-                                {:prompt => true}, {:class => 'reqqqq form-control m-bt'} %>
+                <%= form.select :contact2_relationship, [%w(Padre 1), %w(Madre 2), %w(Hermano/a 3), %w(Hijo/a 4), %w(Amigo/a 5), %w(Otro 6)],
+                                {:prompt => true}, {:class => 'form-control m-bt'} %>
               </div>
             </div>
             <div class="form-group col-md-3">
@@ -594,43 +620,16 @@
 
           <div class="row">
 
-            <div class="form-group col-md-4">
-              <div class="col-md-4">
-                <%= form.label :allergies, 'Alergias', class: 'control-label' %>
-              </div>
-              <div class="col-md-8">
-                <%= form.text_field :allergies, class: 'form-control', placeholder: 'Alergias' %>
-              </div>
-            </div>
-
-            <div class="form-group col-md-3">
-              <div class="col-md-6">
-                <%= form.label :blood_type, 'Tipo de Sangre*', class: 'control-label' %>
-              </div>
-              <div class="col-md-6">
-                <%= form.select :home_type, options_for_select([%w(A+ 1), %w(A- 2), %w(B+ 3), %w(B- 4), %w(AB+ 5),
-                                                                %w(AB- 6), %w(O+ 6), %w(O- 6)]),
-                                {:prompt => true}, {:class => 'reqqqq form-control m-bt'} %>
-              </div>
-            </div>
 
             <div class="form-group col-md-3">
               <div class="col-md-8">
                 <%= form.label :dependents_number, 'No. Dependientes*', class: 'control-label' %>
               </div>
               <div class="col-md-4">
-                <%= form.text_field :dependents_number, class: 'form-control reqqqq', value: '0' %>
+                <%= form.text_field :dependents_number, class: 'form-control required', value: '0' %>
               </div>
             </div>
 
-            <div class="form-group col-md-2">
-              <div class="checkbox checkbox-info checkbox-circle">
-                <input name="employer[travel_capability]" id="travel_capability" type="checkbox">
-                <label for="travel_capability">
-                  Disponibilidad Para Viajar
-                </label>
-              </div>
-            </div>
 
           </div>
         </div>

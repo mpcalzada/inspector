@@ -17,3 +17,14 @@
 //= require chartjs/Chart.min
 //= require plugin/dropzone/dropzone
 //= require toastr/toastr.min.js
+
+// setTimeout(function() {
+//     toastr.options = {
+//         closeButton: true,
+//         progressBar: true,
+//         showMethod: 'slideDown',
+//         timeOut: 4000
+//     };
+//     toastr.error('Error', 'Error');
+//
+// }, 1300);
