@@ -30,11 +30,10 @@
             </h2>
             <div class="navy-line" style="margin-bottom: 15px"></div>
 
-            <div style="max-height: 380px; overflow: scroll">
+            <div style="height: 30vh; overflow: scroll">
               <table class="table table-hover">
                 <tr>
-                  <td><i class="fa fa-sitemap"></i>
-                    <strong>Puesto: </strong></td>
+                  <td><i class="fa fa-sitemap"></i><strong>Puesto: </strong></td>
                   <td><%= @employer.degree.nil? ? 'Puesto Desconocido' : @employer.degree.description %></td>
                 </tr>
                 <tr>
