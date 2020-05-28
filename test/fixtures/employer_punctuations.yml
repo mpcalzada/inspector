@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  performance: 1
+  punctuality: 1
+  attendance: 1
+  attitude: 1
+  quality: 1
+
+two:
+  performance: 1
+  punctuality: 1
+  attendance: 1
+  attitude: 1
+  quality: 1

@@ -32,6 +32,7 @@ class CreateEmployers < ActiveRecord::Migration[5.0]
       t.string :birthplace_city
       t.string :birthplace_country
 
+      t.string :identification_number
       t.attachment :curriculum_vitae
       t.string :contract_number
       t.string :gross_salary
@@ -46,6 +47,7 @@ class CreateEmployers < ActiveRecord::Migration[5.0]
       t.integer :dependents_number
       t.string :blood_type
       t.string :allergies
+      t.string :diseases
 
       t.string :contact1_full_name
       t.string :contact1_relationship

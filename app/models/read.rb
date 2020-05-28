@@ -27,22 +27,25 @@ class Read
           end
 
           first_name = employer_name.split('.')[0]
-          last_name = employer_name.split('.')[1]
+          paternal_last_name = employer_name.split('.')[1]
+          maternal_last_name = employer_name.split('.')[2]
 
           first_name = first_name.nil? ? '' : first_name.downcase
-          last_name = last_name.nil? ? '' : last_name.downcase
+          paternal_last_name = paternal_last_name.nil? ? '' : paternal_last_name.downcase
+          maternal_last_name = maternal_last_name.nil? ? '' : maternal_last_name.downcase
 
-          @user = Employer.where(
-              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(paternal_last_name), \' \', \'\') = ?',
+          @employer = Employer.where(
+              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(paternal_last_name), \' \', \'\') = ? and REPLACE(lower(maternal_last_name), \' \', \'\') = ?',
               first_name,
-              last_name
+              paternal_last_name,
+              maternal_last_name
           ).first
 
-          unless @user.nil?
+          unless @employer.nil?
             AttendanceTracker.new(
                 :name => employer_name.downcase,
                 :description => description.downcase,
-                :user_id => @user.id,
+                :employer_id => @employer.id,
                 :registered_datetime => registered_time,
                 :internal_id => employer_id
             ).save
@@ -52,7 +55,7 @@ class Read
           puts('Unable to write AttendanceTracker for '+
                    "Employer Name: #{(employer_name)}"+
                    "Description: #{(description)}"+
-                   "User Id: #{(user_id)}"+
+                   "Employer Id: #{(user_id)}"+
                    "Registered Datetime: #{(registered_time)}"+
                    "Internal Id: #{(employer_id)}"+
                    "Exception: #{(e.message)}"

@@ -31,7 +31,7 @@ class DegreesController < ApplicationController
         format.html { redirect_to degrees_path, notice: 'Degree was successfully created.' }
         format.json { render :index, status: :created, location: @degree }
       else
-        format.html { render :new }
+        format.html { redirect_to degrees_path, notice: 'Campos Requeridos Faltantes' }
         format.json { render json: @degree.errors, status: :unprocessable_entity }
       end
     end

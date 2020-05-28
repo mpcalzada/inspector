@@ -79,7 +79,8 @@ class EmployersController < ApplicationController
                                      :dependents_number, :blood_type, :allergies, :contact1_full_name, :contact1_relationship,
                                      :contact1_home_phone_number, :contact1_cellphone_number, :contact2_full_name,
                                      :contact2_relationship, :contact2_home_phone_number, :contact2_cellphone_number,
-                                     :masters_description, :phd_description, :birthplace_country, :birthplace_city
+                                     :masters_description, :phd_description, :birthplace_country, :birthplace_city, :diseases,
+                                     :identification_number
     )
   end
 end

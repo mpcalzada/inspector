@@ -54,10 +54,28 @@
 
 fieldset > h2 {
   text-align: center;
+  margin-top: 0;
 }
 
 .wizard > .content {
   @extend .content;
   height: 60vh;
   overflow: scroll;
+}
+
+#punctuation {
+  border-color: red;
+}
+
+#punctuation p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+#punctuation .center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

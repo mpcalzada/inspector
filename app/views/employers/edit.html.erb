@@ -1,4 +1,10 @@
 <div class="ibox float-e-margins">
-  <div class="ibox-title"><h1>Edit Employer</h1></div>
-  <%= render 'form', employer: @employer, type: 'Edit Employer' %>
+  <div class="ibox-title">
+    <h1>Editar Empleado: <%= @employer.first_name + ' ' + @employer.paternal_last_name %></h1>
+  </div>
+  <div class="ibox-content">
+    <div class="row">
+      <%= render 'form', employer: @employer, type: 'Edit Employer' %>
+    </div>
+  </div>
 </div>

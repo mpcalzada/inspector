@@ -30,6 +30,8 @@
 //= require bootstrap/bootstrap-tagsinput
 
 
+/** FORM VIEW JAVASCRIPT **/
+
 function initWizard() {
     $("#form").steps({
         bodyTag: "fieldset",
@@ -105,8 +107,13 @@ function initClockPicker() {
     $('.clockpicker').clockpicker();
 }
 
+$('input[type="checkbox"]').change(function(){
+    this.value = (Number(this.checked));
+});
+
 function initDatepicker() {
     $('.form_datepicker').find('.input-group.date').datepicker({
+        format: "yyyy-mm-dd",
         startView: 2,
         todayBtn: "linked",
         keyboardNavigation: false,
@@ -129,11 +136,34 @@ function initChosen() {
     }
 }
 
+var avatarImage = $("#avatarImage");
+if (window.FileReader) {
+    avatarImage.change(function () {
+        let avatar_button = $("#avatar-button");
+        avatar_button.css('background-color', '#1AB394');
+        avatar_button.css('border-color', '#1AB394');
+    });
+} else {
+    avatarImage.addClass("hide");
+}
+
+var curriculumInput = $("#curriculumInput");
+if (window.FileReader) {
+    curriculumInput.change(function () {
+        $("#curriculum-button").css('background-color', '#1AB394');
+        $("#curriculum-button").css('border-color', '#1AB394');
+    });
+} else {
+    curriculumInput.addClass("hide");
+}
+
 initWizard();
 initDatepicker();
 initClockPicker();
 initChosen();
 
+
+/** SHOW VIEW JAVASCRIPT **/
 
 $(function () {
 
@@ -171,7 +201,7 @@ function plotGraph(data) {
     ];
 
 
-    var options = {
+    const options = {
         xaxis: {
             mode: "time",
             tickSize: [1, "day"],
@@ -247,23 +277,27 @@ function modifyAttendanceTable(jsonDataSet) {
         let options = {weekday: 'short', year: 'numeric', month: 'short', day: '2-digit'};
         let date = new Date(jsonDataSet[i].date);
 
-        let tick = '  <i class="fa fa-check text-navy"></i>';
-        let strike = '  <i class="fa fa-times" style="color: #ed5565"></i>';
+        let tick = '<a class="btn btn-xs" style="background-color: #3a9ab3"><i class="fa fa-check" style="color: white;"></i></a>';
+        let strike = '<a class="btn btn-xs" onclick="showModal(`${this}`)" style="background-color: #ed5565"><i class="fa fa-times" style="color: white;"></i></a>';
 
 
         dateCell.innerHTML = date.toLocaleDateString("es", options);
         entranceCell.innerHTML = jsonDataSet[i].entrance_time;
 
-        entranceCell.innerHTML = jsonDataSet[i].entrance_time + ((jsonDataSet[i].entrance_time < '09:10:00') ? tick : strike);
-        exitCell.innerHTML = jsonDataSet[i].finished_time + ((jsonDataSet[i].finished_time > '18:00:00') ? tick : strike);
-        workedHoursCell.innerHTML = jsonDataSet[i].worked_hours + ((jsonDataSet[i].worked_hours > 8) ? tick : strike);
+        entranceCell.innerHTML = jsonDataSet[i].entrance_time + ' - ' + ((jsonDataSet[i].entrance_time < '09:10:00') ? tick : strike);
+        exitCell.innerHTML = jsonDataSet[i].finished_time + ' - ' + ((jsonDataSet[i].finished_time > '18:00:00') ? tick : strike);
+        workedHoursCell.innerHTML = jsonDataSet[i].worked_hours + ' - ' + ((jsonDataSet[i].worked_hours > 8) ? tick : strike);
     }
+}
+
+function showModal(registerId) {
+    $('#myModal6').modal()
 }
 
 function gatherData() {
     let jsonText = $('#attendance-graph-data').text();
     if (jsonText) {
-        let json = JSON.parse();
+        let json = JSON.parse(jsonText);
         let plotArray = [];
 
         if (json.length > 0) {
@@ -288,24 +322,3 @@ function gatherData() {
 }
 
 gatherData();
-
-
-var avatarImage = $("#avatarImage");
-if (window.FileReader) {
-    avatarImage.change(function () {
-        $("#avatar-button").css('background-color', '#1AB394');
-        $("#avatar-button").css('border-color', '#1AB394');
-    });
-} else {
-    avatarImage.addClass("hide");
-}
-
-var curriculumInput = $("#curriculumInput");
-if (window.FileReader) {
-    curriculumInput.change(function () {
-        $("#curriculum-button").css('background-color', '#1AB394');
-        $("#curriculum-button").css('border-color', '#1AB394');
-    });
-} else {
-    curriculumInput.addClass("hide");
-}

@@ -1,5 +1,8 @@
 class Employer < ApplicationRecord
   belongs_to :degree
+  has_one :employer_punctuation
+  has_many :attendance_trackers
+
 
   # existing code
 

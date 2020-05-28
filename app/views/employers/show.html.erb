@@ -1,155 +1,321 @@
-<p id="notice"><%= notice %></p>
-
-
-<div class="ibox float-e-margins">
-  <div class="ibox-title">
-    <div class="container row">
-      <div class="col-lg-10">
-        <h2>Perfil Empleado</h2>
-        <ol class="breadcrumb">
-          <li>
-            <a href="<%= url_for :controller => 'employers', :action => 'index' %>">Listado de Empleados</a>
-          </li>
-          <li class="active">
-            <strong><%= @employer.first_name %> <%= @employer.paternal_last_name %> <%= @employer.maternal_last_name %></strong>
-          </li>
-        </ol>
+<div class="show">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <div class="container row">
+        <div class="col-lg-10">
+          <h2>Perfil Empleado</h2>
+          <ol class="breadcrumb">
+            <li>
+              <a href="<%= url_for :controller => 'employers', :action => 'index' %>">Listado de Empleados</a>
+            </li>
+            <li class="active">
+              <strong><%= @employer.first_name %> <%= @employer.paternal_last_name %> <%= @employer.maternal_last_name %></strong>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="ibox-content">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="row">
-          <div class="profile-content">
-            <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(@employer.avatar.url(:medium)) %>">
-            <br>
-            <h2 style="text-align: center">
-              <strong><%= @employer.first_name %>
-                <br/> <%= @employer.paternal_last_name %> <%= @employer.maternal_last_name %></strong>
-            </h2>
-            <div class="navy-line" style="margin-bottom: 15px"></div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="profile-content">
+              <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(@employer.avatar.url(:medium)) %>">
+              <br>
+              <h2 style="text-align: center">
+                <strong><%= @employer.first_name %>
+                  <br/> <%= @employer.paternal_last_name %> <%= @employer.maternal_last_name %></strong>
+              </h2>
+              <div class="navy-line" style="margin-bottom: 15px"></div>
 
-            <div style="height: 30vh; overflow: scroll">
-              <table class="table table-hover">
-                <tr>
-                  <td><i class="fa fa-sitemap"></i><strong>Puesto: </strong></td>
-                  <td><%= @employer.degree.nil? ? 'Puesto Desconocido' : @employer.degree.description %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-map-marker"></i> <strong>Numero de Contrato</strong></td>
-                  <td><%= @employer.contract_number %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-institution"></i> <strong>Fecha de Ingreso</strong></td>
-                  <td><%= @employer.entry_date %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-check"></i> <strong>Validez de Contrato</strong></td>
-                  <td><%= @employer.validity %></td>
-                </tr>
-                <tr>
-                  <td>
-                    <i class="fa fa-map-marker"></i> <strong>Dirección</strong>
-                  </td>
-                  <td>
-                    <%= (@employer.street.empty? ? '-' : @employer.street) %>,
-                    <%= (@employer.city.empty? ? '-' : @employer.city) %>.
-                    <%= (@employer.state.empty? ? '-' : @employer.state) %>.
-                    <%= (@employer.postal_code.empty? ? '-' : @employer.postal_code) %>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-envelope"></i> <strong>Correo Corporativo</strong></td>
-                  <td><%= @employer.email %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-phone"></i> <strong>Telefono Corporativo</strong></td>
-                  <td><%= @employer.phone_number %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-envelope"></i> <strong>Correo Personal</strong></td>
-                  <td><%= @employer.personal_email.empty? ? ' Email Desconocido ' : @employer.email %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-phone"></i> <strong>Telefono Personal</strong></td>
-                  <td><%= @employer.personal_phone_number %></td>
-                </tr>
-                <tr>
-                  <td><i class="fa fa-map-marker"></i> <strong>Currículum Vitae</strong></td>
-                  <td><%= @employer.curriculum_vitae %></td>
-                </tr>
-              </table>
-            </div>
-            <div class="user-button" style="text-align: center">
-              <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
-              <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>
+              <div style="height: 30vh; overflow: scroll">
+                <table class="table table-hover">
+                  <tr>
+                    <td><i class="fa fa-sitemap"></i><strong>Puesto: </strong></td>
+                    <td><%= @employer.degree.nil? ? 'Puesto Desconocido' : @employer.degree.description %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-map-marker"></i> <strong>Numero de Contrato</strong></td>
+                    <td><%= @employer.contract_number %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-institution"></i> <strong>Fecha de Ingreso</strong></td>
+                    <td><%= @employer.entry_date %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-check"></i> <strong>Validez de Contrato</strong></td>
+                    <td><%= @employer.validity %></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="fa fa-map-marker"></i> <strong>Dirección</strong>
+                    </td>
+                    <td>
+                      <%= (@employer.street.empty? ? '-' : @employer.street) %>,
+                      <%= (@employer.country.empty? ? '-' : @employer.country) %>,
+                      <%= (@employer.city.empty? ? '-' : @employer.city) %>.
+                      <%= (@employer.state.empty? ? '-' : @employer.state) %>.
+                      <%= (@employer.postal_code.empty? ? '-' : @employer.postal_code) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-envelope"></i> <strong>Correo Corporativo</strong></td>
+                    <td><%= @employer.email %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-phone"></i> <strong>Telefono Corporativo</strong></td>
+                    <td><%= @employer.phone_number %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-envelope"></i> <strong>Correo Personal</strong></td>
+                    <td><%= @employer.personal_email.empty? ? ' Email Desconocido ' : @employer.email %></td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa fa-phone"></i> <strong>Telefono Personal</strong></td>
+                    <td><%= @employer.personal_phone_number %></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="user-button" style="text-align: center">
+                <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
+                <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-8">
-        <div class="row">
-          <div style="display: none" id="attendance-graph-data"><%= @attendance_report %></div>
-          <div class="employer-data" style="overflow: scroll">
-            <div class="text-center">
-              <div class="navy-line"></div>
-              <h2>Grafica de Asistencias del Mes</h2>
-            </div>
-            <div class="col-md-8">
-              <div class="flot-chart">
-                <div class="flot-chart-content" id="flot-dashboard-chart"></div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <ul class="stat-list">
-                <li>
-                  <h2 class="no-margins " id="average-per-day-label">0 hrs</h2>
-                  <small>Horas trabajadas / día (Avg)</small>
-                </li>
-                <li>
-                  <h2 class="no-margins" id="total-worked-hours-label">0 hrs</h2>
-                  <small>Horas Trabajadas (periodo)</small>
-                  <div class="stat-percent"><label id="total-worked-hours-stat">0%</label>
-                    <i class="fa fa-level-up text-navy"></i>
-                  </div>
-                  <div class="progress progress-mini">
-                    <div style="width: 1%;" class="progress-bar"></div>
-                  </div>
-                </li>
-                <li>
-                  <h2 class="no-margins " id="delays-label">0 Delays</h2>
-                  <small>Retardos (periodo)</small>
-                  <div class="stat-percent"><label id="delays-stat">0% </label><i class="fa fa-bolt text-navy"></i>
-                  </div>
-                  <div class="progress progress-mini">
-                    <div style="width: 1%;" class="progress-bar"></div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <br>
-            <div class="col-lg-12 text-center">
-              <div class="navy-line"></div>
-              <h2>Tabla de Asistencias del Mes</h2>
-            </div>
-            <div class="col-lg-12">
-              <div class="table-responsive">
-                <table class="table table-striped" id="attendance-table">
-                  <thead>
-                  <tr>
+        <div class="col-md-8">
+          <div class="row">
+            <div style="display: none" id="attendance-graph-data"><%= @attendance_report %></div>
+            <div class="employer-data" style="overflow: scroll">
 
-                    <th>Fecha</th>
-                    <th>Hora de Entrada</th>
-                    <th>Hora de Salida</th>
-                    <th>Horas Trabajadas</th>
-                  </tr>
-                  </thead>
-                  <tbody>
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>Estadisticas Generales</h5>
+                </div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="col-lg-3 col-md-2 col-xs-12 text-center">
+                        <div class="btn btn-info btn-block">
+                          <i class="fa fa-trophy fa-5x"></i>
+                          <p><strong>Puntuación: 0</strong></p>
+                        </div>
+                      </div>
 
-                  </tbody>
-                </table>
+                      <div id="punctuation" class="col-lg-9 col-md-10">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Desempeño</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Puntualidad</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Asistencia</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Actitud</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-warning m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Calidad</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Disponibilidad</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                          <div class="col-md-10">
+                            <p>Crecimiento</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>Contenido del Empleado</h5>
+                </div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <% unless @employer.curriculum_vitae.nil? %>
+                          <div class="file-box">
+                            <div class="file">
+                              <form method="get" action="<%= @employer.curriculum_vitae %>">
+                                <span class="corner"></span>
+                                <div class="icon">
+                                  <i class="fa fa-file"></i>
+                                </div>
+                                <div class="file-name">
+                                  <button type="submit" class="btn success"><%= @employer.curriculum_vitae_file_name %></button>
+                                  <br/>
+                                  <small><%= @employer.curriculum_vitae_updated_at %></small>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>Gráfica de asistencias del mes</h5>
+                  <div class="ibox-tools">
+                    <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      <i class="fa fa-wrench"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <ul class="stat-list">
+                        <li>
+                          <h2 class="no-margins " id="average-per-day-label">0 hrs</h2>
+                          <small>Horas trabajadas / día (Avg)</small>
+                        </li>
+                        <li>
+                          <h2 class="no-margins" id="total-worked-hours-label">0 hrs</h2>
+                          <small>Horas Trabajadas (periodo)</small>
+                          <div class="stat-percent"><label id="total-worked-hours-stat">0%</label>
+                            <i class="fa fa-level-up text-navy"></i>
+                          </div>
+                          <div class="progress progress-mini">
+                            <div style="width: 1%;" class="progress-bar"></div>
+                          </div>
+                        </li>
+                        <li>
+                          <h2 class="no-margins " id="delays-label">0 Delays</h2>
+                          <small>Retardos (periodo)</small>
+                          <div class="stat-percent">
+                            <label id="delays-stat">0% </label><i class="fa fa-bolt text-navy"></i>
+                          </div>
+                          <div class="progress progress-mini">
+                            <div style="width: 1%;" class="progress-bar"></div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="ibox">
+                <div class="ibox-title">
+                  <h5>Tabla de Asistencias del Mes</h5>
+                  <div class="ibox-tools">
+                    <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      <i class="fa fa-wrench"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table table-striped" id="attendance-table">
+                        <thead>
+                        <tr>
+
+                          <th>Fecha</th>
+                          <th>Hora de Entrada</th>
+                          <th>Hora de Salida</th>
+                          <th>Horas Trabajadas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title"> Agregar Justificación</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        <strong>Fecha de Incidente:</strong>
+                      </p>
+                      <p>
+                        <strong>Hora de Entrada:</strong>
+                      </p>
+                      <p>
+                        <strong>Hora de Salida:</strong>
+                      </p>
+                      <p>
+                        <strong>Horas Trabajadas:</strong>
+                      </p>
+
+                      <form enctype="multipart/form-data" action="/employers/1" accept-charset="UTF-8" method="post" role="application">
+
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-primary">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -157,4 +323,3 @@
     </div>
   </div>
 </div>
-

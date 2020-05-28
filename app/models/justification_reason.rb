@@ -1,0 +1,2 @@
+class JustificationReason < ApplicationRecord
+end

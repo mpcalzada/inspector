@@ -1,67 +1,72 @@
-<div class="ibox float-e-margins">
-  <div class="ibox-title">
-    <h1>Departamentos</h1>
-  </div>
-  <div class="ibox-content">
-    <div class="container">
-      <div class="col-md-6 col-sm-12">
-        <table class="table table-striped table-bordered table-hover dataTables-example">
-          <thead>
-          <tr>
-            <th style="text-align: center">Descripción</th>
-            <th style="text-align: center" colspan="2">Acciones</th>
-          </tr>
-          </thead>
-
-          <tbody>
-          <% @departments.each do |department| %>
-              <tr>
-                <td><%= department.description %></td>
-                <td style="text-align: center"><%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_department_path(department), {class: 'btn btn-warning btn-xs'} %></td>
-                <td style="text-align: center"><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, department, {class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: 'Are you sure?'}} %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
+<div class="row">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h1>Departamentos</h1>
     </div>
-  </div>
-  <div class="ibox-footer">
-    <div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Crear Departamento
-      </button>
-    </div>
-    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-          <%= form_for Department.new do |form| %>
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-sitemap modal-icon"></i>
-                <h4 class="modal-title">Crear Departamento</h4>
-              </div>
-              <div class="modal-body">
+    <div class="ibox-content">
+      <div class="container">
+        <div class="col-md-6 col-sm-12">
+          <table class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+            <tr>
+              <th style="text-align: center">Descripción</th>
+              <th style="text-align: center" colspan="2">Acciones</th>
+            </tr>
+            </thead>
 
-                <div class="row">
-                  <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                      <%= form.label :description, 'Descripción' %>
-                    </div>
-                    <div class="col-md-6">
-                      <%= form.text_field :description, autocomplete: 'off', class: 'form-control required', placeholder: 'Descripción' %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                <%= form.submit 'Crear', {class: 'btn btn-primary'} %>
-              </div>
-          <% end %>
+            <tbody>
+            <% @departments.each do |department| %>
+                <tr>
+                  <td><%= department.description %></td>
+                  <td style="text-align: center"><%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_department_path(department), {class: 'btn btn-warning btn-xs'} %></td>
+                  <td style="text-align: center"><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, department, {class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: 'Are you sure?'}} %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
+    <div class="ibox-footer">
+      <div class="container">
+        <div style="margin: 10px 10px 10px 10px;">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Crear Departamento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <%= form_for Department.new do |form| %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-sitemap modal-icon"></i>
+            <h4 class="modal-title">Crear Departamento</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <%= form.label :description, 'Descripción' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :description, autocomplete: 'off', class: 'form-control required', placeholder: 'Descripción' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+            <%= form.submit 'Crear', {class: 'btn btn-primary'} %>
+          </div>
+      <% end %>
     </div>
   </div>
 </div>

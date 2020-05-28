@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  resources :departments
   devise_for :users
 
   devise_scope :user do
     resources :landing
 
     authenticated :user do
-
+      resources :departments
+      resources :attendance_tracker
       resources :upload_files
       resources :home
       resources :employers

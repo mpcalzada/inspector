@@ -10,17 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200516191048) do
+ActiveRecord::Schema.define(version: 20200524041330) do
 
   create_table "attendance_trackers", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "employer_id"
+    t.integer  "justification_reason_id"
     t.string   "name"
     t.integer  "internal_id"
     t.string   "description"
+    t.string   "justification_description"
     t.datetime "registered_datetime"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["user_id"], name: "index_attendance_trackers_on_user_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["employer_id"], name: "index_attendance_trackers_on_employer_id"
+    t.index ["justification_reason_id"], name: "index_attendance_trackers_on_justification_reason_id"
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -35,6 +38,18 @@ ActiveRecord::Schema.define(version: 20200516191048) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "employer_punctuations", force: :cascade do |t|
+    t.integer  "performance"
+    t.integer  "punctuality"
+    t.integer  "attendance"
+    t.integer  "attitude"
+    t.integer  "quality"
+    t.integer  "employer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["employer_id"], name: "index_employer_punctuations_on_employer_id"
   end
 
   create_table "employers", force: :cascade do |t|
@@ -69,6 +84,7 @@ ActiveRecord::Schema.define(version: 20200516191048) do
     t.string   "postal_code"
     t.string   "birthplace_city"
     t.string   "birthplace_country"
+    t.string   "identification_number"
     t.string   "curriculum_vitae_file_name"
     t.string   "curriculum_vitae_content_type"
     t.bigint   "curriculum_vitae_file_size"
@@ -85,6 +101,7 @@ ActiveRecord::Schema.define(version: 20200516191048) do
     t.integer  "dependents_number"
     t.string   "blood_type"
     t.string   "allergies"
+    t.string   "diseases"
     t.string   "contact1_full_name"
     t.string   "contact1_relationship"
     t.string   "contact1_home_phone_number"
@@ -103,6 +120,12 @@ ActiveRecord::Schema.define(version: 20200516191048) do
     t.index ["degree_id"], name: "index_employers_on_degree_id"
     t.index ["employer_id"], name: "index_employers_on_employer_id"
     t.index ["user_id"], name: "index_employers_on_user_id"
+  end
+
+  create_table "justification_reasons", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "upload_files", force: :cascade do |t|

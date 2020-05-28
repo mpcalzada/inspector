@@ -1,5 +1,5 @@
 class AttendanceTracker < ApplicationRecord
-  belongs_to :user
+  belongs_to :employer
 
   def self.perform_attendance_analysis
     begin
