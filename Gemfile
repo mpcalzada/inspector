@@ -31,7 +31,7 @@ gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
 #paginacion
-gem 'kaminari', '~> 1.0', '>= 1.0.1'
+gem 'kaminari', '~> 1.2'
 gem 'bootstrap-kaminari-views'
 
 # Subir achivos
