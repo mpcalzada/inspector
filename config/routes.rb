@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "user/registrations", :sessions => "user/sessions"}, path: 'auth',
+             path_names: {sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification',
+                          unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in'}
+
+  resources :landing
 
   devise_scope :user do
-    resources :landing
 
     authenticated :user do
       resources :departments
@@ -11,6 +14,11 @@ Rails.application.routes.draw do
       resources :home
       resources :employers
       resources :degrees
+
+      put 'employers/:id/attach_document', to: 'employers#attach_document'
+
+      put '/porcentual_filter_details/:id', to: 'porcentual_filter_details#create'
+
 
       root to: 'home#index', as: :authenticated_root
     end

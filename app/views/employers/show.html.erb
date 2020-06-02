@@ -20,7 +20,7 @@
         <div class="col-md-4">
           <div class="row">
             <div class="profile-content">
-              <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(@employer.avatar.url(:medium)) %>">
+              <%= image_tag(@employer.avatar, width: 200, class: 'show-profile-photo m-t-xm img-responsive') if @employer.avatar.attached? %>
               <br>
               <h2 style="text-align: center">
                 <strong><%= @employer.first_name %>
@@ -189,6 +189,39 @@
                             </div>
                           </div>
                       <% end %>
+
+                      <% unless @employer.scholarship_attachments.nil? %>
+                          <% @employer.scholarship_attachments.each do |upload| %>
+                              <div class="file-box">
+                                <div class="file">
+                                  <form method="get" action="<%= upload %>">
+                                    <span class="corner"></span>
+                                    <div class="icon">
+                                      <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                      <button type="submit" class="btn success"><%= upload.name %></button>
+                                      <br/>
+                                      <small><%= upload.created_at %></small>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                          <% end %>
+                      <% end %>
+
+                      <div class="file-box">
+                        <a type="button" data-toggle="modal" data-target="#newAttachmentModal">
+                          <div class="file">
+                            <form method="get" action="<%= @employer.curriculum_vitae %>">
+                              <span class="corner"></span>
+                              <div class="icon">
+                                <i class="fa fa-plus-square"></i>
+                              </div>
+                            </form>
+                          </div>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -281,44 +314,88 @@
 
                 </div>
               </div>
-
-              <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                      <h4 class="modal-title"> Agregar Justificación</h4>
-                    </div>
-                    <div class="modal-body">
-                      <p>
-                        <strong>Fecha de Incidente:</strong>
-                      </p>
-                      <p>
-                        <strong>Hora de Entrada:</strong>
-                      </p>
-                      <p>
-                        <strong>Hora de Salida:</strong>
-                      </p>
-                      <p>
-                        <strong>Horas Trabajadas:</strong>
-                      </p>
-
-                      <form enctype="multipart/form-data" action="/employers/1" accept-charset="UTF-8" method="post" role="application">
-
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-primary">Aceptar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"> Agregar Justificación</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong>Fecha de Incidente:</strong>
+        </p>
+        <p>
+          <strong>Hora de Entrada:</strong>
+        </p>
+        <p>
+          <strong>Hora de Salida:</strong>
+        </p>
+        <p>
+          <strong>Horas Trabajadas:</strong>
+        </p>
+
+        <form enctype="multipart/form-data" action="/employers/1" accept-charset="UTF-8" method="post" role="application">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="newAttachmentModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <%= form_tag({:controller => 'employers', :action => 'attach_document'}, method: 'put', multipart: true) do %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-file modal-icon"></i>
+            <h4 class="modal-title">Agregar Documento</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="document_type">Tipo de Documento</label>
+                </div>
+                <div class="col-md-6">
+                  <select name="document_type" id="document_type">
+                    <option value="1">Curso</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="attachment">Documento</label>
+                </div>
+                <div class="col-md-6">
+                  <input type="file" id="attachment" name="attachment">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+              <%= button_tag(type: 'submit', class: 'btn btn-primary', id: "btn_search_lay") do %>
+                  <i class="fa fa-search"></i> <%= t('all.btn_search') %>
+              <% end %>
+            </div>
+      <% end %>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 class EmployersController < ApplicationController
-  before_action :set_employer, only: [:show, :edit, :update, :destroy]
+  before_action :set_employer, only: [:show, :edit, :update, :destroy, :attach_document]
 
   # GET /employers
   # GET /employers.json
@@ -11,6 +11,28 @@ class EmployersController < ApplicationController
   # GET /employers/1.json
   def show
     @attendance_report = AttendanceTracker.perform_attendance_analysis
+  end
+
+  def attach_document
+
+    case params[:document_type]
+      when '1'
+        @employer.scholarship_attachments.attach(params[:attachment])
+      when '2'
+        @employer.master_attachments.attach(params[:attachment])
+      when '3'
+        @employer.phd_attachments.attach(params[:attachment])
+    end
+
+    respond_to do |format|
+      if @employer.save
+        format.html { redirect_to @employer, notice: 'Employer was successfully created.' }
+        format.json { render :show, status: :created, location: @employer }
+      else
+        format.html { render :new }
+        format.json { render json: @employer.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /employers/new
@@ -80,7 +102,8 @@ class EmployersController < ApplicationController
                                      :contact1_home_phone_number, :contact1_cellphone_number, :contact2_full_name,
                                      :contact2_relationship, :contact2_home_phone_number, :contact2_cellphone_number,
                                      :masters_description, :phd_description, :birthplace_country, :birthplace_city, :diseases,
-                                     :identification_number
+                                     :identification_number, scholarship_attachments: [], master_attachments: [], phd_attachments: []
+
     )
   end
 end

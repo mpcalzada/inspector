@@ -11,7 +11,11 @@
               <a href="<%= url_for employer %>">
                 <div class="col-md-6">
                   <div class="text-center">
-                    <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
+                    <% if employer.avatar.attached? %>
+                        <%= image_tag(employer.avatar, width: 200, class: 'show-profile-photo m-t-xm img-responsive') %>
+                    <% else %>
+                        <img src="<%= image_path('employers/missing_employer.jpg') %>" alt="missing_employer" class="show-profile-photo m-t-xm img-responsive"/>
+                    <% end %>
                     <br>
                     <div class="m-t-xs font-bold">
                       <%= employer.degree.nil? ? 'Puesto Desconocido' : employer.degree.description %>

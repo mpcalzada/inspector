@@ -1,16 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails' , '~> 5.0.7.2'
-gem 'autoprefixer-rails'
+ruby '2.5.0'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.6'
-
-# Use postgres as the database for Active Record
-gem 'pg', '~> 0.21.0'
-gem 'appengine', '~> 0.4.1'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '~> 5.2.1'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -18,7 +13,7 @@ gem 'uglifier'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+# gem 'mini_racer', platforms: :ruby
 gem 'devise'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -29,6 +24,9 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
+
+#Google Cloud App Engine Deploy
+gem 'appengine', '~> 0.4.1'
 
 #paginacion
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
@@ -54,6 +52,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
+group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
+
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
@@ -62,14 +67,22 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+  # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'chromedriver-helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+# official library for Google Cloud Storage
+gem 'google-cloud-storage', '~> 1.8', require: false
+
+group :production do
+  gem 'pg'
+end
+
