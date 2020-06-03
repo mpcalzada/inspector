@@ -1,52 +1,67 @@
 <p id="notice"><%= notice %></p>
-<div class="ibox float-e-margins">
-  <div class="ibox-title">
-    <h1>Listado de Empleados</h1>
-  </div>
-  <div class="ibox-content">
-    <div class="row">
-      <% @employers.each do |employer| %>
-          <div class="col-md-4">
-            <div class="contact-box">
-              <a href="<%= url_for employer %>">
-                <div class="col-md-6">
-                  <div class="text-center">
-                    <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
-                    <br>
-                    <div class="m-t-xs font-bold">
-                      <%= employer.degree.nil? ? 'Puesto Desconocido' : employer.degree.description %>
+<div class="row">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <label style="font-size: 12px" class="label label-primary pull-right">
+        <%= @employers.size %> Empleados Activos
+      </label>
+      <h1>Listado de Empleados</h1>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="contact-box" style="height: 300px; overflow: scroll; display: flex; justify-content: center; align-items: center">
+            <a href="<%= new_employer_path %>">
+              <i class="fa fa-4x fa-plus-square"></i>
+              <h3 style="text-align: center">Nuevo</h3>
+            </a>
+          </div>
+        </div>
+        <% @employers.each do |employer| %>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+              <div class="contact-box" style="height: 300px; overflow: scroll">
+                <a href="<%= url_for employer %>">
+                  <div class="col-md-6">
+                    <div class="text-center">
+                      <img alt="image" class="show-profile-photo m-t-xm img-responsive" src="<%= image_path(employer.avatar.url(:thumb)) %>">
+                      <br>
+                      <div class="m-t-xs font-bold">
+                        <%= employer.degree.nil? ? 'Puesto Desconocido' : employer.degree.description %>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-6">
-                  <h3><strong><%= employer.first_name %>  <%= employer.paternal_last_name %></strong></h3>
-                  <i class="fa fa-envelope"></i>
-                  <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
-                  <br>
-                  <br>
-                  <address>
-                    <i class="fa fa-map-marker"></i>
-                    <%= (employer.street.empty? ? '-' : employer.street) %>,
-                    <%= (employer.city.empty? ? '-' : employer.city) %>.
-                    <%= (employer.state.empty? ? '-' : employer.state) %>.
-                    <%= (employer.postal_code.empty? ? '-' : employer.postal_code) %>.
-                    <br>
-                    <i class="fa fa-phone"></i>
-                    <%= employer.phone_number %>
+                  <div class="col-sm-6">
+                    <h3><strong><%= employer.first_name %>  <%= employer.paternal_last_name %></strong></h3>
+                    <i class="fa fa-envelope"></i>
+                    <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
                     <br>
                     <br>
-                    Contrato: <%= employer.contract_number %>
-                  </address>
-                </div>
-                <div class="clearfix"></div>
-              </a>
+                    <address>
+                      <i class="fa fa-map-marker"></i>
+                      <%= (employer.street.empty? ? '-' : employer.street) %>,
+                      <%= (employer.city.empty? ? '-' : employer.city) %>.
+                      <%= (employer.state.empty? ? '-' : employer.state) %>.
+                      <%= (employer.postal_code.empty? ? '-' : employer.postal_code) %>.
+                      <br>
+                      <i class="fa fa-phone"></i>
+                      <%= employer.phone_number %>
+                      <br>
+                      <br>
+                      Contrato: <%= employer.contract_number %>
+                    </address>
+                  </div>
+                  <div class="clearfix"></div>
+                </a>
+              </div>
             </div>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="ibox-footer">
-    <%= link_to 'Crear Empleado', new_employer_path, :class => 'btn btn-primary' %>
+    <div class="ibox-footer">
+      <div style="margin: 10px 10px 10px 10px;">
+        <%= link_to 'Crear Empleado', new_employer_path, :class => 'btn btn-primary' %>
+      </div>
+    </div>
   </div>
 </div>
 
