@@ -27,6 +27,8 @@ gem 'font-awesome-rails'
 
 #Google Cloud App Engine Deploy
 gem 'appengine', '~> 0.4.1'
+#Google Cloud Storage
+gem "google-cloud-storage", "~> 1.8", require: false
 
 #paginacion
 gem 'kaminari', '~> 1.0', '>= 1.0.1'

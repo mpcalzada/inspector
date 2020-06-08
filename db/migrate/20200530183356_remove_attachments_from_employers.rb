@@ -1,6 +1,6 @@
 class RemoveAttachmentsFromEmployers < ActiveRecord::Migration[5.2]
   def change
-    remove_column :employers, :avatar, :attachment
-    remove_column :employers, :curriculum_vitae, :attachment
+    remove_attachment :employers, :avatar
+    remove_attachment :employers, :curriculum_vitae
   end
 end

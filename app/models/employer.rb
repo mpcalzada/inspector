@@ -8,6 +8,7 @@ class Employer < ApplicationRecord
   has_many_attached :scholarship_attachments
   has_many_attached :master_attachments
   has_many_attached :phd_attachments
+  has_many_attached :courses_attachments
 
   def self.current_employer(user_id)
     Employer.find_by_user_id(user_id)

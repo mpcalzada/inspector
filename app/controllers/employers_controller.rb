@@ -22,6 +22,8 @@ class EmployersController < ApplicationController
         @employer.master_attachments.attach(params[:attachment])
       when '3'
         @employer.phd_attachments.attach(params[:attachment])
+      when '4'
+        @employer.courses_attachments.attach(params[:attachment])
     end
 
     respond_to do |format|
