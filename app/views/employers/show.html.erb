@@ -78,6 +78,9 @@
                 <div class="user-button" style="display: flex; justify-content: space-around">
                   <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
                   <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>
+                  <a type="button" class="btn btn-info" data-toggle="modal" data-target="#registerUserModa">
+                    <i class="fa fa-bolt fa-2x"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -171,111 +174,122 @@
                   <div class="ibox-content">
                     <div class="row">
                       <div class="col-md-12">
-                        <div class="file-box">
-                          <a type="button" data-toggle="modal" data-target="#newAttachmentModal">
-                            <div class="file">
-                              <span class="corner"></span>
-                              <div class="icon">
-                                <i class="fa fa-plus-square" style="color: #3a9ab3"></i>
-                              </div>
-                              <div class="file-name" style="text-align: center">
-                                <p><i class="fa fa-plus"></i> Agregar </p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
 
-                        <% if @employer.curriculum_vitae.attached? %>
-                            <div class="file-box">
-                              <div class="file">
-                                <span class="corner"></span>
-                                <div class="icon">
-                                  <i class="fa fa-file" style="color: #394a4d"></i>
-                                </div>
-                                <div class="file-name">
-                                  <%= link_to @employer.curriculum_vitae.filename, rails_blob_path(@employer.curriculum_vitae, disposition: 'attachment') %>
 
-                                  <button type="submit" class="btn success"><%= @employer.curriculum_vitae_file_name %></button>
-                                  <br/>
-                                  <small><%= @employer.curriculum_vitae_updated_at %></small>
-                                </div>
-                              </div>
-                            </div>
-                        <% end %>
+                        <table class="table table-hover">
+                          <tbody>
+                          <% if @employer.curriculum_vitae.attached? %>
+                            <tr>
+                              <td class="project-status">
+                                <span class="label label-primary">Curriculum</span>
+                              </td>
+                              <td class="project-title">
+                                <%= link_to @employer.curriculum_vitae.filename, rails_blob_path(@employer.curriculum_vitae, disposition: 'attachment') %>
+                                <br/>
+                                <small>Actualizado: <%= @employer.curriculum_vitae.created_at %></small>
+                              </td>
+                              <td class="project-actions">
+                                <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(@employer.curriculum_vitae, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
+                                <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                  <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                              </td>
+                            </tr>
+                          <% end %>
 
-                        <% unless @employer.scholarship_attachments.nil? %>
+                          <% unless @employer.scholarship_attachments.nil? %>
                             <% @employer.scholarship_attachments.each do |upload| %>
-                                <div class="file-box">
-                                  <div class="file">
-                                    <input name="document_id" value="<%= upload.id %>" hidden>
-                                    <span class="corner"></span>
-                                    <div class="icon">
-                                      <i class="fa fa-file" style="color: #9bacb6"></i>
-                                    </div>
-                                    <div class="file-name">
-                                      <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
-                                      <br/>
-                                      <small><%= upload.created_at %></small>
-                                    </div>
-                                  </div>
-                                </div>
+                              <tr>
+                                <td class="project-status">
+                                  <span class="label label-primary">Profesión</span>
+                                </td>
+                                <td class="project-title">
+                                  <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
+                                  <br/>
+                                  <small>Creado <%= upload.created_at %></small>
+                                </td>
+                                <td class="project-actions">
+                                  <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
+                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                  </a>
+                                </td>
+                              </tr>
                             <% end %>
-                        <% end %>
+                          <% end %>
 
-                        <% unless @employer.master_attachments.nil? %>
+                          <% unless @employer.master_attachments.nil? %>
                             <% @employer.master_attachments.each do |upload| %>
-                                <div class="file-box">
-                                  <div class="file">
-                                    <span class="corner"></span>
-                                    <div class="icon">
-                                      <i class="fa fa-file" style="color: #e5dcd2"></i>
-                                    </div>
-                                    <div class="file-name">
-                                      <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
-                                      <br/>
-                                      <small><%= upload.created_at %></small>
-                                    </div>
-                                  </div>
-                                </div>
-
+                              <tr>
+                                <td class="project-status">
+                                  <span class="label label-primary">Maestría</span>
+                                </td>
+                                <td class="project-title">
+                                  <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
+                                  <br/>
+                                  <small>Creado <%= upload.created_at %></small>
+                                </td>
+                                <td class="project-actions">
+                                  <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
+                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                  </a>
+                                </td>
+                              </tr>
                             <% end %>
-                        <% end %>
+                          <% end %>
 
-                        <% unless @employer.phd_attachments.nil? %>
+                          <% unless @employer.phd_attachments.nil? %>
                             <% @employer.phd_attachments.each do |upload| %>
-                                <div class="file-box">
-                                  <div class="file">
-                                    <span class="corner"></span>
-                                    <div class="icon">
-                                      <i class="fa fa-file" style="color: #264b77"></i>
-                                    </div>
-                                    <div class="file-name">
-                                      <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
-                                      <br/>
-                                      <small><%= upload.created_at %></small>
-                                    </div>
-                                  </div>
-                                </div>
+                              <tr>
+                                <td class="project-status">
+                                  <span class="label label-primary">Doctorado</span>
+                                </td>
+                                <td class="project-title">
+                                  <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
+                                  <br/>
+                                  <small>Creado <%= upload.created_at %></small>
+                                </td>
+                                <td class="project-actions">
+                                  <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
+                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                  </a>
+                                </td>
+                              </tr>
                             <% end %>
-                        <% end %>
+                          <% end %>
 
-                        <% unless @employer.courses_attachments.nil? %>
+                          <% unless @employer.courses_attachments.nil? %>
                             <% @employer.courses_attachments.each do |upload| %>
-                                <div class="file-box">
-                                  <div class="file">
-                                    <span class="corner"></span>
-                                    <div class="icon">
-                                      <i class="fa fa-file" style="color: #00243f"></i>
-                                    </div>
-                                    <div class="file-name">
-                                      <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
-                                      <br/>
-                                      <small><%= upload.created_at %></small>
-                                    </div>
-                                  </div>
-                                </div>
+                              <tr>
+                                <td class="project-status">
+                                  <span class="label label-primary">Curso</span>
+                                </td>
+                                <td class="project-title">
+                                  <%= link_to upload.filename, rails_blob_path(upload, disposition: 'attachment') %>
+                                  <br/>
+                                  <small>Creado <%= upload.created_at %></small>
+                                </td>
+                                <td class="project-actions">
+                                  <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
+                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                  </a>
+                                </td>
+                              </tr>
                             <% end %>
-                        <% end %>
+                          <% end %>
+
+                          <tr>
+                            <td colspan="3" class="project-status">
+                              <a type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newAttachmentModal">
+                                <i class="fa fa-plus"></i> Agregar Documento
+                              </a>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
@@ -415,44 +429,110 @@
   <div class="modal-dialog">
     <div class="modal-content animated bounceInRight">
       <%= form_tag({:controller => 'employers', :action => 'attach_document'}, method: 'put', multipart: true) do %>
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <i class="fa fa-file modal-icon"></i>
-            <h4 class="modal-title">Agregar Documento</h4>
-          </div>
-          <div class="modal-body">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <i class="fa fa-file modal-icon"></i>
+          <h4 class="modal-title">Agregar Documento</h4>
+        </div>
+        <div class="modal-body">
 
-            <div class="row">
-              <div class="form-group col-md-12">
-                <div class="col-md-3">
-                  <label for="document_type">Tipo de Documento</label>
-                </div>
-                <div class="col-md-6">
-                  <select name="document_type" id="document_type" class="form-control m-bt">
-                    <option value="1">Profesión</option>
-                    <option value="2">Maestría</option>
-                    <option value="3">Doctorado</option>
-                    <option value="4">Curso</option>
-                    <option value="5">Otro</option>
-                  </select>
-                </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <div class="col-md-3">
+                <label for="document_type">Tipo de Documento</label>
               </div>
-              <div class="form-group col-md-12">
-                <div class="col-md-3">
-                  <label for="attachment">Documento</label>
-                </div>
-                <div class="col-md-6">
-                  <input type="file" id="attachment" name="attachment">
-                </div>
+              <div class="col-md-6">
+                <select name="document_type" id="document_type" class="form-control m-bt">
+                  <option value="1">Profesión</option>
+                  <option value="2">Maestría</option>
+                  <option value="3">Doctorado</option>
+                  <option value="4">Curso</option>
+                </select>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-              <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
-                  <i class="fa fa-plus-square"></i> Agregar
-              <% end %>
+            <div class="form-group col-md-12">
+              <div class="col-md-3">
+                <label for="attachment">Documento</label>
+              </div>
+              <div class="col-md-6">
+                <input type="file" id="attachment" name="attachment">
+              </div>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+            <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+              <i class="fa fa-plus-square"></i> Agregar
+            <% end %>
+          </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal inmodal" id="registerUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <%= form_for(User.new, url: '/users') do |f| %>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <i class="fa fa-bolt modal-icon"></i>
+          <h4 class="modal-title">Habilitar Inicio de Sesión</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <%= f.label 'Usuario' %>
+              </div>
+              <div class="col-md-8">
+                <%= f.text_field :username, class: 'form-control', requiered: true, autocomplete: 'off' %>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <%= f.label :email %>
+              </div>
+              <div class="col-md-8">
+                <%= f.email_field :email, class: 'form-control', requiered: true, autocomplete: 'off' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <%= f.label 'Contraseña' %>
+              </div>
+              <div class="col-md-8">
+                <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br/>
+                <%= f.password_field :password, autocomplete: 'off', class: 'form-control', requiered: true %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <%= f.label 'Repetir Contraseña' %>
+              </div>
+              <div class="col-md-8">
+                <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', requiered: true %>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+            <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+              <i class="fa fa-plus-square"></i> Agregar
+            <% end %>
+          </div>
       <% end %>
       </div>
     </div>

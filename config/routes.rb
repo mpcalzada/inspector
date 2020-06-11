@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
     resources :landing
 
+    get 'about' => 'landing#about'
+    get 'home_landing' => 'landing#index'
+
     authenticated :user do
       resources :departments
       resources :attendance_tracker

@@ -16,14 +16,17 @@ class EmployersController < ApplicationController
   def attach_document
 
     case params[:document_type]
-      when '1'
-        @employer.scholarship_attachments.attach(params[:attachment])
-      when '2'
-        @employer.master_attachments.attach(params[:attachment])
-      when '3'
-        @employer.phd_attachments.attach(params[:attachment])
-      when '4'
-        @employer.courses_attachments.attach(params[:attachment])
+    when '1'
+      @employer.scholarship_attachments.attach(params[:attachment])
+    when '2'
+      @employer.master_attachments.attach(params[:attachment])
+    when '3'
+      @employer.phd_attachments.attach(params[:attachment])
+    when '4'
+      @employer.courses_attachments.attach(params[:attachment])
+    else
+      format.html { redirect_to @employer, notice: 'No se pudo crear el documento.' }
+      format.json { render json: @employer.errors, status: :unprocessable_entity }
     end
 
     respond_to do |format|
@@ -87,6 +90,7 @@ class EmployersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_employer
     @employer = Employer.find(params[:id])

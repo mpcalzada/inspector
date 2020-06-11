@@ -5,57 +5,58 @@
     </div>
     <div class="ibox-content">
       <div class="row">
+        <%= resource %>
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-            <%= devise_error_messages! %>
+          <%= devise_error_messages! %>
 
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Usuario' %>
-              </div>
-              <div class="col-md-8">
-                <%= f.text_field :username, class: 'form-control', requiered: true, autocomplete: 'off' %>
-              </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.label 'Usuario' %>
             </div>
-
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label :email %>
-              </div>
-              <div class="col-md-8">
-                <%= f.email_field :email, class: 'form-control', requiered: true, autocomplete: 'off' %>
-              </div>
+            <div class="col-md-8">
+              <%= f.text_field :username, class: 'form-control', requiered: true, autocomplete: 'off' %>
             </div>
+          </div>
 
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Contraseña' %>
-              </div>
-              <div class="col-md-8">
-                <% if @minimum_password_length %>
-                    <em>(<%= @minimum_password_length %> characters minimum)</em>
-                <% end %><br/>
-                <%= f.password_field :password, autocomplete: 'off', class: 'form-control', requiered: true %>
-              </div>
+
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.label :email %>
             </div>
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Repetir Contraseña' %>
-              </div>
-              <div class="col-md-8">
-                <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', requiered: true %>
-              </div>
+            <div class="col-md-8">
+              <%= f.email_field :email, class: 'form-control', requiered: true, autocomplete: 'off' %>
             </div>
+          </div>
 
-            <br><br>
-
-            <div class="col-md-offset-7">
-              <div class="row actions">
-                <%= f.submit 'Sign up', class: 'btn btn-success' %>
-                <%= render 'devise/shared/links' %>
-              </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.label 'Contraseña' %>
             </div>
+            <div class="col-md-8">
+              <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br/>
+              <%= f.password_field :password, autocomplete: 'off', class: 'form-control', requiered: true %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.label 'Repetir Contraseña' %>
+            </div>
+            <div class="col-md-8">
+              <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', requiered: true %>
+            </div>
+          </div>
+
+          <br><br>
+
+          <div class="col-md-offset-7">
+            <div class="row actions">
+              <%= f.submit 'Sign up', class: 'btn btn-success' %>
+              <%= render 'devise/shared/links' %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
