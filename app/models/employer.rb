@@ -1,5 +1,6 @@
 class Employer < ApplicationRecord
   belongs_to :degree
+  belongs_to :user
   has_one :employer_punctuation
   has_many :attendance_trackers
 

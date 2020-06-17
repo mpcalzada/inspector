@@ -76,11 +76,24 @@
                   </tr>
                 </table>
                 <div class="user-button" style="display: flex; justify-content: space-around">
-                  <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
-                  <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>
-                  <a type="button" class="btn btn-info" data-toggle="modal" data-target="#registerUserModa">
-                    <i class="fa fa-bolt fa-2x"></i>
-                  </a>
+                  <% if is_editor(current_user) %>
+                    <%= link_to '<i class="fa fa-pencil fa-2x"></i>'.html_safe, edit_employer_path(@employer), :class => 'btn btn-primary' %>
+                  <% end %>
+                  <% if is_admin(current_user) %>
+
+                    <% if @employer.user.nil? %>
+                      <a type="button" class="btn btn-info" data-toggle="modal" data-target="#registerUserModal">
+                        <i class="fa fa-bolt fa-2x"></i>
+                      </a>
+                    <% else %>
+                      <a type="button" class="btn btn-info" data-toggle="modal" data-target="#rolesUserModal">
+                        <i class="fa fa-shield fa-2x"></i>
+                      </a>
+                    <% end %>
+                    <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @employer, :class => 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure?'} %>
+
+                  <% end %>
+
                 </div>
               </div>
             </div>
@@ -90,82 +103,84 @@
               <div style="display: none" id="attendance-graph-data"><%= @attendance_report %></div>
               <div class="employer-data" style="overflow: scroll">
 
-                <div class="ibox float-e-margins">
-                  <div class="ibox-title">
-                    <h5>Estadisticas Generales</h5>
-                  </div>
-                  <div class="ibox-content">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="col-lg-3 col-md-2 col-xs-12 text-center">
-                          <div class="btn btn-info btn-block">
-                            <i class="fa fa-trophy fa-5x"></i>
-                            <p><strong>Puntuación: 0</strong></p>
+                <% if current_user.has_role? :admin %>
+                  <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                      <h5>Estadisticas Generales</h5>
+                    </div>
+                    <div class="ibox-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="col-lg-3 col-md-2 col-xs-12 text-center">
+                            <div class="btn btn-info btn-block">
+                              <i class="fa fa-trophy fa-5x"></i>
+                              <p><strong>Puntuación: 0</strong></p>
+                            </div>
                           </div>
-                        </div>
 
-                        <div id="punctuation" class="col-lg-9 col-md-10">
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Desempeño</p>
+                          <div id="punctuation" class="col-lg-9 col-md-10">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Desempeño</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                              </div>
                             </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Puntualidad</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Puntualidad</p>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Asistencia</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                              </div>
                             </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Actitud</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-warning m-r-sm">0</button>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Asistencia</p>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Calidad</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                              </div>
                             </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-info m-r-sm">0</button>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Disponibilidad</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Actitud</p>
-                            </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-warning m-r-sm">0</button>
-                            </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Calidad</p>
-                            </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
-                            </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Disponibilidad</p>
-                            </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
-                            </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
-                            <div class="col-md-10">
-                              <p>Crecimiento</p>
-                            </div>
-                            <div class="col-md-2">
-                              <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 center-items">
+                              <div class="col-md-10">
+                                <p>Crecimiento</p>
+                              </div>
+                              <div class="col-md-2">
+                                <button style="margin: 10px 0;" type="button" class="btn btn-danger m-r-sm">0</button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                <% end %>
 
                 <div class="ibox float-e-margins">
                   <div class="ibox-title">
@@ -190,9 +205,12 @@
                               </td>
                               <td class="project-actions">
                                 <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(@employer.curriculum_vitae, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
-                                <a href="#" class="btn btn-white btn-sm" disabled="true">
-                                  <i class="fa fa-trash"></i> Eliminar
-                                </a>
+                                <% if is_editor(current_user) %>
+                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                  </a>
+                                <% end %>
+
                               </td>
                             </tr>
                           <% end %>
@@ -210,9 +228,12 @@
                                 </td>
                                 <td class="project-actions">
                                   <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
-                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                  </a>
+                                  <% if is_editor(current_user) %>
+                                    <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                      <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                  <% end %>
+
                                 </td>
                               </tr>
                             <% end %>
@@ -231,9 +252,12 @@
                                 </td>
                                 <td class="project-actions">
                                   <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
-                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                  </a>
+                                  <% if is_editor(current_user) %>
+                                    <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                      <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                  <% end %>
+
                                 </td>
                               </tr>
                             <% end %>
@@ -252,9 +276,12 @@
                                 </td>
                                 <td class="project-actions">
                                   <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
-                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                  </a>
+                                  <% if is_editor(current_user) %>
+                                    <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                      <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                  <% end %>
+
                                 </td>
                               </tr>
                             <% end %>
@@ -273,21 +300,26 @@
                                 </td>
                                 <td class="project-actions">
                                   <%= link_to '<i class="fa fa-arrow-circle-down"></i> Descargar'.html_safe, rails_blob_path(upload, disposition: 'attachment'), class: "btn btn-white btn-sm" %>
-                                  <a href="#" class="btn btn-white btn-sm" disabled="true">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                  </a>
+                                  <% if is_editor(current_user) %>
+                                    <a href="#" class="btn btn-white btn-sm" disabled="true">
+                                      <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                  <% end %>
                                 </td>
                               </tr>
                             <% end %>
                           <% end %>
 
-                          <tr>
-                            <td colspan="3" class="project-status">
-                              <a type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newAttachmentModal">
-                                <i class="fa fa-plus"></i> Agregar Documento
-                              </a>
-                            </td>
-                          </tr>
+                          <% if is_editor(current_user) %>
+                            <tr>
+                              <td colspan="3" class="project-status">
+                                <a type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newAttachmentModal">
+                                  <i class="fa fa-plus"></i> Agregar Documento
+                                </a>
+                              </td>
+                            </tr>
+                          <% end %>
+
                           </tbody>
                         </table>
                       </div>
@@ -391,150 +423,180 @@
   </div>
 </div>
 
-<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title"> Agregar Justificación</h4>
-      </div>
-      <div class="modal-body">
-        <p>
-          <strong>Fecha de Incidente:</strong>
-        </p>
-        <p>
-          <strong>Hora de Entrada:</strong>
-        </p>
-        <p>
-          <strong>Hora de Salida:</strong>
-        </p>
-        <p>
-          <strong>Horas Trabajadas:</strong>
-        </p>
-
-        <form enctype="multipart/form-data" action="/employers/1" accept-charset="UTF-8" method="post" role="application">
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal inmodal" id="newAttachmentModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content animated bounceInRight">
-      <%= form_tag({:controller => 'employers', :action => 'attach_document'}, method: 'put', multipart: true) do %>
+<% if is_editor(current_user) %>
+  <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <i class="fa fa-file modal-icon"></i>
-          <h4 class="modal-title">Agregar Documento</h4>
+          <h4 class="modal-title"> Agregar Justificación</h4>
         </div>
         <div class="modal-body">
+          <p>
+            <strong>Fecha de Incidente:</strong>
+          </p>
+          <p>
+            <strong>Hora de Entrada:</strong>
+          </p>
+          <p>
+            <strong>Hora de Salida:</strong>
+          </p>
+          <p>
+            <strong>Horas Trabajadas:</strong>
+          </p>
 
-          <div class="row">
-            <div class="form-group col-md-12">
-              <div class="col-md-3">
-                <label for="document_type">Tipo de Documento</label>
-              </div>
-              <div class="col-md-6">
-                <select name="document_type" id="document_type" class="form-control m-bt">
-                  <option value="1">Profesión</option>
-                  <option value="2">Maestría</option>
-                  <option value="3">Doctorado</option>
-                  <option value="4">Curso</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <div class="col-md-3">
-                <label for="attachment">Documento</label>
-              </div>
-              <div class="col-md-6">
-                <input type="file" id="attachment" name="attachment">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-            <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
-              <i class="fa fa-plus-square"></i> Agregar
-            <% end %>
-          </div>
-      <% end %>
+          <form enctype="multipart/form-data" action="/employers/1" accept-charset="UTF-8" method="post" role="application">
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Aceptar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
-<div class="modal inmodal" id="registerUserModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content animated bounceInRight">
-      <%= form_for(User.new, url: '/users') do |f| %>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <i class="fa fa-bolt modal-icon"></i>
-          <h4 class="modal-title">Habilitar Inicio de Sesión</h4>
+<% if is_editor(current_user) %>
+  <div class="modal inmodal" id="newAttachmentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content animated bounceInRight">
+        <%= form_tag({:controller => 'employers', :action => 'attach_document'}, method: 'put', multipart: true) do %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-file modal-icon"></i>
+            <h4 class="modal-title">Agregar Documento</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="document_type">Tipo de Documento</label>
+                </div>
+                <div class="col-md-6">
+                  <select name="document_type" id="document_type" class="form-control m-bt">
+                    <option value="1">Profesión</option>
+                    <option value="2">Maestría</option>
+                    <option value="3">Doctorado</option>
+                    <option value="4">Curso</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="attachment">Documento</label>
+                </div>
+                <div class="col-md-6">
+                  <input type="file" id="attachment" name="attachment">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+              <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+                <i class="fa fa-plus-square"></i> Agregar
+              <% end %>
+            </div>
+        <% end %>
         </div>
-        <div class="modal-body">
-
-          <div class="row">
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Usuario' %>
-              </div>
-              <div class="col-md-8">
-                <%= f.text_field :username, class: 'form-control', requiered: true, autocomplete: 'off' %>
-              </div>
-            </div>
-
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label :email %>
-              </div>
-              <div class="col-md-8">
-                <%= f.email_field :email, class: 'form-control', requiered: true, autocomplete: 'off' %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Contraseña' %>
-              </div>
-              <div class="col-md-8">
-                <% if @minimum_password_length %>
-                  <em>(<%= @minimum_password_length %> characters minimum)</em>
-                <% end %><br/>
-                <%= f.password_field :password, autocomplete: 'off', class: 'form-control', requiered: true %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-md-4">
-                <%= f.label 'Repetir Contraseña' %>
-              </div>
-              <div class="col-md-8">
-                <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', requiered: true %>
-              </div>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-            <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
-              <i class="fa fa-plus-square"></i> Agregar
-            <% end %>
-          </div>
-      <% end %>
       </div>
     </div>
   </div>
-</div>
+<% end %>
+
+<% if is_admin(current_user) %>
+  <div class="modal inmodal" id="registerUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content animated bounceInRight">
+        <%= form_tag({:controller => 'employers', :action => 'enable_user'}, method: 'post', multipart: true) do %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-bolt modal-icon"></i>
+            <h4 class="modal-title">Habilitar Inicio de Sesión</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+
+              <div class="form-group col-md-12">
+                <div class="col-md-4">
+                  <label for="password">Contraseña</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="password" name="password" autocomplete="off" class="form-control" id="password">
+                </div>
+              </div>
+
+              <div class="form-group col-md-12">
+                <div class="col-md-4">
+                  <label for="password_confirmation">Confirmar Contraseña</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="password" name="password_confirmation" autocomplete="off" class="form-control" id="password">
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+              <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+                <i class="fa fa-bolt"></i> Habilitar
+              <% end %>
+            </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if is_admin(current_user) %>
+  <div class="modal inmodal" id="rolesUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content animated bounceInRight">
+        <%= form_tag({:controller => 'employers', :action => 'add_roles'}, method: 'put', multipart: true) do %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-bolt modal-icon"></i>
+            <h4 class="modal-title">Asignación de Roles</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="general_grant">Generales</label>
+                </div>
+                <div class="col-md-6">
+                  <%= select_tag 'input_roles[general]', options_for_select([%w(Estandar none), %w(Administrador admin)], @roles.general),
+                                 include_blank: false, id: 'general_grant', class: "form-control m-bt" %>
+
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <div class="col-md-3">
+                  <label for="employers_grant">Empleados</label>
+                </div>
+                <div class="col-md-6">
+                  <%= select_tag 'input_roles[employers]',
+                                 options_for_select([['Sin Privilegios', 'none'], %w(Administrador employer_admin), %w(Editor employer_editor), %w(Visor employer_viewer)], @roles.employer),
+                                 include_blank: false, id: 'employers_grant', class: "form-control m-bt" %>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+              <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+                <i class="fa fa-bolt"></i> Asignar
+              <% end %>
+            </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -10,61 +10,58 @@
     </div>
     <div class="ibox-content">
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-          <div class="contact-box" style="height: 300px; overflow: scroll; display: flex; justify-content: center; align-items: center">
-            <a href="<%= new_employer_path %>">
-              <i class="fa fa-5x fa-plus-square" style="color: #3a9ab3"></i>
-              <br>
-              <h3 style="text-align: center">Nuevo</h3>
-            </a>
+        <% if is_editor(current_user) %>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <div class="contact-box" style="height: 300px; overflow: scroll; display: flex; justify-content: center; align-items: center">
+              <a href="<%= new_employer_path %>">
+                <i class="fa fa-5x fa-plus-square" style="color: #3a9ab3"></i>
+                <br>
+                <h3 style="text-align: center">Nuevo</h3>
+              </a>
+            </div>
           </div>
-        </div>
+        <% end %>
         <% @employers.each do |employer| %>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-              <div class="contact-box" style="height: 300px; overflow: scroll">
-                <a href="<%= url_for employer %>">
-                  <div class="col-md-6">
-                    <div class="text-center">
-                      <% if employer.avatar.attached? %>
-                          <%= image_tag(employer.avatar, width: 200, class: 'show-profile-photo m-t-xm img-responsive') %>
-                      <% else %>
-                          <img src="<%= image_path('employers/missing_employer.jpg') %>" alt="missing_employer" class="show-profile-photo m-t-xm img-responsive"/>
-                      <% end %>                      <br>
-                      <div class="m-t-xs font-bold">
-                        <%= employer.degree.nil? ? 'Puesto Desconocido' : employer.degree.description %>
-                      </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <div class="contact-box" style="height: 300px; overflow: scroll">
+              <a href="<%= url_for employer %>">
+                <div class="col-md-6">
+                  <div class="text-center">
+                    <% if employer.avatar.attached? %>
+                      <%= image_tag(employer.avatar, width: 200, class: 'show-profile-photo m-t-xm img-responsive') %>
+                    <% else %>
+                      <img src="<%= image_path('employers/missing_employer.jpg') %>" alt="missing_employer" class="show-profile-photo m-t-xm img-responsive"/>
+                    <% end %>                      <br>
+                    <div class="m-t-xs font-bold">
+                      <%= employer.degree.nil? ? 'Puesto Desconocido' : employer.degree.description %>
                     </div>
                   </div>
-                  <div class="col-sm-6">
-                    <h3><strong><%= employer.first_name %>  <%= employer.paternal_last_name %></strong></h3>
-                    <i class="fa fa-envelope"></i>
-                    <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
+                </div>
+                <div class="col-sm-6">
+                  <h3><strong><%= employer.first_name %>  <%= employer.paternal_last_name %></strong></h3>
+                  <i class="fa fa-envelope"></i>
+                  <strong><%= (employer.email.empty? ? '- ' : employer.email) %></strong>
+                  <br>
+                  <br>
+                  <address>
+                    <i class="fa fa-map-marker"></i>
+                    <%= (employer.street.empty? ? '-' : employer.street) %>,
+                    <%= (employer.city.empty? ? '-' : employer.city) %>.
+                    <%= (employer.state.empty? ? '-' : employer.state) %>.
+                    <%= (employer.postal_code.empty? ? '-' : employer.postal_code) %>.
+                    <br>
+                    <i class="fa fa-phone"></i>
+                    <%= employer.phone_number %>
                     <br>
                     <br>
-                    <address>
-                      <i class="fa fa-map-marker"></i>
-                      <%= (employer.street.empty? ? '-' : employer.street) %>,
-                      <%= (employer.city.empty? ? '-' : employer.city) %>.
-                      <%= (employer.state.empty? ? '-' : employer.state) %>.
-                      <%= (employer.postal_code.empty? ? '-' : employer.postal_code) %>.
-                      <br>
-                      <i class="fa fa-phone"></i>
-                      <%= employer.phone_number %>
-                      <br>
-                      <br>
-                      Contrato: <%= employer.contract_number %>
-                    </address>
-                  </div>
-                  <div class="clearfix"></div>
-                </a>
-              </div>
+                    Contrato: <%= employer.contract_number %>
+                  </address>
+                </div>
+                <div class="clearfix"></div>
+              </a>
             </div>
+          </div>
         <% end %>
-      </div>
-    </div>
-    <div class="ibox-footer">
-      <div style="margin: 10px 10px 10px 10px;">
-        <%= link_to 'Crear Empleado', new_employer_path, :class => 'btn btn-primary' %>
       </div>
     </div>
   </div>
@@ -72,17 +69,17 @@
 
 <% content_for :javascript do %>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-        $(function () {
+      $(function () {
 
-            $('.contact-box').each(function () {
-                animationHover(this, 'pulse');
-            });
+          $('.contact-box').each(function () {
+              animationHover(this, 'pulse');
+          });
 
-        });
+      });
 
-    </script>
+  </script>
 
 <% end %>
 
