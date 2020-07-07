@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  loan_id: 1
+  paid_date: 2020-06-23
+  amount: MyString
+  paid_type: 1
+  remaining_amount: MyString
+
+two:
+  loan_id: 1
+  paid_date: 2020-06-23
+  amount: MyString
+  paid_type: 1
+  remaining_amount: MyString

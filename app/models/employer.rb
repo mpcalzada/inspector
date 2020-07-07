@@ -3,6 +3,7 @@ class Employer < ApplicationRecord
   belongs_to :user
   has_one :employer_punctuation
   has_many :attendance_trackers
+  has_many :loans
 
   has_one_attached :avatar
   has_one_attached :curriculum_vitae
@@ -15,4 +16,7 @@ class Employer < ApplicationRecord
     Employer.find_by_user_id(user_id)
   end
 
+  def full_name
+    "#{self.paternal_last_name} #{self.maternal_last_name} #{self.first_name}"
+  end
 end

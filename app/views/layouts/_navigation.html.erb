@@ -66,23 +66,23 @@
         <li class="<%= is_active_controller('upload_files') %>">
           <a href=""><i class="fa fa-upload"></i> <span class="nav-label">Manejo de Archivos</span>
             <span class="fa arrow"></span></a>
-          <% if has_attendance_roles(current_user) %>
-            <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
-              <li class="<%= is_active_controller('upload_files') %>">
-                <%= link_to '<i class="fa fa-check-circle-o"></i>Asistencia'.html_safe, upload_files_path %>
-              </li>
-            </ul>
-          <% end %>
-
+          <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
+            <li class="<%= is_active_controller('upload_files') %>">
+              <%= link_to '<i class="fa fa-check-circle-o"></i>Asistencia'.html_safe, upload_files_path %>
+            </li>
+          </ul>
         </li>
       <% end %>
 
       <% if has_accounting_roles(current_user) %>
-        <li>
-          <%= link_to home_index_path do %>
-            <i class="fa fa-diamond"></i> <span class="nav-label">Contabilidad</span>
-            <span class="label label-primary pull-right">Pronto</span>
-          <% end %>
+        <li class="<%= is_active_controller('loans') %>">
+          <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Contabilidad</span>
+            <span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level <%= is_active_controller('loans') %>">
+            <li class="<%= is_active_controller('loans') %>">
+              <%= link_to '<i class="fa fa-check-circle-o"></i>Prestamos'.html_safe, loans_path %>
+            </li>
+          </ul>
         </li>
       <% end %>
 

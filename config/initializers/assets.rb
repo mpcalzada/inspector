@@ -22,3 +22,6 @@ Rails.application.config.assets.precompile += %w( upload_files.css )
 
 Rails.application.config.assets.precompile += %w( departments.js )
 Rails.application.config.assets.precompile += %w( departments.css )
+
+Rails.application.config.assets.precompile += %w( loans.js )
+Rails.application.config.assets.precompile += %w( loans.css.scss )

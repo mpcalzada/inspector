@@ -1,0 +1,17 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Nuevo Préstamo</h2>
+    <ol class="breadcrumb">
+      <li>
+        <%= link_to 'Préstamos', loans_path %>
+      </li>
+      <li class="active">
+        <strong>Nuevo Préstamo</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+</div>
+<%= render 'form', loan: @loan %>

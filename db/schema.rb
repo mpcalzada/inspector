@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_035009) do
+ActiveRecord::Schema.define(version: 2020_06_24_031551) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -139,6 +139,32 @@ ActiveRecord::Schema.define(version: 2020_06_12_035009) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "loan_histories", force: :cascade do |t|
+    t.date "paid_date"
+    t.string "amount", default: "0", null: false
+    t.string "interest", default: "0", null: false
+    t.integer "paid_type", default: 1, null: false
+    t.string "remaining_amount", default: "0", null: false
+    t.integer "loan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["loan_id"], name: "index_loan_histories_on_loan_id"
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.string "amount"
+    t.integer "monthly_term"
+    t.float "interest"
+    t.string "total_amount"
+    t.date "loan_date"
+    t.string "amount_paid", default: "0", null: false
+    t.integer "current_month", default: 0, null: false
+    t.integer "employer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employer_id"], name: "index_loans_on_employer_id"
   end
 
   create_table "roles", force: :cascade do |t|
