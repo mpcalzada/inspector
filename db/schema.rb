@@ -147,6 +147,8 @@ ActiveRecord::Schema.define(version: 2020_06_24_031551) do
     t.string "interest", default: "0", null: false
     t.integer "paid_type", default: 1, null: false
     t.string "remaining_amount", default: "0", null: false
+    t.boolean "paid", default: false, null: false
+    t.integer "penalization_duty", default: 0, null: false
     t.integer "loan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -154,13 +156,18 @@ ActiveRecord::Schema.define(version: 2020_06_24_031551) do
   end
 
   create_table "loans", force: :cascade do |t|
+    t.string "monthly_payment"
     t.string "amount"
-    t.integer "monthly_term"
-    t.float "interest"
     t.string "total_amount"
-    t.date "loan_date"
+    t.string "total_interest"
+    t.integer "penalization_duty", default: 0, null: false
+    t.integer "prepayment_amount", default: 0, null: false
+    t.integer "monthly_term"
+    t.float "interest_rate"
+    t.date "loan_date", null: false
     t.string "amount_paid", default: "0", null: false
     t.integer "current_month", default: 0, null: false
+    t.boolean "paid", default: false, null: false
     t.integer "employer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

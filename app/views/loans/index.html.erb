@@ -16,83 +16,245 @@
 
   </div>
 </div>
-<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+<div class="wrapper wrapper-content animated">
 
+  <div class="ibox">
+    <div class="ibox-content">
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="ibox">
-        <div class="ibox-content">
+      <div>
+        <h3 class="text-center">Mensualidades del Periodo</h3>
+        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Empleado</th>
+            <th>Monto Prestado</th>
+            <th>Mensualidad</th>
+            <th>Fecha de Préstamo</th>
+            <th>Monto Pagado</th>
+            <th>Mensualidad Actual</th>
+            <th data-hide="all">Tasa de Interés</th>
+            <th data-hide="all">Monto Total</th>
+            <th data-hide="all">Monto Penalización</th>
+            <th data-hide="all">Monto Pago Adelantado</th>
+            <th colspan="3" class="text-center">Acciones</th>
 
-          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
-            <thead>
+          </tr>
+          </thead>
+          <tbody>
+          <% @today_loans.each do |loan| %>
             <tr>
-
-              <th>Empleado</th>
-              <th>Monto Prestado</th>
-              <th>Plazo</th>
-              <th>Tasa de Interés</th>
-              <th>Monto Total</th>
-              <th>Fecha de Préstamo</th>
-              <th>Monto Pagado</th>
-              <th>Mensualidad Actual</th>
-              <th colspan="3" class="text-center">Acciones</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <% @loans.each do |loan| %>
-              <tr>
-                <td><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
-                <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
-                <td><%= loan.monthly_term %></td>
-                <td><%= loan.interest %>%</td>
-                <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
-                <td><%= loan.loan_date %></td>
-                <td>$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
-                <td><%= loan.current_month %></td>
-                <td class="text-center">
-                  <div class="btn-group">
-                    <button class="btn-info btn btn-xs">Abonar</button>
-                    <%= link_to 'Editar', edit_loan_path(loan), class: 'btn-warning btn btn-xs' %>
-                    <%= link_to 'Eliminar', loan, method: :delete, class: 'btn-danger btn btn-xs',
-                                data: {confirm: 'Are you sure?'} %>
-                  </div>
-                </td>
-                <td></td>
-              </tr>
-            <% end %>
-
-            </tbody>
-            <tfoot>
-            <tr>
-              <td colspan="9">
-                <ul class="pagination pull-right"></ul>
+              <td class="loanerId"><%= loan.id %></td>
+              <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
+              <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= loan.monthly_payment %></td>
+              <td><%= loan.loan_date %></td>
+              <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
+              <td><%= loan.interest_rate %>%</td>
+              <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td>$<%= loan.penalization_duty %></td>
+              <td>$<%= loan.prepayment_amount %></td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <%= link_to 'Pagar', penalize_loan_path(loan), method: :post, class: 'btn-info btn btn-xs',
+                              data: {confirm: 'Are you sure?'} %>
+                  <%= link_to 'Penalizar', penalize_loan_path(loan), method: :post, class: 'btn-danger btn btn-xs',
+                              data: {confirm: 'Are you sure?'} %>
+                </div>
               </td>
             </tr>
-            </tfoot>
-          </table>
+          <% end %>
 
-        </div>
-        <div class="ibox-footer">
-          <div style="margin: 10px 10px 10px 10px;">
-            <%= link_to 'Nuevo Prestamo', new_loan_path, class: 'btn btn-primary' %>
-          </div>
-        </div>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="9">
+              <ul class="pagination pull-right"></ul>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div>
+        <h3 class="text-center">Préstamos Activos</h3>
+        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Empleado</th>
+            <th>Monto Prestado</th>
+            <th>Mensualidad</th>
+            <th>Fecha de Préstamo</th>
+            <th>Monto Pagado</th>
+            <th>Mensualidad Actual</th>
+            <th data-hide="all">Tasa de Interés</th>
+            <th data-hide="all">Monto Total</th>
+            <th data-hide="all">Monto Penalización</th>
+            <th data-hide="all">Monto Pago Adelantado</th>
+            <th colspan="3" class="text-center">Acciones</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <% @active_loans.each do |loan| %>
+            <tr>
+              <td class="loanerId"><%= loan.id %></td>
+              <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
+              <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= loan.monthly_payment %></td>
+              <td><%= loan.loan_date %></td>
+              <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
+              <td><%= loan.interest_rate %>%</td>
+              <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td>$<%= loan.penalization_duty %></td>
+              <td>$<%= loan.prepayment_amount %></td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <button class="btn-info btn btn-xs pay_button" data-toggle="modal" data-target="#myModal">
+                    Abonar
+                  </button>
+                  <%= link_to 'Editar', edit_loan_path(loan), class: 'btn-warning btn btn-xs' %>
+                  <%= link_to 'Eliminar', loan, method: :delete, class: 'btn-danger btn btn-xs',
+                              data: {confirm: 'Are you sure?'} %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="9">
+              <ul class="pagination pull-right"></ul>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div>
+        <h3 class="text-center">Préstamos Inactivos</h3>
+        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Empleado</th>
+            <th>Monto Prestado</th>
+            <th>Mensualidad</th>
+            <th>Fecha de Préstamo</th>
+            <th>Monto Pagado</th>
+            <th>Mensualidad Actual</th>
+            <th data-hide="all">Tasa de Interés</th>
+            <th data-hide="all">Monto Total</th>
+            <th data-hide="all">Monto Penalización</th>
+            <th data-hide="all">Monto Pago Adelantado</th>
+            <th class="text-center">Acciones</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <% @inactive_loans.each do |loan| %>
+            <tr>
+              <td class="loanerId"><%= loan.id %></td>
+              <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
+              <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= loan.monthly_payment %></td>
+              <td><%= loan.loan_date %></td>
+              <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
+              <td><%= loan.interest_rate %>%</td>
+              <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td>$<%= loan.penalization_duty %></td>
+              <td>$<%= loan.prepayment_amount %></td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <%= link_to 'Eliminar', loan, method: :delete, class: 'btn-danger btn btn-xs',
+                              data: {confirm: 'Are you sure?'} %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="9">
+              <ul class="pagination pull-right"></ul>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+
+    </div>
+    <div class="ibox-footer">
+      <div style="margin: 10px 10px 10px 10px;">
+        <%= link_to 'Nuevo Prestamo', new_loan_path, class: 'btn btn-primary' %>
       </div>
     </div>
   </div>
 
 
 </div>
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <%= form_tag({:controller => 'loans', :action => 'pay'}, method: 'post', multipart: true) do %>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <i class="fa fa-sitemap modal-icon"></i>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <input type="text" id="loan_id_field" name="pay_loan_id" hidden>
+
+            <div class="form-group col-md-12">
+              <div class="col-md-3">
+                <label for="paid_amount">Monto</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="paid_amount" name="pay_amount" class="form-control" data-mask="$ 999,999.99">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn btn-primary">Aceptar</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <% content_for :javascript do %>
 
   <script type="text/javascript">
 
 
       $(function () {
-
           $('.footable').footable();
+      });
+
+      function pay_triggered(e) {
+
+      }
+
+      $(".pay_button").click(function () {
+          const tableTr = $(this).closest("tr");
+          const loanerName = tableTr.find(".loanerName").text();
+          const loanerId = tableTr.find(".loanerId").text();
+          const limitPay = tableTr.find(".limitPay").text();
+
+          $('#loan_id_field').val(loanerId)
+
+          $('.modal-title').text(`Realizar Abono: ${loanerName} ${loanerId} ${limitPay}`)
 
       });
 
