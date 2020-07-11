@@ -22,21 +22,16 @@
     <div class="ibox-content">
 
       <div>
-        <h3 class="text-center">Mensualidades del Periodo</h3>
-        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+        <h2 class="text-center">Mensualidades del Periodo</h2>
+        <table class=" table table-stripped toggle-arrow-tiny">
           <thead>
           <tr>
-            <th>Id</th>
             <th>Empleado</th>
-            <th>Monto Prestado</th>
             <th>Mensualidad</th>
-            <th>Fecha de Préstamo</th>
+            <th>Monto Restante</th>
             <th>Monto Pagado</th>
             <th>Mensualidad Actual</th>
-            <th data-hide="all">Tasa de Interés</th>
-            <th data-hide="all">Monto Total</th>
-            <th data-hide="all">Monto Penalización</th>
-            <th data-hide="all">Monto Pago Adelantado</th>
+            <th>Fecha de Corte</th>
             <th colspan="3" class="text-center">Acciones</th>
 
           </tr>
@@ -44,23 +39,18 @@
           <tbody>
           <% @today_loans.each do |loan| %>
             <tr>
-              <td class="loanerId"><%= loan.id %></td>
               <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
-              <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= loan.monthly_payment %></td>
-              <td><%= loan.loan_date %></td>
+              <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
               <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
-              <td><%= loan.interest_rate %>%</td>
-              <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
-              <td>$<%= loan.penalization_duty %></td>
-              <td>$<%= loan.prepayment_amount %></td>
+              <td><%= loan.next_payment %></td>
               <td class="text-center">
                 <div class="btn-group">
-                  <%= link_to 'Pagar', penalize_loan_path(loan), method: :post, class: 'btn-info btn btn-xs',
-                              data: {confirm: 'Are you sure?'} %>
+                  <%= link_to 'Aplicar', pay_monthly_path(loan), method: :post, class: 'btn-info btn btn-xs',
+                              style: 'width: 65px', data: {confirm: '¿Desea aplicar el pago de la mensualidad?'} %>
                   <%= link_to 'Penalizar', penalize_loan_path(loan), method: :post, class: 'btn-danger btn btn-xs',
-                              data: {confirm: 'Are you sure?'} %>
+                              style: 'width: 65px', data: {confirm: '¿Desea penalizar por incumplimiento de pago?'} %>
                 </div>
               </td>
             </tr>
@@ -76,9 +66,13 @@
           </tfoot>
         </table>
       </div>
+    </div>
+  </div>
+  <div class="ibox">
+    <div class="ibox-content">
 
       <div>
-        <h3 class="text-center">Préstamos Activos</h3>
+        <h2 class="text-center">Préstamos Activos</h2>
         <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
           <thead>
           <tr>
@@ -86,9 +80,10 @@
             <th>Empleado</th>
             <th>Monto Prestado</th>
             <th>Mensualidad</th>
-            <th>Fecha de Préstamo</th>
+            <th>Fecha de Corte</th>
             <th>Monto Pagado</th>
             <th>Mensualidad Actual</th>
+            <th data-hide="all">Fecha de Préstamo</th>
             <th data-hide="all">Tasa de Interés</th>
             <th data-hide="all">Monto Total</th>
             <th data-hide="all">Monto Penalización</th>
@@ -104,9 +99,10 @@
               <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
               <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= loan.monthly_payment %></td>
-              <td><%= loan.loan_date %></td>
+              <td><%= loan.next_payment %></td>
               <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
+              <td><%= loan.loan_date %>%</td>
               <td><%= loan.interest_rate %>%</td>
               <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
               <td>$<%= loan.penalization_duty %></td>
@@ -134,9 +130,14 @@
           </tfoot>
         </table>
       </div>
+    </div>
+  </div>
+
+  <div class="ibox">
+    <div class="ibox-content">
 
       <div>
-        <h3 class="text-center">Préstamos Inactivos</h3>
+        <h2 class="text-center">Préstamos Inactivos</h2>
         <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
           <thead>
           <tr>
@@ -158,12 +159,12 @@
           <tbody>
           <% @inactive_loans.each do |loan| %>
             <tr>
-              <td class="loanerId"><%= loan.id %></td>
-              <td class="loanerName"><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
+              <td><%= loan.id %></td>
+              <td><%= loan.employer.nil? ? 'Desconocido' : loan.employer.full_name %></td>
               <td>$<%= number_with_delimiter(loan.amount.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= loan.monthly_payment %></td>
               <td><%= loan.loan_date %></td>
-              <td class="limitPay">$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
+              <td>$<%= number_with_delimiter(loan.amount_paid.to_f, :delimiter => ',', :precision => 2) %></td>
               <td><%= "#{loan.current_month} / #{loan.monthly_term}" %></td>
               <td><%= loan.interest_rate %>%</td>
               <td>$<%= number_with_delimiter(loan.total_amount.to_f, :delimiter => ',', :precision => 2) %></td>
@@ -203,7 +204,7 @@
 <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content animated bounceInRight">
-      <%= form_tag({:controller => 'loans', :action => 'pay'}, method: 'post', multipart: true) do %>
+      <%= form_tag({:controller => 'loans', :action => 'prepayment'}, method: 'post', multipart: true) do %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -212,7 +213,7 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <input type="text" id="loan_id_field" name="pay_loan_id" hidden>
+            <input type="text" id="loan_id_field" name="id" hidden>
 
             <div class="form-group col-md-12">
               <div class="col-md-3">

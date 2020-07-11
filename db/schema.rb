@@ -142,13 +142,10 @@ ActiveRecord::Schema.define(version: 2020_06_24_031551) do
   end
 
   create_table "loan_histories", force: :cascade do |t|
-    t.date "paid_date"
-    t.string "amount", default: "0", null: false
-    t.string "interest", default: "0", null: false
-    t.integer "paid_type", default: 1, null: false
-    t.string "remaining_amount", default: "0", null: false
-    t.boolean "paid", default: false, null: false
-    t.integer "penalization_duty", default: 0, null: false
+    t.date "paid_date", null: false
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.integer "paid_type", null: false
+    t.decimal "remaining_amount", precision: 8, scale: 2, null: false
     t.integer "loan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -157,15 +154,16 @@ ActiveRecord::Schema.define(version: 2020_06_24_031551) do
 
   create_table "loans", force: :cascade do |t|
     t.string "monthly_payment"
-    t.string "amount"
-    t.string "total_amount"
-    t.string "total_interest"
-    t.integer "penalization_duty", default: 0, null: false
-    t.integer "prepayment_amount", default: 0, null: false
+    t.float "amount"
+    t.float "total_amount"
+    t.float "total_interest"
+    t.float "amount_paid", default: 0.0, null: false
+    t.float "penalization_duty", default: 0.0, null: false
+    t.float "prepayment_amount", default: 0.0, null: false
     t.integer "monthly_term"
     t.float "interest_rate"
     t.date "loan_date", null: false
-    t.string "amount_paid", default: "0", null: false
+    t.date "next_payment", null: false
     t.integer "current_month", default: 0, null: false
     t.boolean "paid", default: false, null: false
     t.integer "employer_id"

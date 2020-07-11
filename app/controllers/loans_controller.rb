@@ -1,12 +1,12 @@
 class LoansController < ApplicationController
-  before_action :set_loan, only: [:show, :edit, :update, :destroy, :penalize]
+  before_action :set_loan, only: [:show, :edit, :update, :destroy, :penalize, :pay_monthly, :prepayment]
 
   # GET /loans
   # GET /loans.json
   def index
     @active_loans = Loan.where(:paid => false)
     @inactive_loans = Loan.where(:paid => true)
-    @today_loans = Loan.where(:loan_date => Date.today)
+    @today_loans = Loan.where('next_payment <= ?', Date.today)
   end
 
   # GET /loans/1
@@ -26,21 +26,12 @@ class LoansController < ApplicationController
   # POST /loans
   # POST /loans.json
   def create
+    sanitize_params
     @loan = Loan.new(loan_params)
-    @loan.amount = @loan.amount.gsub('$', '').gsub(',', '')
-    @loan.total_amount = @loan.total_amount.gsub('$', '').gsub(',', '')
+    @loan.next_payment = @loan.loan_date + 1.month
 
     respond_to do |format|
       if @loan.save
-
-        params[:histories].each { |history|
-          puts "Loading history: #{history[1]}"
-          history[1].permit!
-          loan_history = LoanHistory.new(history[1])
-          loan_history.paid_type = 1
-          loan_history.loan_id = @loan.id
-          loan_history.save!
-        }
 
         format.html { redirect_to @loan, notice: 'Loan was successfully created.' }
         format.json { render :show, status: :created, location: @loan }
@@ -76,23 +67,61 @@ class LoansController < ApplicationController
   end
 
   def penalize
-    penalization_duty = @loan.total_amount.to_i * 0.10
-    @loan.penalization_duty += penalization_duty
-    @loan.total_amount = @loan.total_amount
+    unless @loan.next_payment > Date.now
+      penalization_duty = @loan.total_amount.to_f * 0.05
+      @loan.penalization_duty += penalization_duty
+      @loan.total_amount += penalization_duty
+      @loan.next_payment += 1.month
+
+      if @loan.save
+        LoanHistory.new(
+            paid_date: Date.today,
+            amount: penalization_duty,
+            remaining_amount: @loan.total_amount,
+            paid_type: LoanHistory::Payment::PENALIZATION,
+            loan_id: @loan.id
+        ).save!
+      end
+    end
+
+    redirect_back(fallback_location: loans_path)
   end
 
-  def pay
-    @loan = Loan.find(params[:pay_loan_id])
-    @loan.amount_paid = @loan.amount_paid.to_f + params[:pay_amount].to_f
+  def pay_monthly
+    unless @loan.next_payment > Date.today
+      @loan.amount_paid += @loan.monthly_payment.to_f
+      @loan.total_amount -= @loan.monthly_payment.to_f
+      @loan.current_month += 1
+      @loan.next_payment += 1.month
+
+      if @loan.save
+        LoanHistory.new(
+            paid_date: Date.today,
+            amount: @loan.monthly_payment,
+            remaining_amount: @loan.total_amount,
+            paid_type: LoanHistory::Payment::MONTHLY_PAYMENT,
+            loan_id: @loan.id
+        ).save!
+      end
+    end
+
+    redirect_back(fallback_location: loans_path)
+  end
+
+  def prepayment
+    @loan.amount_paid += params[:pay_amount].to_f
+    @loan.total_amount -= params[:pay_amount].to_f
 
     respond_to do |format|
       if @loan.save!
 
-        @loan_history = LoanHistory.new(
-            paid_date: Date.now,
-            amount: params[:pay_amount],
-            paid_type: '1'
-        )
+        LoanHistory.new(
+            paid_date: Date.today,
+            amount: params[:pay_amount].to_f,
+            remaining_amount: @loan.total_amount,
+            paid_type: LoanHistory::Payment::PREPAYMENT,
+            loan_id: @loan.id
+        ).save!
 
         format.html { redirect_to loans_path, notice: 'Loan was successfully updated.' }
         format.json { render :index, status: :ok, location: @loan }
@@ -106,6 +135,12 @@ class LoansController < ApplicationController
 
   private
 
+  def sanitize_params
+    params[:loan][:amount] = params[:loan][:amount].gsub('$', '').gsub(',', '')
+    params[:loan][:total_amount] = params[:loan][:total_amount].gsub('$', '').gsub(',', '')
+    params[:loan][:monthly_payment] = params[:loan][:monthly_payment].gsub('$', '').gsub(',', '')
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_loan
     @loan = Loan.find(params[:id])
@@ -114,7 +149,6 @@ class LoansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def loan_params
     params.require(:loan).permit(:employer_id, :amount, :monthly_term, :interest_rate, :total_amount, :loan_date,
-                                 :amount_paid, :current_month, :pay_loan_id, :total_interest, :pay_amount, :monthly_payment,
-                                 histories: [])
+                                 :amount_paid, :current_month, :total_interest, :pay_amount, :monthly_payment,)
   end
 end

@@ -22,8 +22,9 @@ Rails.application.routes.draw do
       put 'employers/:id/add_roles', to: 'employers#add_roles'
       post 'employers/:id/enable_user', to: 'employers#enable_user'
 
-      post 'loans/pay', to: 'loans#pay'
+      post 'loans/prepayment', to: 'loans#prepayment'
       post 'loans/:id/penalize', to: 'loans#penalize', as: :penalize_loan
+      post 'loans/:id/pay_monthly', to: 'loans#pay_monthly', as: :pay_monthly
 
       put '/porcentual_filter_details/:id', to: 'porcentual_filter_details#create'
 

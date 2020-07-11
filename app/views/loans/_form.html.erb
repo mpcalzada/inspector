@@ -66,7 +66,7 @@
                   <div class="col-md-6 form_datepicker" id="birthday_datepicker">
                     <div class="input-group date">
                       <%= form.text_field :loan_date, class: 'form-control required',
-                                          :value => (loan.loan_date || Time.now.strftime("%Y/%m/%d")), id: 'date_field' %>
+                                          :value => (loan.loan_date || Time.now.strftime("%Y-%m-%d")), id: 'date_field' %>
                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                   </div>
@@ -170,6 +170,9 @@
       function loadTable() {
 
           $('.dataTables-example').DataTable({
+              ordering: false,
+              searching: false,
+              bLengthChange: false,
               pageLength: 10,
               responsive: true,
               dom: '<"html5buttons"B>lTfgitp',
@@ -216,14 +219,14 @@
               inputs_histories.removeChild(inputs_histories.lastChild);
           }
 
-          let totalPayment = 0;
+          let totalPayment;
           let jsonAmortize;
 
           let input_opts;
           for (let month = 0; month < term; month++) {
+              date.setMonth(date.getMonth() + 1)
               jsonAmortize = calculateAmortize(balance, rate, term, month + 1)
               let row = table.insertRow(-1);
-              console.log(jsonAmortize)
 
               let dateCell = row.insertCell(0);
               let monthlyPayCell = row.insertCell(1);
@@ -251,8 +254,6 @@
                   $('#inputs_histories')
                       .append(`<input type="hidden" name=${jsonInputValues.name} value=${jsonInputValues.value} />`);
               }
-
-              date.setMonth(date.getMonth() + 1)
           }
 
           totalPayment = (jsonAmortize.principal + parseFloat(jsonAmortize.interestRound))
