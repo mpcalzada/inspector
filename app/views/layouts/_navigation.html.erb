@@ -78,6 +78,11 @@
         <li class="<%= is_active_controller('loans') %>">
           <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Contabilidad</span>
             <span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level <%= is_active_controller('dashboards') %>">
+            <li class="<%= is_active_controller('dashboards') %>">
+              <%= link_to '<i class="fa fa-check-circle-o"></i>Dashboard'.html_safe, accountancy_dashboard_path %>
+            </li>
+          </ul>
           <ul class="nav nav-second-level <%= is_active_controller('loans') %>">
             <li class="<%= is_active_controller('loans') %>">
               <%= link_to '<i class="fa fa-check-circle-o"></i>Prestamos'.html_safe, loans_path %>

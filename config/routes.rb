@@ -18,6 +18,11 @@ Rails.application.routes.draw do
       resources :employers
       resources :degrees
 
+      get 'dashboard/home_dashboard'
+      get 'dashboard/accountancy_dashboard', as: :accountancy_dashboard
+      get 'dashboard/human_resources_dashboard'
+      get 'dashboard/reports_dashboard'
+
       put 'employers/:id/attach_document', to: 'employers#attach_document'
       put 'employers/:id/add_roles', to: 'employers#add_roles'
       post 'employers/:id/enable_user', to: 'employers#enable_user'

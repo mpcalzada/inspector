@@ -1,0 +1,45 @@
+<div class="ibox">
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="widget style1 navy-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-user fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> Préstamos Activos </span>
+              <h2 class="font-bold"><%= @active_loans_total %></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="widget style1 navy-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-user fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> Préstamos Inactivos </span>
+              <h2 class="font-bold"><%= @inactive_loans_total %></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="widget style1 navy-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-user fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> Monto Total Prestado </span>
+              <h2 class="font-bold"><%= @total_loaned_amount %></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
