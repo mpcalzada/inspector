@@ -1,7 +1,9 @@
 class AttendanceTracker < ApplicationRecord
   belongs_to :employer
 
-  def self.perform_attendance_analysis
+  validates_uniqueness_of :registered_datetime, scope: [:employer_id]
+
+  def self.perform_attendance_analysis(employer)
     begin
       entrance_constant = 'entrada internet 21'
       exit_constant = 'salida internet 21'
@@ -10,7 +12,7 @@ class AttendanceTracker < ApplicationRecord
       is_working = false
       last_entrance = Date.new
 
-      attendances = AttendanceTracker.where(:description => [entrance_constant, exit_constant]).order(:registered_datetime).limit(nil)
+      attendances = AttendanceTracker.where(:description => [entrance_constant, exit_constant], :employer_id => employer.id).order(:registered_datetime).limit(nil)
 
       attendances.each do |attend|
         if attend.description.eql? entrance_constant
@@ -24,7 +26,7 @@ class AttendanceTracker < ApplicationRecord
             last_exit = attend.registered_datetime
 
             key = attend.registered_datetime.strftime('%m-%d-%Y')
-            worked_hours = ((last_exit - last_entrance) / 60)/60
+            worked_hours = ((last_exit - last_entrance) / 60) / 60
 
             if response_hash.key? key
               inner_attendant_control = response_hash[key]
@@ -54,7 +56,7 @@ class AttendanceTracker < ApplicationRecord
     end
 
     def add_minutes(hours)
-      @worked_hours =(@worked_hours + hours).round 2
+      @worked_hours = (@worked_hours + hours).round 2
     end
 
     def change_finished_time(finished_time)

@@ -35,13 +35,12 @@ class Read
           maternal_last_name = maternal_last_name.nil? ? '' : maternal_last_name.downcase
 
           @employer = Employer.where(
-              'REPLACE(lower(first_name), \' \', \'\') = ? and REPLACE(lower(paternal_last_name), \' \', \'\') = ? and REPLACE(lower(maternal_last_name), \' \', \'\') = ?',
-              first_name,
-              paternal_last_name,
-              maternal_last_name
+              "REPLACE(lower(first_name), ' ', '') LIKE '%#{first_name}%' and REPLACE(lower(paternal_last_name), ' ', '') LIKE '%#{paternal_last_name}%'"
           ).first
 
-          unless @employer.nil?
+          if @employer.nil?
+            puts "Unable to find employer #{first_name} + #{paternal_last_name} for row number #{row_number} in file #{ruta}"
+          else
             AttendanceTracker.new(
                 :name => employer_name.downcase,
                 :description => description.downcase,
@@ -52,12 +51,12 @@ class Read
           end
 
         rescue Exception => e
-          puts('Unable to write AttendanceTracker for '+
-                   "Employer Name: #{(employer_name)}"+
-                   "Description: #{(description)}"+
-                   "Employer Id: #{(user_id)}"+
-                   "Registered Datetime: #{(registered_time)}"+
-                   "Internal Id: #{(employer_id)}"+
+          puts('Unable to write AttendanceTracker for ' +
+                   "Employer Name: #{(employer_name)}" +
+                   "Description: #{(description)}" +
+                   "Employer Id: #{(user_id)}" +
+                   "Registered Datetime: #{(registered_time)}" +
+                   "Internal Id: #{(employer_id)}" +
                    "Exception: #{(e.message)}"
           )
         end
