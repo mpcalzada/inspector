@@ -2,10 +2,10 @@
   <div class="ibox-content">
     <div class="row">
       <div class="col-lg-3">
-        <div class="widget style1 navy-bg">
+        <div class="widget style1" style="background-color: #f8ac59; color: white">
           <div class="row">
             <div class="col-xs-4">
-              <i class="fa fa-user fa-5x"></i>
+              <i class="fa fa-user fa-4x"></i>
             </div>
             <div class="col-xs-8 text-right">
               <span> Préstamos Activos </span>
@@ -18,11 +18,12 @@
         <div class="widget style1 navy-bg">
           <div class="row">
             <div class="col-xs-4">
-              <i class="fa fa-user fa-5x"></i>
+              <i class="fa fa-dollar fa-4x"></i>
             </div>
             <div class="col-xs-8 text-right">
-              <span> Préstamos Inactivos </span>
-              <h2 class="font-bold"><%= @inactive_loans_total %></h2>
+              <span> Monto Total Prestado </span>
+              <h2 class="font-bold"><%= number_with_delimiter(@total_loaned_amount.round(2), :delimiter => ',',
+                                                              :precision => 2) %></h2>
             </div>
           </div>
         </div>
@@ -31,11 +32,11 @@
         <div class="widget style1 navy-bg">
           <div class="row">
             <div class="col-xs-4">
-              <i class="fa fa-user fa-5x"></i>
+              <i class="fa fa-check-square-o fa-4x"></i>
             </div>
             <div class="col-xs-8 text-right">
-              <span> Monto Total Prestado </span>
-              <h2 class="font-bold"><%= @total_loaned_amount %></h2>
+              <span> Préstamos Inactivos </span>
+              <h2 class="font-bold"><%= @inactive_loans_total %></h2>
             </div>
           </div>
         </div>
