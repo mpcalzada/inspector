@@ -12,7 +12,7 @@ class EmployersController < ApplicationController
   # GET /employers/1
   # GET /employers/1.json
   def show
-    @attendance_report = AttendanceTracker.perform_attendance_analysis
+    @attendance_report = AttendanceTracker.perform_attendance_analysis(@employer.id)
     @roles = EmployerRoles.new
 
     user = @employer.user

@@ -1,20 +1,25 @@
 class AttendanceTracker < ApplicationRecord
   belongs_to :employer
 
-  def self.perform_attendance_analysis
+  def self.perform_attendance_analysis(employer_id)
     begin
       entrance_constant = 'entrada internet 21'
       exit_constant = 'salida internet 21'
       response_hash = Hash.new
 
+
       is_working = false
       last_entrance = Date.new
 
-      attendances = AttendanceTracker.where(:description => [entrance_constant, exit_constant]).order(:registered_datetime).limit(nil)
+      attendances = AttendanceTracker
+                        .where(:description => [entrance_constant, exit_constant], :employer_id => employer_id)
+                        .order(:registered_datetime)
+                        .limit(nil)
+      current_day = attendances.first.registered_datetime.wday
 
       attendances.each do |attend|
         if attend.description.eql? entrance_constant
-          unless is_working
+          unless is_working && current_day.eql?(attend.registered_datetime.wday)
             is_working = true
             last_entrance = attend.registered_datetime
           end
@@ -24,7 +29,7 @@ class AttendanceTracker < ApplicationRecord
             last_exit = attend.registered_datetime
 
             key = attend.registered_datetime.strftime('%m-%d-%Y')
-            worked_hours = ((last_exit - last_entrance) / 60)/60
+            worked_hours = ((last_exit - last_entrance) / 60) / 60
 
             if response_hash.key? key
               inner_attendant_control = response_hash[key]
@@ -37,6 +42,7 @@ class AttendanceTracker < ApplicationRecord
             response_hash[key] = inner_attendant_control
           end
         end
+        current_day = attend.registered_datetime.wday
       end
     rescue Exception => e
       puts "Unable to process attendance analysis: #{(e)}"
@@ -54,7 +60,7 @@ class AttendanceTracker < ApplicationRecord
     end
 
     def add_minutes(hours)
-      @worked_hours =(@worked_hours + hours).round 2
+      @worked_hours = (@worked_hours + hours).round 2
     end
 
     def change_finished_time(finished_time)

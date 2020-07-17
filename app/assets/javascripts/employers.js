@@ -107,7 +107,7 @@ function initClockPicker() {
     $('.clockpicker').clockpicker();
 }
 
-$('input[type="checkbox"]').change(function(){
+$('input[type="checkbox"]').change(function () {
     this.value = (Number(this.checked));
 });
 
@@ -285,8 +285,15 @@ function modifyAttendanceTable(jsonDataSet) {
         entranceCell.innerHTML = jsonDataSet[i].entrance_time;
 
         entranceCell.innerHTML = jsonDataSet[i].entrance_time + ' - ' + ((jsonDataSet[i].entrance_time < '09:10:00') ? tick : strike);
-        exitCell.innerHTML = jsonDataSet[i].finished_time + ' - ' + ((jsonDataSet[i].finished_time > '18:00:00') ? tick : strike);
-        workedHoursCell.innerHTML = jsonDataSet[i].worked_hours + ' - ' + ((jsonDataSet[i].worked_hours > 8) ? tick : strike);
+
+        if (jsonDataSet[i].finished_time > '18:00:00') {
+            exitCell.innerHTML = jsonDataSet[i].finished_time + ' - ' + tick
+        } else if (jsonDataSet[i].finished_time > '16:00:00' && date.getDay() === 5) {
+            exitCell.innerHTML = jsonDataSet[i].finished_time + ' - ' + tick
+        } else {
+            exitCell.innerHTML = jsonDataSet[i].finished_time + ' - ' + strike
+        }
+        workedHoursCell.innerHTML = jsonDataSet[i].worked_hours;
     }
 }
 
