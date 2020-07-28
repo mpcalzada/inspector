@@ -1,7 +1,30 @@
 class AttendanceTracker < ApplicationRecord
   belongs_to :employer
 
-  def self.perform_attendance_analysis(employer_id)
+  def self.full_analysis(initial_date, end_date, employer_id = nil)
+    attendance_historic = {initial_date: initial_date, end_date: end_date}
+    attendance_historic["employers"] ||= []
+
+    employers = employer_id.nil? ? Employer.all : Employer.where(id: employer_id)
+
+    employers.each do |employer|
+      attendance = self.date_range_analysis(
+          initial_date: initial_date,
+          end_date: end_date,
+          employer_id: employer.id
+      )
+      json = {
+          employer_id: employer.id,
+          employer_name: employer.full_name,
+          attendance_tracking: JSON.parse(attendance)
+      }
+      attendance_historic["employers"] << json
+    end
+
+    return attendance_historic.to_json
+  end
+
+  def self.date_range_analysis(initial_date: 15.days.ago.to_date, end_date: Date.today, employer_id: nil)
     begin
       entrance_constant = 'entrada internet 21'
       exit_constant = 'salida internet 21'
@@ -12,7 +35,11 @@ class AttendanceTracker < ApplicationRecord
       last_entrance = Date.new
 
       attendances = AttendanceTracker
-                        .where(:description => [entrance_constant, exit_constant], :employer_id => employer_id)
+                        .where(
+                            :description => [entrance_constant, exit_constant],
+                            :employer_id => employer_id
+                        )
+                        .where("registered_datetime > ? AND registered_datetime < ?", initial_date, end_date)
                         .order(:registered_datetime)
                         .limit(nil)
       current_day = attendances.first.registered_datetime.wday
@@ -50,6 +77,7 @@ class AttendanceTracker < ApplicationRecord
     return response_hash.values.to_json
   end
 
+
   class InnerAttendantControl
 
     def initialize(date, entrance_time, finished_time, worked_hours)
@@ -67,4 +95,5 @@ class AttendanceTracker < ApplicationRecord
       @finished_time = finished_time.strftime('%H:%M:%S')
     end
   end
+
 end

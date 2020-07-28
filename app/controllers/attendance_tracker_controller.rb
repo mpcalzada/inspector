@@ -1,6 +1,22 @@
 class AttendanceTrackerController < ApplicationController
   before_action :set_attendance_tracker, only: [:update]
 
+  def employer_history
+    @history = AttendanceTracker.full_analysis(100.days.ago.to_date, Date.today, params[:id])
+    respond_to do |format|
+      format.html { render json: @history, status: :ok }
+      format.json { render json: @history, status: :ok }
+    end
+  end
+
+  def full_history
+    @history = AttendanceTracker.full_analysis(100.days.ago.to_date, Date.today)
+    respond_to do |format|
+      format.html { render json: @history, status: :ok }
+      format.json { render json: @history, status: :ok }
+    end
+  end
+
   # PATCH/PUT /attendance_tracker/1
   # PATCH/PUT /attendance_tracker/1.json
   def update
@@ -26,6 +42,7 @@ class AttendanceTrackerController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_attendance_tracker
     @attendance_tracker = AttendanceTracker.find(params[:id])

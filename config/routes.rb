@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       get 'dashboard/human_resources_dashboard'
       get 'dashboard/reports_dashboard'
 
+      get 'attendance/historic/:id', to: 'attendance_tracker#employer_history'
+      get 'attendance/historic', to: 'attendance_tracker#full_history'
+
       put 'employers/:id/attach_document', to: 'employers#attach_document'
       put 'employers/:id/add_roles', to: 'employers#add_roles'
       post 'employers/:id/enable_user', to: 'employers#enable_user'
