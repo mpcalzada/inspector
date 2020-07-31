@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-
-  resources :loans
   devise_for :users
 
   devise_scope :user do
@@ -11,6 +9,7 @@ Rails.application.routes.draw do
     get 'home_landing' => 'landing#index'
 
     authenticated :user do
+      resources :loans
       resources :departments
       resources :attendance_tracker
       resources :upload_files
@@ -23,8 +22,11 @@ Rails.application.routes.draw do
       get 'dashboard/human_resources_dashboard'
       get 'dashboard/reports_dashboard'
 
-      get 'attendance/historic/:id', to: 'attendance_tracker#employer_history'
-      get 'attendance/historic', to: 'attendance_tracker#full_history'
+      get 'reports/attendance_tracking', as: :attendance_report
+
+
+      post 'attendance/historic/:id', to: 'attendance_tracker#employer_history'
+      post 'attendance/historic', to: 'attendance_tracker#full_history'
 
       put 'employers/:id/attach_document', to: 'employers#attach_document'
       put 'employers/:id/add_roles', to: 'employers#add_roles'

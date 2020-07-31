@@ -2,6 +2,8 @@ class AttendanceTracker < ApplicationRecord
   belongs_to :employer
 
   def self.full_analysis(initial_date, end_date, employer_id = nil)
+    initial_date ||= 15.days.ago.to_date
+    end_date ||= Date.today
     attendance_historic = {initial_date: initial_date, end_date: end_date}
     attendance_historic["employers"] ||= []
 

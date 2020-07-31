@@ -2,7 +2,7 @@ class AttendanceTrackerController < ApplicationController
   before_action :set_attendance_tracker, only: [:update]
 
   def employer_history
-    @history = AttendanceTracker.full_analysis(100.days.ago.to_date, Date.today, params[:id])
+    @history = AttendanceTracker.full_analysis(params[:initial_date], params[:end_date], params[:id])
     respond_to do |format|
       format.html { render json: @history, status: :ok }
       format.json { render json: @history, status: :ok }
@@ -10,7 +10,7 @@ class AttendanceTrackerController < ApplicationController
   end
 
   def full_history
-    @history = AttendanceTracker.full_analysis(100.days.ago.to_date, Date.today)
+    @history = AttendanceTracker.full_analysis(params[:initial_date], params[:end_date])
     respond_to do |format|
       format.html { render json: @history, status: :ok }
       format.json { render json: @history, status: :ok }

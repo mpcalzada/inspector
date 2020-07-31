@@ -1,0 +1,170 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Reportes de Asistencia</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a>Reportes</a>
+      </li>
+      <li class="active">
+        <strong>Reportes de Asistencia</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated">
+
+  <div class="ibox">
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <%= select_tag('employers', options_from_collection_for_select(Employer.all, 'id', 'full_name'),
+                           {:prompt => 'Todos', :class => 'form-control m-b', :id => 'employers_select'}) %>
+          </div>
+          <div class="col-md-3 form_datepicker">
+            <div class="input-group date">
+              <input type="text" class="form-control" id="initial-date-field">
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <div class="col-md-3 form_datepicker">
+            <div class="input-group date">
+              <input type="text" class="form-control" id="end-date-field">
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="button" name="search_employer" id="search-employer-button" class="btn btn-info btn-block">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="height: 60vw">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover dataTables-example" id="attendance-table">
+            <thead>
+            <tr>
+
+              <th>Empleado</th>
+              <th>Fecha</th>
+              <th>Entrada</th>
+              <th>Salida</th>
+              <th>Horas Trabajadas</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+
+      function loadTable() {
+
+          $('.dataTables-example').DataTable({
+              pageLength: 25,
+              responsive: true,
+              dom: '<"html5buttons"B>lTfgitp',
+              buttons: [
+                  { extend: 'copy'},
+                  {extend: 'csv'},
+                  {extend: 'excel', title: 'ExampleFile'},
+                  {extend: 'pdf', title: 'ExampleFile'},
+
+                  {extend: 'print',
+                      customize: function (win){
+                          $(win.document.body).addClass('white-bg');
+                          $(win.document.body).css('font-size', '10px');
+
+                          $(win.document.body).find('table')
+                              .addClass('compact')
+                              .css('font-size', 'inherit');
+                      }
+                  }
+              ]
+
+          });
+      }
+
+      $('.form_datepicker').find('.input-group.date').datepicker({
+          date: new Date(),
+          format: "yyyy-mm-dd",
+          startView: 2,
+          todayBtn: "linked",
+          keyboardNavigation: false,
+          forceParse: false,
+          autoclose: true
+      }).datepicker("setDate", new Date());
+
+      async function printAttendanceTable(path = '/attendance/historic/', data = {}) {
+          fetch(path, {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+              .then((response) => {
+                  return response.json()
+              })
+              .then((json) => {
+                  fillTable(json)
+              })
+      }
+
+      function fillTable(json) {
+          $('.dataTables-example').DataTable().clear();
+          $('.dataTables-example').DataTable().destroy();
+
+          const table = document.getElementById("attendance-table").getElementsByTagName('tbody')[0];
+          for (var i = table.children.length - 1; i >= 0; i--) {
+              table.children[0].remove();
+          }
+
+          json.employers.forEach((employer) => {
+
+              const employerName = employer.employer_name
+
+              employer.attendance_tracking.forEach((tracking) => {
+                  let row = table.insertRow(-1);
+
+                  let employerCell = row.insertCell(0);
+                  let dateCell = row.insertCell(1);
+                  let monthlyPayCell = row.insertCell(2);
+                  let interestCell = row.insertCell(3);
+                  let totalCell = row.insertCell(4);
+
+                  employerCell.innerHTML = employerName;
+                  dateCell.innerHTML = tracking.date;
+                  monthlyPayCell.innerHTML = tracking.entrance_time;
+                  interestCell.innerHTML = tracking.finished_time;
+                  totalCell.innerHTML = tracking.worked_hours;
+              })
+          })
+          loadTable()
+      }
+
+      $("#search-employer-button").click(function () {
+          const api_path = `/attendance/historic/${$('#employers_select').val()}`;
+          const data = {
+              initial_date: `${$('#initial-date-field').val()}`,
+              end_date: `${$('#end-date-field').val()}`,
+          }
+          printAttendanceTable(api_path, data)
+      })
+
+      $(document).ready(function () {
+          printAttendanceTable()
+          loadTable()
+      })
+
+  </script>
+
+<% end %>

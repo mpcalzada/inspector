@@ -92,11 +92,14 @@
       <% end %>
 
       <% if has_report_roles(current_user) %>
-        <li>
-          <%= link_to home_index_path do %>
-            <i class="fa fa-diamond"></i> <span class="nav-label">Reportes</span>
-            <span class="label label-primary pull-right">Pronto</span>
-          <% end %>
+        <li class="<%= is_active_controller('reports') %>">
+          <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Reportes</span>
+            <span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level <%= is_active_controller('dashboards') %>">
+            <li class="<%= is_active_controller('dashboards') %>">
+              <%= link_to '<i class="fa fa-check-circle-o"></i>Reporte Asistencia'.html_safe, attendance_report_path %>
+            </li>
+          </ul>
         </li>
       <% end %>
 
