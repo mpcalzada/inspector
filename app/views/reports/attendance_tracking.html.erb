@@ -14,7 +14,7 @@
 <div class="wrapper wrapper-content animated">
 
   <div class="ibox">
-    <div class="ibox-content">
+    <div class="ibox-title">
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-4">
@@ -40,6 +40,55 @@
           </div>
         </div>
       </div>
+
+    </div>
+  </div>
+  <div class="ibox">
+    <div class="ibox-title">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="widget style1" style="background-color: #f8ac59; color: white">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-user fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Préstamos Activos </span>
+                <h2 class="font-bold">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 navy-bg">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-dollar fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Monto Total Prestado </span>
+                <h2 class="font-bold">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 navy-bg">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-check-square-o fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Préstamos Inactivos </span>
+                <h2 class="font-bold">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ibox-content">
       <div class="row" style="height: 60vw">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover dataTables-example" id="attendance-table">
@@ -49,6 +98,8 @@
               <th>Empleado</th>
               <th>Fecha</th>
               <th>Entrada</th>
+              <!--              <th>Dif (09:00)</th>-->
+              <!--              <th>Dif (09:10)</th>-->
               <th>Salida</th>
               <th>Horas Trabajadas</th>
             </tr>
@@ -69,17 +120,17 @@
       function loadTable() {
 
           $('.dataTables-example').DataTable({
-              pageLength: 25,
               responsive: true,
               dom: '<"html5buttons"B>lTfgitp',
               buttons: [
-                  { extend: 'copy'},
+                  {extend: 'copy'},
                   {extend: 'csv'},
                   {extend: 'excel', title: 'ExampleFile'},
                   {extend: 'pdf', title: 'ExampleFile'},
 
-                  {extend: 'print',
-                      customize: function (win){
+                  {
+                      extend: 'print',
+                      customize: function (win) {
                           $(win.document.body).addClass('white-bg');
                           $(win.document.body).css('font-size', '10px');
 
@@ -133,6 +184,8 @@
               const employerName = employer.employer_name
 
               employer.attendance_tracking.forEach((tracking) => {
+
+                  console.log(tracking)
                   let row = table.insertRow(-1);
 
                   let employerCell = row.insertCell(0);
@@ -141,10 +194,25 @@
                   let interestCell = row.insertCell(3);
                   let totalCell = row.insertCell(4);
 
+                  let entranceSpan = ''
+
+                  if (tracking.entrance_diff.startsWith('+')) {
+                      entranceSpan = `<span class="label label-warning pull-right">${tracking.entrance_diff}</span>`
+                  }
+                  if (tracking.delay_diff.startsWith('+')) {
+                      entranceSpan += `<span class="label label-danger pull-right">${tracking.delay_diff}</span>`
+                  }
+
+                  let exitSpan = ''
+
+                  if (tracking.exit_diff.startsWith('-')) {
+                      exitSpan = `<span class="label label-danger pull-right">${tracking.exit_diff}</span>`
+                  }
+
                   employerCell.innerHTML = employerName;
                   dateCell.innerHTML = tracking.date;
-                  monthlyPayCell.innerHTML = tracking.entrance_time;
-                  interestCell.innerHTML = tracking.finished_time;
+                  monthlyPayCell.innerHTML = tracking.entrance_time + entranceSpan;
+                  interestCell.innerHTML = tracking.finished_time + exitSpan;
                   totalCell.innerHTML = tracking.worked_hours;
               })
           })

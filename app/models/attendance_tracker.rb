@@ -1,6 +1,12 @@
 class AttendanceTracker < ApplicationRecord
   belongs_to :employer
 
+  ENTRANCE_IDENTIFIER = 'entrada internet 21'
+  EXIT_IDENTIFIER = 'salida internet 21'
+  ENTRANCE_TIME = '09:00:00'
+  DELAY_TIME = '09:10:00'
+  EXIT_TIME = '19:00:00'
+
   def self.full_analysis(initial_date, end_date, employer_id = nil)
     initial_date ||= 15.days.ago.to_date
     end_date ||= Date.today
@@ -28,17 +34,14 @@ class AttendanceTracker < ApplicationRecord
 
   def self.date_range_analysis(initial_date: 15.days.ago.to_date, end_date: Date.today, employer_id: nil)
     begin
-      entrance_constant = 'entrada internet 21'
-      exit_constant = 'salida internet 21'
       response_hash = Hash.new
-
 
       is_working = false
       last_entrance = Date.new
 
       attendances = AttendanceTracker
                         .where(
-                            :description => [entrance_constant, exit_constant],
+                            :description => [ENTRANCE_IDENTIFIER, EXIT_IDENTIFIER],
                             :employer_id => employer_id
                         )
                         .where("registered_datetime > ? AND registered_datetime < ?", initial_date, end_date)
@@ -47,7 +50,7 @@ class AttendanceTracker < ApplicationRecord
       current_day = attendances.first.registered_datetime.wday
 
       attendances.each do |attend|
-        if attend.description.eql? entrance_constant
+        if attend.description.eql? ENTRANCE_IDENTIFIER
           unless is_working && current_day.eql?(attend.registered_datetime.wday)
             is_working = true
             last_entrance = attend.registered_datetime
@@ -82,11 +85,14 @@ class AttendanceTracker < ApplicationRecord
 
   class InnerAttendantControl
 
-    def initialize(date, entrance_time, finished_time, worked_hours)
+    def initialize(date, entrance_time, finished_time, worked_hours, exit_diff = '0')
       @date = date
       @entrance_time = entrance_time.strftime('%H:%M:%S')
       @finished_time = finished_time.strftime('%H:%M:%S')
       @worked_hours = worked_hours.round 2
+      @entrance_diff = time_difference(@entrance_time, ENTRANCE_TIME)
+      @delay_diff = time_difference(@entrance_time, DELAY_TIME)
+      @exit_diff = exit_diff
     end
 
     def add_minutes(hours)
@@ -95,6 +101,18 @@ class AttendanceTracker < ApplicationRecord
 
     def change_finished_time(finished_time)
       @finished_time = finished_time.strftime('%H:%M:%S')
+      @exit_diff = time_difference(@finished_time, EXIT_TIME)
+    end
+
+    def time_difference(date_a, date_b)
+      time_a = Time.parse(date_a)
+      time_b = Time.parse(date_b)
+
+      min = ((time_a - time_b) / 60).to_i
+      sign = min < 0 ? '-' : '+'
+      hour = min.abs / 60
+
+      sign + hour.to_s + ':' + min.abs.to_s
     end
   end
 
