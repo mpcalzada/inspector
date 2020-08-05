@@ -108,11 +108,14 @@ class AttendanceTracker < ApplicationRecord
       time_a = Time.parse(date_a)
       time_b = Time.parse(date_b)
 
-      min = ((time_a - time_b) / 60).to_i
-      sign = min < 0 ? '-' : '+'
-      hour = min.abs / 60
+      seconds = (time_a - time_b).to_f.round(2)
 
-      sign + hour.to_s + ':' + min.abs.to_s
+      total_minutes = seconds.abs / 60
+      hour = total_minutes / 60
+      minutes = total_minutes % 60
+      sign = seconds < 0 ? '-' : '+'
+
+      sign + hour.to_i.to_s + ':' + minutes.to_i.abs.to_s
     end
   end
 
