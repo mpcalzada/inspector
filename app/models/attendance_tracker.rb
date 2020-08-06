@@ -1,5 +1,6 @@
 class AttendanceTracker < ApplicationRecord
   belongs_to :employer
+  validates_uniqueness_of :registered_datetime, scope: [:employer_id]
 
   ENTRANCE_IDENTIFIER = 'entrada internet 21'
   EXIT_IDENTIFIER = 'salida internet 21'

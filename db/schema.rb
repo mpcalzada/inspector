@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_031551) do
+ActiveRecord::Schema.define(version: 2020_07_15_031502) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_031551) do
     t.datetime "registered_datetime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["employer_id", "registered_datetime"], name: "unique_register_datetime_for_attendance", unique: true
     t.index ["employer_id"], name: "index_attendance_trackers_on_employer_id"
     t.index ["justification_reason_id"], name: "index_attendance_trackers_on_justification_reason_id"
   end
