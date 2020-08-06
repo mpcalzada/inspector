@@ -16,13 +16,13 @@
       <%= select_tag('employers', options_from_collection_for_select(Employer.all, 'id', 'full_name'),
                      {:prompt => 'Todos', :class => 'form-control m-b', :id => 'employers_select'}) %>
     </div>
-    <div class="col-md-3 form-group form_datepicker">
+    <div class="col-md-3 form-group form-datepicker" id="initial-datepicker">
       <div class="input-group date">
         <input type="text" class="form-control" id="initial-date-field">
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
       </div>
     </div>
-    <div class="col-md-3 form-group form_datepicker">
+    <div class="col-md-3 form-group form-datepicker form-final-date" id="end-datepicker">
       <div class="input-group date">
         <input type="text" class="form-control" id="end-date-field">
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -170,17 +170,12 @@
           });
       }
 
-      $('.form_datepicker').find('.input-group.date').datepicker({
-          date: new Date(),
-          format: "yyyy-mm-dd",
-          startView: 2,
-          todayBtn: "linked",
-          keyboardNavigation: false,
-          forceParse: false,
-          autoclose: true
-      }).datepicker("setDate", new Date());
+      async function printAttendanceTable(path = '/attendance/historic/') {
+          const data = {
+              initial_date: `${$('#initial-date-field').val()}`,
+              end_date: `${$('#end-date-field').val()}`,
+          }
 
-      async function printAttendanceTable(path = '/attendance/historic/', data = {}) {
           fetch(path, {
               method: 'POST',
               body: JSON.stringify(data),
@@ -194,6 +189,25 @@
               .then((json) => {
                   fillTable(json)
               })
+      }
+
+      function initializeDatePickers() {
+          $('.form-datepicker').find('.input-group.date').datepicker({
+              date: new Date(),
+              format: "yyyy-mm-dd",
+              startView: 2,
+              todayBtn: "linked",
+              keyboardNavigation: false,
+              forceParse: false,
+              autoclose: true
+          });
+
+          const today = new Date()
+
+          $('#initial-datepicker').find('.input-group.date')
+              .datepicker("setDate", new Date(today.getTime() - (100 * 24 * 60 * 60 * 1000)));
+          $('#end-datepicker').find('.input-group.date')
+              .datepicker("setDate", today);
       }
 
       function fillTable(json) {
@@ -222,11 +236,10 @@
 
                   let entranceSpan = ''
 
-                  if (tracking.entrance_diff.startsWith('+')) {
-                      entranceSpan = `<span class="label label-warning pull-right">${tracking.entrance_diff}</span>`
-                  }
                   if (tracking.delay_diff.startsWith('+')) {
-                      entranceSpan += `<span class="label label-danger pull-right">${tracking.delay_diff}</span>`
+                      entranceSpan = `<span class="label label-danger pull-right">${tracking.delay_diff}</span>`
+                  } else if (tracking.entrance_diff.startsWith('+')) {
+                      entranceSpan = `<span class="label label-warning pull-right">${tracking.entrance_diff}</span>`
                   }
 
                   let exitSpan = ''
@@ -247,14 +260,11 @@
 
       $("#search-employer-button").click(function () {
           const api_path = `/attendance/historic/${$('#employers_select').val()}`;
-          const data = {
-              initial_date: `${$('#initial-date-field').val()}`,
-              end_date: `${$('#end-date-field').val()}`,
-          }
-          printAttendanceTable(api_path, data)
+          printAttendanceTable(api_path)
       })
 
       $(document).ready(function () {
+          initializeDatePickers();
           printAttendanceTable()
           loadTable()
       })
