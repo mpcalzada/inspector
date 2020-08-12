@@ -56,8 +56,21 @@
                 <i class="fa fa-dollar fa-4x"></i>
               </div>
               <div class="col-xs-8 text-right">
+                <span>Total de Días</span>
+                <h2 class="font-bold" id="dashboard-days-counter">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 navy-bg" style="min-height: 8vw">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-dollar fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
                 <span>Total de Retardos</span>
-                <h2 class="font-bold">0</h2>
+                <h2 class="font-bold" id="dashboard-delays-counter">0</h2>
               </div>
             </div>
           </div>
@@ -70,7 +83,7 @@
               </div>
               <div class="col-xs-8 text-right">
                 <span>Horas Trabajadas</span>
-                <h2 class="font-bold">0</h2>
+                <h2 class="font-bold" id="dashboard-worked-hours">0</h2>
               </div>
             </div>
           </div>
@@ -83,7 +96,7 @@
               </div>
               <div class="col-xs-8 text-right">
                 <span>Promedio de Horas Diario</span>
-                <h2 class="font-bold">0</h2>
+                <h2 class="font-bold" id="dashboard-avg-worked-hours">0</h2>
               </div>
             </div>
           </div>
@@ -95,8 +108,34 @@
                 <i class="fa fa-check-square-o fa-4x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span>Horas trabajadas / día (Avg)</span>
-                <h2 class="font-bold">0</h2>
+                <span>Promedio de Salidas Diarias</span>
+                <h2 class="font-bold" id="dashboard-avg-daily-exits">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 navy-bg" style="min-height: 8vw">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-check-square-o fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span>Total de Salidas</span>
+                <h2 class="font-bold" id="dashboard-total-exits">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 navy-bg" style="min-height: 8vw">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-check-square-o fa-4x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span>Total de Entradas</span>
+                <h2 class="font-bold" id="dashboard-total-entrances">0</h2>
               </div>
             </div>
           </div>
@@ -170,6 +209,24 @@
           });
       }
 
+      function fillDashboards(dashboardContent = {
+          daysCounter: 0,
+          delaysCounter: 0,
+          workedHours: 0,
+          dailyWorkedHoursAvg: 0,
+          dailyExitsAvg: 0,
+          totalExits: 0,
+          totalEntrances: 0,
+      }) {
+          $('#dashboard-days-counter').text(dashboardContent.daysCounter)
+          $('#dashboard-delays-counter').text(dashboardContent.delaysCounter)
+          $('#dashboard-worked-hours').text(dashboardContent.workedHours)
+          $('#dashboard-avg-worked-hours').text(dashboardContent.dailyWorkedHoursAvg)
+          $('#dashboard-avg-daily-exits').text(dashboardContent.dailyExitsAvg)
+          $('#dashboard-total-exits').text(dashboardContent.totalExits)
+          $('#dashboard-total-entrances').text(dashboardContent.totalEntrances)
+      }
+
       async function printAttendanceTable(path = '/attendance/historic/') {
           const data = {
               initial_date: `${$('#initial-date-field').val()}`,
@@ -205,7 +262,7 @@
           const today = new Date()
 
           $('#initial-datepicker').find('.input-group.date')
-              .datepicker("setDate", new Date(today.getTime() - (100 * 24 * 60 * 60 * 1000)));
+              .datepicker("setDate", new Date(today.getTime() - (15 * 24 * 60 * 60 * 1000)));
           $('#end-datepicker').find('.input-group.date')
               .datepicker("setDate", today);
       }
@@ -219,15 +276,30 @@
               table.children[0].remove();
           }
 
+          const dashboardContent = {
+              daysCounter: 0,
+              delaysCounter: 0,
+              workedHours: 0,
+              dailyWorkedHoursAvg: 0,
+              dailyExitsAvg: 0,
+              totalExits: 0,
+              totalEntrances: 0,
+          }
+
+          console.log(json)
+
           json.employers.forEach((employer) => {
 
-              const employerName = employer.employer_name
+              const employerName = employer.full_name
+              dashboardContent.workedHours += employer.worked_hours
+              dashboardContent.dailyWorkedHoursAvg += employer.daily_avg_worked_hours
+              dashboardContent.dailyExitsAvg += employer.daily_avg_exits
+              dashboardContent.totalExits += employer.total_exits
+              dashboardContent.totalEntrances += employer.total_entrance
 
-              employer.attendance_tracking.forEach((tracking) => {
+              employer.tracking_analysis.forEach((tracking) => {
 
-                  console.log(tracking)
                   let row = table.insertRow(-1);
-
                   let employerCell = row.insertCell(0);
                   let dateCell = row.insertCell(1);
                   let monthlyPayCell = row.insertCell(2);
@@ -236,7 +308,10 @@
 
                   let entranceSpan = ''
 
-                  if (tracking.delay_diff.startsWith('+')) {
+                  dashboardContent.daysCounter++
+
+                  if (tracking.is_delayed) {
+                      dashboardContent.delaysCounter++
                       entranceSpan = `<span class="label label-danger pull-right">${tracking.delay_diff}</span>`
                   } else if (tracking.entrance_diff.startsWith('+')) {
                       entranceSpan = `<span class="label label-warning pull-right">${tracking.entrance_diff}</span>`
@@ -255,6 +330,7 @@
                   totalCell.innerHTML = tracking.worked_hours;
               })
           })
+          fillDashboards(dashboardContent)
           loadTable()
       }
 

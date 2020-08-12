@@ -22,12 +22,11 @@ class AttendanceTracker < ApplicationRecord
           end_date: end_date,
           employer_id: employer.id
       )
-      json = {
-          employer_id: employer.id,
-          employer_name: employer.full_name,
-          attendance_tracking: JSON.parse(attendance)
-      }
-      attendance_historic["employers"] << json
+
+      employer_json = InnerEmployer.new(employer.id, employer.full_name, attendance)
+      employer_json.generate_metrics
+
+      attendance_historic["employers"] << employer_json
     end
 
     return attendance_historic.to_json
@@ -51,23 +50,28 @@ class AttendanceTracker < ApplicationRecord
       current_day = attendances.first.registered_datetime.wday
 
       attendances.each do |attend|
+        key = attend.registered_datetime.strftime('%m-%d-%Y')
+
         if attend.description.eql? ENTRANCE_IDENTIFIER
           unless is_working && current_day.eql?(attend.registered_datetime.wday)
             is_working = true
             last_entrance = attend.registered_datetime
+          end
+          if response_hash.key? key
+            response_hash[key].new_entrance
           end
         else
           if is_working
             is_working = false
             last_exit = attend.registered_datetime
 
-            key = attend.registered_datetime.strftime('%m-%d-%Y')
             worked_hours = ((last_exit - last_entrance) / 60) / 60
 
             if response_hash.key? key
               inner_attendant_control = response_hash[key]
               inner_attendant_control.change_finished_time last_exit
               inner_attendant_control.add_minutes worked_hours
+              inner_attendant_control.new_exit
             else
               inner_attendant_control = InnerAttendantControl.new(key, last_entrance, last_exit, worked_hours)
             end
@@ -80,20 +84,62 @@ class AttendanceTracker < ApplicationRecord
     rescue Exception => e
       puts "Unable to process attendance analysis: #{(e)}"
     end
-    return response_hash.values.to_json
+    return response_hash.values
   end
 
 
+  class InnerEmployer
+    def initialize(id, full_name, tracking_analysis)
+      @id = id
+      @full_name = full_name
+      @tracking_analysis = tracking_analysis
+      @delays_total = 0
+      @worked_hours = 0
+      @daily_avg_worked_hours = 0
+      @daily_avg_exits = 0
+      @total_exits = 0
+      @total_entrance = 0
+      @total_days = 0
+    end
+
+    def generate_metrics
+      @tracking_analysis.each do |attendant_control|
+        @total_days += 1
+        @worked_hours += attendant_control.worked_hours
+        @delays_total += 1 if attendant_control.is_delayed
+        @total_entrance += attendant_control.total_entrances
+        @total_exits += attendant_control.total_exits
+      end
+      if @total_days > 0
+        @daily_avg_exits = (@total_exits / @total_days).to_i
+        @daily_avg_worked_hours = (@worked_hours / @total_days).round 2
+        @worked_hours = @worked_hours.round 2
+      end
+    end
+  end
+
   class InnerAttendantControl
+    attr_reader :worked_hours, :is_delayed, :total_entrances, :total_exits
 
     def initialize(date, entrance_time, finished_time, worked_hours, exit_diff = '0')
       @date = date
       @entrance_time = entrance_time.strftime('%H:%M:%S')
       @finished_time = finished_time.strftime('%H:%M:%S')
       @worked_hours = worked_hours.round 2
-      @entrance_diff = time_difference(@entrance_time, ENTRANCE_TIME)
-      @delay_diff = time_difference(@entrance_time, DELAY_TIME)
+      @entrance_diff = time_difference(@entrance_time, '09:00:00')
+      @delay_diff = time_difference(@entrance_time, '09:00:00')
+      @is_delayed = estimate_delay(@entrance_time)
       @exit_diff = exit_diff
+      @total_exits = 1
+      @total_entrances = 1
+    end
+
+    def new_entrance
+      @total_entrances += 1
+    end
+
+    def new_exit
+      @total_exits += 1
     end
 
     def add_minutes(hours)
@@ -103,6 +149,15 @@ class AttendanceTracker < ApplicationRecord
     def change_finished_time(finished_time)
       @finished_time = finished_time.strftime('%H:%M:%S')
       @exit_diff = time_difference(@finished_time, EXIT_TIME)
+    end
+
+    private
+
+    def estimate_delay(entrance_time)
+      time_a = Time.parse(entrance_time)
+      time_b = Time.parse('09:10:00')
+
+      ((time_a - time_b).to_f.round(2) > 0)
     end
 
     def time_difference(date_a, date_b)
