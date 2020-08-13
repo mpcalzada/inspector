@@ -171,7 +171,7 @@ class AttendanceTracker < ApplicationRecord
       minutes = total_minutes % 60
       sign = seconds < 0 ? '-' : '+'
 
-      sign + hour.to_i.to_s + ':' + minutes.to_i.abs.to_s
+      '%s%02d:%02d' % [sign, hour.to_i, minutes.to_i.abs]
     end
   end
 
