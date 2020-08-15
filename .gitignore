@@ -407,4 +407,4 @@ build-iPhoneSimulator/
 
 # End of https://www.gitignore.io/api/node,ruby,rails,macos,rubymine,database,jetbrains
 
-app.standard.yaml
+app.standard.yaml.env
