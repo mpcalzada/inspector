@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_031502) do
+ActiveRecord::Schema.define(version: 2020_08_20_040512) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +46,17 @@ ActiveRecord::Schema.define(version: 2020_07_15_031502) do
     t.index ["employer_id", "registered_datetime"], name: "unique_register_datetime_for_attendance", unique: true
     t.index ["employer_id"], name: "index_attendance_trackers_on_employer_id"
     t.index ["justification_reason_id"], name: "index_attendance_trackers_on_justification_reason_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.boolean "is_buisiness_entity"
+    t.string "full_name"
+    t.string "city"
+    t.string "address"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -171,6 +182,17 @@ ActiveRecord::Schema.define(version: 2020_07_15_031502) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["employer_id"], name: "index_loans_on_employer_id"
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.boolean "is_business_entity"
+    t.string "full_name"
+    t.string "city"
+    t.string "address"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|

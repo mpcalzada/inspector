@@ -31,3 +31,9 @@ Rails.application.config.assets.precompile += %w( dashboard.css.scss )
 
 Rails.application.config.assets.precompile += %w( reports.js )
 Rails.application.config.assets.precompile += %w( reports.css.scss )
+
+Rails.application.config.assets.precompile += %w( clients.js )
+Rails.application.config.assets.precompile += %w( clients.css.scss )
+
+Rails.application.config.assets.precompile += %w( providers.js )
+Rails.application.config.assets.precompile += %w( providers.css.scss )

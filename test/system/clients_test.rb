@@ -14,9 +14,12 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_url
     click_on "New Client"
 
-    fill_in "Member since", with: @client.member_since
-    fill_in "Office address", with: @client.office_address_id
-    fill_in "Office number", with: @client.office_number
+    fill_in "Address", with: @client.address
+    fill_in "City", with: @client.city
+    fill_in "Contact email", with: @client.contact_email
+    fill_in "Contact phone", with: @client.contact_phone
+    fill_in "Full name", with: @client.full_name
+    check "Is buisiness entity" if @client.is_buisiness_entity
     click_on "Create Client"
 
     assert_text "Client was successfully created"
@@ -27,9 +30,12 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_url
     click_on "Edit", match: :first
 
-    fill_in "Member since", with: @client.member_since
-    fill_in "Office address", with: @client.office_address_id
-    fill_in "Office number", with: @client.office_number
+    fill_in "Address", with: @client.address
+    fill_in "City", with: @client.city
+    fill_in "Contact email", with: @client.contact_email
+    fill_in "Contact phone", with: @client.contact_phone
+    fill_in "Full name", with: @client.full_name
+    check "Is buisiness entity" if @client.is_buisiness_entity
     click_on "Update Client"
 
     assert_text "Client was successfully updated"

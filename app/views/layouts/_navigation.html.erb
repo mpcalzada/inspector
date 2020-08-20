@@ -36,7 +36,9 @@
       </li>
 
       <% if has_employer_roles(current_user) or has_degree_roles(current_user) %>
-        <li class="<%= is_active_controller('employers') %> <%= is_active_controller('degrees') %> <%= is_active_controller('departments') %>">
+        <li class="<%= is_active_controller('employers') or is_active_controller('degrees') or
+                           is_active_controller('departments') or is_active_controller('clients') or
+                           is_active_controller('providers') %>">
           <a href=""><i class="fa fa-users"></i> <span class="nav-label">Recursos Humanos</span>
             <span class="fa arrow"></span></a>
           <ul class="nav nav-second-level <%= is_active_controller('employers') %>">
@@ -46,7 +48,7 @@
               </li>
             <% end %>
             <% if has_degree_roles(current_user) %>
-              <li class="<%= is_active_controller('degrees') %> <%= is_active_controller('departments') %>">
+              <li class="<%= is_active_controller('degrees') or is_active_controller('departments') %>">
                 <a href="#"><i class="fa fa-gear"></i>Organigrama <span class="fa arrow"></span></a>
                 <ul class="nav nav-third-level">
                   <li class="<%= is_active_controller('degrees') %>">
@@ -58,29 +60,30 @@
                 </ul>
               </li>
             <% end %>
-          </ul>
-        </li>
-      <% end %>
-
-      <% if has_attendance_roles(current_user) %>
-        <li class="<%= is_active_controller('upload_files') %>">
-          <a href=""><i class="fa fa-upload"></i> <span class="nav-label">Manejo de Archivos</span>
-            <span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level <%= is_active_controller('upload_files') %>">
-            <li class="<%= is_active_controller('upload_files') %>">
-              <%= link_to '<i class="fa fa-check-circle-o"></i>Asistencia'.html_safe, upload_files_path %>
-            </li>
+            <% if has_contacts_roles(current_user) %>
+              <li class="<%= is_active_controller('clients') or is_active_controller('providers') %>">
+                <a href="#"><i class="fa fa-address-book"></i>Contactos <span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                  <li class="<%= is_active_controller('clients') %>">
+                    <%= link_to '<i class="fa fa-address-card"></i>Clientes'.html_safe, clients_path %>
+                  </li>
+                  <li class="<%= is_active_controller('providers') %>">
+                    <%= link_to '<i class="fa fa-address-card-o"></i>Proveedores'.html_safe, providers_path %>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
           </ul>
         </li>
       <% end %>
 
       <% if has_accounting_roles(current_user) %>
         <li class="<%= is_active_controller('loans') %>">
-          <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Contabilidad</span>
+          <a href=""><i class="fa fa-dollar"></i> <span class="nav-label">Contabilidad</span>
             <span class="fa arrow"></span></a>
           <ul class="nav nav-second-level <%= is_active_controller('dashboards') %>">
             <li class="<%= is_active_controller('dashboards') %>">
-              <%= link_to '<i class="fa fa-check-circle-o"></i>Dashboard'.html_safe, accountancy_dashboard_path %>
+              <%= link_to '<i class="fa fa-dashboard"></i>Dashboard'.html_safe, accountancy_dashboard_path %>
             </li>
           </ul>
           <ul class="nav nav-second-level <%= is_active_controller('loans') %>">
@@ -91,13 +94,16 @@
         </li>
       <% end %>
 
-      <% if has_report_roles(current_user) %>
-        <li class="<%= is_active_controller('reports') %>">
-          <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Reportes</span>
+      <% if has_attendance_roles(current_user) %>
+        <li class="<%= is_active_controller('reports') || is_active_controller('upload_files') %>">
+          <a href=""><i class="fa fa-check-circle-o"></i> <span class="nav-label">Asistencia</span>
             <span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level <%= is_active_controller('dashboards') %>">
+          <ul class="nav nav-second-level <%= is_active_controller('dashboards') || is_active_controller('upload_files') %>">
+            <li class="<%= is_active_controller('upload_files') %>">
+              <%= link_to '<i class="fa fa-table"></i>Archivos'.html_safe, upload_files_path %>
+            </li>
             <li class="<%= is_active_controller('dashboards') %>">
-              <%= link_to '<i class="fa fa-check-circle-o"></i>Reporte Asistencia'.html_safe, attendance_report_path %>
+              <%= link_to '<i class="fa fa-star"></i>Reporte'.html_safe, attendance_report_path %>
             </li>
           </ul>
         </li>

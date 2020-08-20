@@ -18,6 +18,10 @@ module ApplicationHelper
     current_user.has_cached_role? :admin
   end
 
+  def has_contacts_roles(current_user)
+    current_user.has_cached_role? :admin
+  end
+
   def has_attendance_roles(current_user)
     current_user.has_cached_role? :admin
   end

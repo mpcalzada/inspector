@@ -27,7 +27,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 gem 'bootstrap-sass'
-gem 'font-awesome-rails'
+gem 'font-awesome-rails', '~> 4.7.0.1'
 
 #Google Cloud App Engine Deploy
 gem 'appengine', '~> 0.4.1'

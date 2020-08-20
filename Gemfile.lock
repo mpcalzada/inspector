@@ -383,7 +383,7 @@ DEPENDENCIES
   coffee-rails
   devise
   faker
-  font-awesome-rails
+  font-awesome-rails (~> 4.7.0.1)
   google-cloud-storage (~> 1.8)
   jbuilder (~> 2.5)
   jquery-rails
