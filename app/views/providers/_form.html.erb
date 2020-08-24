@@ -1,47 +1,84 @@
-<%= form_with(model: provider, local: true) do |form| %>
-  <% if provider.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(provider.errors.count, "error") %> prohibited this provider from being saved:</h2>
+<div class="wrapper wrapper-content  animated fadeInRight">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox">
+        <div class="ibox-content">
+          <div class="row">
+            <%= form_with(model: provider, local: true) do |form| %>
+              <% if provider.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(provider.errors.count, "error") %> prohibited this provider from being saved:</h2>
 
-      <ul>
-      <% provider.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+                  <ul>
+                    <% provider.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :full_name, 'Nombre' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :full_name, autocomplete: 'off', class: 'form-control required', placeholder: 'Nombre' %>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :address, 'Dirección' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :address, autocomplete: 'off', class: 'form-control required', placeholder: 'Dirección' %>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :city, 'Municipio' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :city, autocomplete: 'off', class: 'form-control required', placeholder: 'Municipio' %>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :contact_email, 'Correo Electronico' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :contact_email, autocomplete: 'off', class: 'form-control required', placeholder: 'Correo Electronico' %>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :contact_phone, 'Teléfono' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.text_field :contact_phone, autocomplete: 'off', class: 'form-control required', placeholder: 'Teléfono' %>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="col-md-3">
+                  <%= form.label :is_business_entity, 'Persona Moral' %>
+                </div>
+                <div class="col-md-6">
+                  <%= form.check_box :is_business_entity, class: ' required' %>
+                </div>
+              </div>
+
+              <div class="actions col-md-12">
+                <%= link_to 'Cancelar', providers_path, class: 'btn btn-white' %>
+                <%= form.submit 'Crear', {class: 'btn btn-primary'} %>
+              </div>
+              </div>
+            <% end %>
+            </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :is_business_entity %>
-    <%= form.check_box :is_business_entity %>
   </div>
-
-  <div class="field">
-    <%= form.label :full_name %>
-    <%= form.text_field :full_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :contact_email %>
-    <%= form.text_field :contact_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :contact_phone %>
-    <%= form.text_field :contact_phone %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

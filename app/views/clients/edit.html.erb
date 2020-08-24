@@ -1,6 +1,15 @@
-<h1>Editing Client</h1>
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Editar Cliente</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a>Contactos</a>
+      </li>
+      <li class="active">
+        <strong><%= @client.full_name %></strong>
+      </li>
+    </ol>
+  </div>
+</div>
 
 <%= render 'form', client: @client %>
-
-<%= link_to 'Show', @client %> |
-<%= link_to 'Back', clients_path %>

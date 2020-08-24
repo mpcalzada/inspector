@@ -1,6 +1,16 @@
-<h1>Editing Provider</h1>
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Editar Proveedor</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a>Contactos</a>
+      </li>
+      <li class="active">
+        <strong><%= @provider.full_name %></strong>
+      </li>
+    </ol>
+  </div>
+</div>
 
 <%= render 'form', provider: @provider %>
 
-<%= link_to 'Show', @provider %> |
-<%= link_to 'Back', providers_path %>
