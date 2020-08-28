@@ -37,3 +37,6 @@ Rails.application.config.assets.precompile += %w( clients.css.scss )
 
 Rails.application.config.assets.precompile += %w( providers.js )
 Rails.application.config.assets.precompile += %w( providers.css.scss )
+
+Rails.application.config.assets.precompile += %w( accounts.js )
+Rails.application.config.assets.precompile += %w( accounts.css.scss )

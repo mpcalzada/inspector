@@ -6,11 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Department.create(description: 'Dirección General')
-Department.create(description: 'Sistemas')
-Department.create(description: 'Recursos Humanos')
-
-#Degree.create(description: 'Director General')
-#Degree.create(description: 'Director Sistemas')
-#Degree.create(description: 'Analista de Datos')
-#Degree.create(description: 'Desarrollador')
+AccountType.create(id: 1, name: 'Tarjeta de Crédito', description: 'Tarjeta de crédito')
+AccountType.create(id: 2, name: 'Tarjeta de Debito', description: 'Tarjeta de Debito')
+AccountType.create(id: 3, name: 'Cheque', description: 'Cuenta de chequera')

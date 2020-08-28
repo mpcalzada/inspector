@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @account.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @account.description %>
+</p>
+
+<p>
+  <strong>Account number:</strong>
+  <%= @account.account_number %>
+</p>
+
+<p>
+  <strong>Current balance:</strong>
+  <%= @account.current_balance %>
+</p>
+
+<p>
+  <strong>Monthly income:</strong>
+  <%= @account.monthly_income %>
+</p>
+
+<p>
+  <strong>Monthly withdrawal:</strong>
+  <%= @account.monthly_withdrawal %>
+</p>
+
+<p>
+  <strong>Account type:</strong>
+  <%= @account.account_type_id %>
+</p>
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>

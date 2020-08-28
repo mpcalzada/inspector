@@ -1,0 +1,70 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+  <div class="ibox">
+    <div class="ibox-content row">
+      <%= form_with(model: account, local: true) do |form| %>
+        <% if account.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(account.errors.count, "error") %> prohibited this account from being saved:</h2>
+
+            <ul>
+              <% account.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group col-md-4">
+          <div class="col-md-3">
+            <%= form.label :name, 'Nombre' %>
+          </div>
+          <div class="col-md-6">
+            <%= form.text_field :name, autocomplete: 'off', class: 'form-control required', placeholder: 'Nombre' %>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <div class="col-md-3">
+            <%= form.label :description, 'Descripción' %>
+          </div>
+          <div class="col-md-6">
+            <%= form.text_field :description, autocomplete: 'off', class: 'form-control required', placeholder: 'Descripción' %>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <div class="col-md-3">
+            <%= form.label :account_number, 'No. Cuenta' %>
+          </div>
+          <div class="col-md-6">
+            <%= form.text_field :account_number, autocomplete: 'off', class: 'form-control required', placeholder: 'No. Cuenta' %>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <div class="col-md-3">
+            <%= form.label :current_balance, 'Balance Actual' %>
+          </div>
+          <div class="col-md-6">
+            <%= form.text_field :current_balance, autocomplete: 'off', class: 'form-control required', placeholder: 'Balance Actual' %>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <div class="col-md-3">
+            <%= form.label :account_type_id, 'Tipo de Cuenta' %>
+          </div>
+          <div class="col-md-6">
+            <%= form.collection_select :account_type_id, AccountType.order(:name), :id, :name, {:prompt => 'Tipo de Cuenta'},
+                                       {:class => 'form-control m-b required'} %>
+          </div>
+        </div>
+
+        <div class="actions col-md-12">
+          <%= link_to 'Cancelar', clients_path, class: 'btn btn-white' %>
+          <%= form.submit 'Crear', {class: 'btn btn-primary'} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
