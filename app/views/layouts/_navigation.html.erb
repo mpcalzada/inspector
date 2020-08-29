@@ -78,7 +78,7 @@
       <% end %>
 
       <% if has_accounting_roles(current_user) %>
-        <li class="<%= is_active_controller('loans') or is_active_controller('accounts') %>">
+        <li class="<%= is_active_controller('loans') or is_active_controller('accounts') or is_active_action('accountancy_report') %>">
           <a href=""><i class="fa fa-dollar"></i> <span class="nav-label">Contabilidad</span>
             <span class="fa arrow"></span></a>
           <ul class="nav nav-second-level <%= is_active_controller('loans') or is_active_controller('dashboards') or
@@ -92,19 +92,22 @@
             <li class="<%= is_active_controller('loans') %>">
               <%= link_to '<i class="fa fa-check-circle-o"></i>Prestamos'.html_safe, loans_path %>
             </li>
+            <li class="<%= is_active_action('accountancy_report') %>">
+              <%= link_to '<i class="fa fa-star"></i>Reporte'.html_safe, accountancy_report_path %>
+            </li>
           </ul>
         </li>
       <% end %>
 
       <% if has_attendance_roles(current_user) %>
-        <li class="<%= is_active_controller('reports') || is_active_controller('upload_files') %>">
+        <li class="<%= is_active_action('attendance_tracking') || is_active_controller('upload_files') %>">
           <a href=""><i class="fa fa-check-circle-o"></i> <span class="nav-label">Asistencia</span>
             <span class="fa arrow"></span></a>
           <ul class="nav nav-second-level <%= is_active_controller('dashboards') || is_active_controller('upload_files') %>">
             <li class="<%= is_active_controller('upload_files') %>">
               <%= link_to '<i class="fa fa-table"></i>Archivos'.html_safe, upload_files_path %>
             </li>
-            <li class="<%= is_active_controller('dashboards') %>">
+            <li class="<%= is_active_action('attendance_tracking') %>">
               <%= link_to '<i class="fa fa-star"></i>Reporte'.html_safe, attendance_report_path %>
             </li>
           </ul>
