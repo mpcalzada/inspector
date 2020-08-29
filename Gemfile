@@ -15,6 +15,8 @@ gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 gem 'devise'
+gem 'devise_security_extension', '~> 0.10.0', git: 'https://github.com/phatworx/devise_security_extension'
+gem 'rails_email_validator'
 
 #Manage application roles https://github.com/RolifyCommunity/rolify
 gem "rolify"

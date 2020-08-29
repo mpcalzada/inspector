@@ -19,65 +19,78 @@
 </head>
 <% if user_signed_in? %>
 
-    <body>
-    <% if notice %>
-        <div id="noticeDiv" style="display: none"><%= notice %></div>
-    <% elsif alert %>
-        <div id="alertDiv" style="display: none"><%= alert %></div>
-    <% end %>
+  <body>
 
-    <!-- Skin configuration box -->
-    <%#= render 'layouts/skinconfig' %>
+  <!-- Skin configuration box -->
+  <%#= render 'layouts/skinconfig' %>
 
-    <!-- Wrapper-->
-    <div id="wrapper" class="<%= params[:controller] %>.<%= params[:action] %>">
+  <!-- Wrapper-->
+  <div id="wrapper" class="<%= params[:controller] %>.<%= params[:action] %>">
 
-      <!-- Navigation -->
-      <%= render 'layouts/navigation' %>
+    <!-- Navigation -->
+    <%= render 'layouts/navigation' %>
 
-      <!-- Page wraper -->
-      <div id="page-wrapper" class="gray-bg <%= @extra_class %>">
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="gray-bg <%= @extra_class %>">
 
-        <!-- Page wrapper -->
-        <%= render 'layouts/topnavbar' %>
+      <% if notice or params[:notice] %>
+        <div class="alert alert-success alert-dismissable" id="mensaje1">
+          <label> <%= notice ? notice : params[:notice] %></label></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-danger alert-dismissible" id="mensaje2">
+          <label id="msj"><%= alert %></label></div>
+      <% end %>
 
-        <!-- Main view  -->
-        <%= yield %>
+      <!-- Page wrapper -->
+      <%= render 'layouts/topnavbar' %>
 
-        <!-- Footer -->
-        <%= render 'layouts/footer' %>
-
-      </div>
-      <!-- End page wrapper-->
-
-      <!-- Right sidebar -->
-      <%#= render 'layouts/rightsidebar' %>
-
-    </div>
-    <!-- End wrapper-->
-
-    <!-- Include javascript per-controller - vendor plugins -->
-    <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
-
-    <!-- Include javascript per-view -->
-    <!-- For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want -->
-    <%= yield :javascript %>
-
-    </body>
-
-<% else %>
-    <body style="background-color: #f3f3f4;">
-    <div class="row">
+      <!-- Main view  -->
       <%= yield %>
 
+      <!-- Footer -->
       <%= render 'layouts/footer' %>
 
     </div>
+    <!-- End page wrapper-->
 
-    <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
-    <%= yield :javascript %>
+    <!-- Right sidebar -->
+    <%#= render 'layouts/rightsidebar' %>
 
-    </body>
+  </div>
+  <!-- End wrapper-->
+
+  <!-- Include javascript per-controller - vendor plugins -->
+  <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+
+  <!-- Include javascript per-view -->
+  <!-- For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want -->
+  <%= yield :javascript %>
+
+  </body>
+
+<% else %>
+  <body style="background-color: #f3f3f4;">
+  <div class="row">
+    <% if notice or params[:notice] %>
+      <div class="alert alert-success alert-dismissable" id="mensaje1">
+        <label> <%= notice ? notice : params[:notice] %></label></div>
+    <% end %>
+    <% if alert %>
+      <div class="alert alert-danger alert-dismissible" id="mensaje2">
+        <label id="msj"><%= alert %></label></div>
+    <% end %>
+
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+
+  </div>
+
+  <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+  <%= yield :javascript %>
+
+  </body>
 <% end %>
 
 </html>

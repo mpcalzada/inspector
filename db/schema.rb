@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_24_023237) do
+ActiveRecord::Schema.define(version: 2020_08_29_034130) do
 
   create_table "account_types", force: :cascade do |t|
     t.string "name"
@@ -204,6 +204,15 @@ ActiveRecord::Schema.define(version: 2020_08_24_023237) do
     t.index ["employer_id"], name: "index_loans_on_employer_id"
   end
 
+  create_table "old_passwords", force: :cascade do |t|
+    t.string "encrypted_password", null: false
+    t.string "password_archivable_type", null: false
+    t.integer "password_archivable_id", null: false
+    t.datetime "created_at"
+    t.string "password_salt"
+    t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
+  end
+
   create_table "providers", force: :cascade do |t|
     t.boolean "is_business_entity"
     t.string "full_name"
@@ -258,6 +267,11 @@ ActiveRecord::Schema.define(version: 2020_08_24_023237) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "password_changed_at"
+    t.string "unique_session_id", limit: 1
+    t.datetime "last_activity_at"
+    t.datetime "expired_at"
+    t.boolean "is_active"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"

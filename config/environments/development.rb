@@ -32,28 +32,17 @@ Inspector::Application.configure do
   config.assets.digest = true
   config.assets.raise_runtime_errors = true
 
-  config.action_mailer.default_url_options = {host: '127.0.0.1:3000'}
+  config.action_mailer.default_url_options = {host: 'http://localhost:3000/users/sign_in'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-      address: "mydomain.com",
-      port: 26,
-      authentication: "plain",
-      enable_starttls_auto: false,
-      oppenssl_veryfy_mode: 'none',
-      user_name: "myemail@mydomain.com",
-      password: "somepassword"
+      address: 'smtp.office365.com',
+      port: 587,
+      domain: 'outlook.com',
+      user_name: ENV["MAIL_USERNAME"],
+      password: ENV["MAIL_PASSWORD"],
+      authentication: 'login',
+      enable_starttls_auto: true
   }
-
-  # config.action_mailer.default_url_options = { host: '10.21.8.159:8080' }
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.perform_deliveries = true
-  # config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.smtp_settings = {
-  #     address: "thdowa.homedepot.com.mx",
-  #     port: 25,
-  #     enable_starttls_auto: false,
-  #     oppenssl_veryfy_mode: 'none',
-  # }
 end
