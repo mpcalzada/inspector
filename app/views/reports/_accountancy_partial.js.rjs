@@ -1,0 +1,6 @@
+page << "$('#accountancy_partial').remove();"
+page << "<% if @eport_type == 1 %>"
+page << "  $('#searching-header').after('<div id=" + accountancy_partial + "><%= escape_javascript render('partial1') %></div>');"
+page << "<% else %>"
+page << "  $('#searching-header').after('<div id=" + accountancy_partial + "><%= escape_javascript render('partial2') %></div>');"
+page << "<% end %>"

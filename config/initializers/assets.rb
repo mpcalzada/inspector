@@ -40,3 +40,6 @@ Rails.application.config.assets.precompile += %w( providers.css.scss )
 
 Rails.application.config.assets.precompile += %w( accounts.js )
 Rails.application.config.assets.precompile += %w( accounts.css.scss )
+
+Rails.application.config.assets.precompile += %w( accountancy_reports.js )
+Rails.application.config.assets.precompile += %w( accountancy_reports.css.scss )

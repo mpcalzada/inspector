@@ -1,0 +1,5 @@
+console.log("Its me again")
+$('#accountancy_partial').remove();
+<% if @report_type == "2" %>
+$('#searching-header').after('<div id="accountancy_partial"><%= escape_javascript render('accountancy_reports/accountancy/billing') %></div>');
+<% end %>

@@ -21,13 +21,19 @@ Rails.application.routes.draw do
     resources :employers
     resources :degrees
 
+    get 'accountancy_reports/index', as: :accountancy_reports
+
+    resources :accountancy_reports do
+      get :report_partial, on: :member
+    end
+
+
     get 'dashboard/home_dashboard'
     get 'dashboard/accountancy_dashboard', as: :accountancy_dashboard
     get 'dashboard/human_resources_dashboard'
     get 'dashboard/reports_dashboard'
 
     get 'reports/attendance_tracking', as: :attendance_report
-    get 'reports/accountancy_report', as: :accountancy_report
 
     post 'attendance/historic/:id', to: 'attendance_tracker#employer_history'
     post 'attendance/historic', to: 'attendance_tracker#full_history'
