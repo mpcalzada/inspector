@@ -4,7 +4,7 @@ class AddSecurityFieldsToUsers < ActiveRecord::Migration[5.2]
     add_column :users, :password_changed_at, :datetime
 
     ## Session limitable
-    add_column :users, :unique_session_id, :string, :limit => 1
+    add_column :users, :unique_session_id, :string, :limit => 30
     add_column :users, :last_activity_at, :datetime
 
     ## Expirable

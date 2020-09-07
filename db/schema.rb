@@ -268,7 +268,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_034130) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "password_changed_at"
-    t.string "unique_session_id", limit: 1
+    t.string "unique_session_id", limit: 30
     t.datetime "last_activity_at"
     t.datetime "expired_at"
     t.boolean "is_active"
