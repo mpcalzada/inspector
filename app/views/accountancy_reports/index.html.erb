@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-2 form-group">
       <br>
-      <button type="button" name="search_employer" id="search-employer-button" class="btn btn-info btn-block">
+      <button type="button" name="search_employer" id="search-report-button" class="btn btn-info btn-block">
         Buscar
       </button>
     </div>
@@ -51,8 +51,20 @@
 
       $(document).ready(function () {
           $('#classified_sub_sub_category_id').change(function () {
-              $.ajax({url: '/accountancy_reports/' + this.value + '/report_partial'});
           });
+
+          $('#search-report-button').click(function () {
+              const data = {
+                  initialDate: $('#initial-date-field').val(),
+                  endDate: $('#end-date-field').val(),
+                  reportType: $('#classified_sub_sub_category_id').val(),
+              }
+
+              $.ajax({
+                  url: '/accountancy_reports/' + $('#classified_sub_sub_category_id').val() + '/report_partial',
+                  data: data
+              });
+          })
       });
 
       function initializeDatePickers() {
