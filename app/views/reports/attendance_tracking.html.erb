@@ -331,6 +331,7 @@
           })
 
           dashboardContent.dailyWorkedHoursAvg = (dashboardContent.workedHours / dashboardContent.daysCounter).toFixed(2)
+          dashboardContent.workedHours = dashboardContent.workedHours.toFixed(2)
           fillDashboards(dashboardContent)
           loadTable()
       }

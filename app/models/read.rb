@@ -16,31 +16,17 @@ class Read
       registered_time = file.cell(row_number, 'C')
       description = file.cell(row_number, 'D')
 
-      unless employer_name.nil?
+      unless employer_id.nil?
 
         begin
 
-          employer_name = employer_name.gsub(/\s+/, '')
 
-          if employer_name.include? '-'
-            employer_name = employer_name.gsub '-', '.'
-          end
-
-          first_name = employer_name.split('.')[0]
-          paternal_last_name = employer_name.split('.')[1]
-          maternal_last_name = employer_name.split('.')[2]
-
-          first_name = first_name.nil? ? '' : first_name.downcase
-          paternal_last_name = paternal_last_name.nil? ? '' : paternal_last_name.downcase
-          maternal_last_name = maternal_last_name.nil? ? '' : maternal_last_name.downcase
-
-          @employer = Employer.where(
-              "REPLACE(lower(first_name), ' ', '') LIKE '%#{first_name}%' and REPLACE(lower(paternal_last_name), ' ', '') LIKE '%#{paternal_last_name}%'"
-          ).first
-
+          @employer = Employer.where(:identification_number => employer_id).first
+          user_id = nil
           if @employer.nil?
-            puts "Unable to find employer #{first_name} + #{paternal_last_name} for row number #{row_number} in file #{ruta}"
+            puts "Unable to find employer #{employer_name} with identifier #{employer_id} for row number #{row_number} in file #{ruta}"
           else
+            user_id = @employer.id
             AttendanceTracker.new(
                 :name => employer_name.downcase,
                 :description => description.downcase,
@@ -64,9 +50,6 @@ class Read
       end
 
     end
-
-    #UploadFileMailer.alert_confirmation(upload_file, @@y, @@save, @@c).deliver
-
   end
 
 end
