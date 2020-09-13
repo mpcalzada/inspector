@@ -78,12 +78,13 @@
       <% end %>
 
       <% if has_accounting_roles(current_user) %>
-        <li class="<%= is_active_controller('loans') or is_active_controller('accounts') or is_active_controller('accountancy_reports') %>">
+        <li class="<%= is_active_controller('loans') or is_active_controller('accounts') or
+                           is_active_controller('accountancy_reports') or is_active_action('accountancy_dashboard') %>">
           <a href=""><i class="fa fa-dollar"></i> <span class="nav-label">Contabilidad</span>
             <span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level <%= is_active_controller('loans') or is_active_controller('dashboards') or
+          <ul class="nav nav-second-level <%= is_active_controller('loans') or is_active_action('accountancy_dashboard') or
                                                   is_active_controller('accounts') %>">
-            <li class="<%= is_active_controller('dashboards') %>">
+            <li class="<%= is_active_action('accountancy_dashboard') %>">
               <%= link_to '<i class="fa fa-dashboard"></i>Dashboard'.html_safe, accountancy_dashboard_path %>
             </li>
             <li class="<%= is_active_controller('accounts') %>">
@@ -100,10 +101,15 @@
       <% end %>
 
       <% if has_attendance_roles(current_user) %>
-        <li class="<%= is_active_action('attendance_tracking') || is_active_controller('upload_files') %>">
+        <li class="<%= is_active_action('attendance_tracking') or is_active_controller('upload_files') or
+                           is_active_action('attendance_dashboard') %>">
           <a href=""><i class="fa fa-check-circle-o"></i> <span class="nav-label">Asistencia</span>
             <span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level <%= is_active_controller('dashboards') || is_active_controller('upload_files') %>">
+          <ul class="nav nav-second-level <%= is_active_controller('dashboards') or is_active_controller('upload_files') or
+                                                  is_active_action('attendance_dashboard') %>">
+            <li class="<%= is_active_action('attendance_dashboard') %>">
+              <%= link_to '<i class="fa fa-dashboard"></i>Dashboard'.html_safe, attendance_dashboard_path %>
+            </li>
             <li class="<%= is_active_controller('upload_files') %>">
               <%= link_to '<i class="fa fa-table"></i>Archivos'.html_safe, upload_files_path %>
             </li>

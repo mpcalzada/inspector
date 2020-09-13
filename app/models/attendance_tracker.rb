@@ -2,11 +2,26 @@ class AttendanceTracker < ApplicationRecord
   belongs_to :employer
   validates_uniqueness_of :registered_datetime, scope: [:employer_id]
 
+  def group_by_day
+    registered_datetime.to_date.to_s(:db)
+  end
+
+  #
+  ## STATIC METHODS
+  #
   ENTRANCE_IDENTIFIER = 'entrada internet 21'
   EXIT_IDENTIFIER = 'salida internet 21'
   ENTRANCE_TIME = '09:00:00'
   DELAY_TIME = '09:10:00'
   EXIT_TIME = '19:00:00'
+
+  def self.top(type)
+    if type.eql? :punctual
+
+    elsif type.eql? :delayed
+
+    end
+  end
 
   def self.full_analysis(initial_date, end_date, employer_id = nil)
     initial_date ||= 15.days.ago.to_date

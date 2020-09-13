@@ -2,6 +2,11 @@ class DashboardController < ApplicationController
   def home_dashboard
   end
 
+  def attendance_dashboard
+    @top_delayed = AttendanceTracker.top(:delayed)
+    @top_punctual = AttendanceTracker.top(:punctual)
+  end
+
   def accountancy_dashboard
     @active_loans_total = Loan.active.count
     @inactive_loans_total = Loan.inactive.count

@@ -1,5 +1,13 @@
 GIT
-  remote: git://github.com/thoughtbot/paperclip.git
+  remote: https://github.com/phatworx/devise_security_extension
+  revision: b2ee978af7d49f0fb0e7271c6ac074dfb4d39353
+  specs:
+    devise_security_extension (0.10.0)
+      devise (>= 3.0.0, < 5.0)
+      railties (>= 3.2.6, < 6.0)
+
+GIT
+  remote: https://github.com/thoughtbot/paperclip.git
   revision: e3f7493b4cc954405a0209d26933830333ae2869
   specs:
     paperclip (6.1.0)
@@ -8,14 +16,6 @@ GIT
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
-
-GIT
-  remote: https://github.com/phatworx/devise_security_extension
-  revision: b2ee978af7d49f0fb0e7271c6ac074dfb4d39353
-  specs:
-    devise_security_extension (0.10.0)
-      devise (>= 3.0.0, < 5.0)
-      railties (>= 3.2.6, < 6.0)
 
 GEM
   remote: https://rubygems.org/

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
     get 'dashboard/home_dashboard'
     get 'dashboard/accountancy_dashboard', as: :accountancy_dashboard
+    get 'dashboard/attendance_dashboard', as: :attendance_dashboard
     get 'dashboard/human_resources_dashboard'
     get 'dashboard/reports_dashboard'
 
