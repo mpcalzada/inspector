@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_034130) do
+ActiveRecord::Schema.define(version: 2020_09_15_025009) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "account_types", force: :cascade do |t|
     t.string "name"
@@ -51,6 +54,22 @@ ActiveRecord::Schema.define(version: 2020_08_29_034130) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "attendance_overviews", force: :cascade do |t|
+    t.date "date", null: false
+    t.datetime "entrance_time", null: false
+    t.datetime "exit_time", null: false
+    t.boolean "is_delayed"
+    t.float "worked_hours"
+    t.integer "registered_entries"
+    t.integer "registered_exits"
+    t.string "entry_time_difference"
+    t.string "exit_time_difference"
+    t.boolean "is_justified", default: true
+    t.string "justification_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "attendance_trackers", force: :cascade do |t|
