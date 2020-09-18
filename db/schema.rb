@@ -61,15 +61,18 @@ ActiveRecord::Schema.define(version: 2020_09_15_025009) do
     t.datetime "entrance_time", null: false
     t.datetime "exit_time", null: false
     t.boolean "is_delayed"
-    t.float "worked_hours"
+    t.string "worked_hours"
     t.integer "registered_entries"
     t.integer "registered_exits"
     t.string "entry_time_difference"
     t.string "exit_time_difference"
     t.boolean "is_justified", default: true
     t.string "justification_description"
+    t.bigint "employer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["employer_id", "date"], name: "unique_date_for_attendance", unique: true
+    t.index ["employer_id"], name: "index_attendance_overviews_on_employer_id"
   end
 
   create_table "attendance_trackers", force: :cascade do |t|

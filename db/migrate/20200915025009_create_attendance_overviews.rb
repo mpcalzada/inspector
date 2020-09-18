@@ -15,7 +15,13 @@ class CreateAttendanceOverviews < ActiveRecord::Migration[5.2]
       t.boolean :is_justified, default: true
       t.string :justification_description
 
+      t.belongs_to :employer, index: true
+
       t.timestamps
     end
+
+    add_index :attendance_overviews, [:employer_id, :date],
+              unique: true,
+              name: 'unique_date_for_attendance'
   end
 end

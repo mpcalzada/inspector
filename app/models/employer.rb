@@ -3,6 +3,7 @@ class Employer < ApplicationRecord
   belongs_to :user
   has_one :employer_punctuation
   has_many :attendance_trackers
+  has_many :attendance_overviews
   has_many :loans
 
   has_one_attached :avatar
