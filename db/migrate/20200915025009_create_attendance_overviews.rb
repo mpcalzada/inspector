@@ -5,7 +5,7 @@ class CreateAttendanceOverviews < ActiveRecord::Migration[5.2]
       t.datetime :entrance_time, null: false
       t.datetime :exit_time, null: false
       t.boolean :is_delayed
-      t.float :worked_hours
+      t.string :worked_hours
       t.integer :registered_entries
       t.integer :registered_exits
       t.string :entry_time_difference
