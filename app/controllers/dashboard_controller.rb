@@ -3,8 +3,9 @@ class DashboardController < ApplicationController
   end
 
   def attendance_dashboard
-    @top_delayed = AttendanceTracker.top(:delayed)
-    @top_punctual = AttendanceTracker.top(:punctual)
+    @period = 1.month.ago
+    @top_delayed = AttendanceOverview.delayed_employers_track 10
+    @top_punctual = AttendanceOverview.on_time_employers_track 10
   end
 
   def accountancy_dashboard

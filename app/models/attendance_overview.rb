@@ -2,9 +2,33 @@ class AttendanceOverview < ApplicationRecord
   belongs_to :employer
   validates_uniqueness_of :date, scope: [:employer_id]
 
-
   ENTRANCE_TIME = Time.parse("09:00:00")
   EXIT_TIME = Time.parse("18:00:00")
+
+  def self.delayed_employers_track(top = 10, initial_date = Date.today.at_beginning_of_month.last_month)
+    return employers_overview_track(top, true, initial_date)
+  end
+
+  def self.on_time_employers_track(top = 10, initial_date = Date.today.at_beginning_of_month.last_month)
+    return employers_overview_track(top, false, initial_date)
+  end
+
+  def self.employers_overview_track(top, is_delayed = true, initial_date)
+    overview = Hash.new
+    attendance_overview = AttendanceOverview
+                              .joins(:employer)
+                              .where(:is_delayed => is_delayed)
+                              .where("date > ?", initial_date)
+                              .group(%w[employers.first_name employers.paternal_last_name])
+                              .order("count_all DESC")
+                              .limit(top)
+                              .count
+
+    attendance_overview.each do |key, val|
+      overview[key[0] + " " + key[1]] = val
+    end
+    return overview
+  end
 
   def self.add_tracker(initial_date, end_date)
     query = "SELECT date_trunc('day', registered_datetime) \"day\", employer_id, count(*) \"moves\",

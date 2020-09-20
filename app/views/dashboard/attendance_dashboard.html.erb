@@ -22,15 +22,9 @@
       <div class="col-lg-4">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
+            <span class="label label-danger pull-right">Mensual (<%= @period.strftime('%d-%b') %>
+              - <%= Date.today.strftime('%d-%b') %>)</span>
             <h5>Top 10 Impuntualidad</h5>
-            <div class="ibox-tools">
-              <a class="collapse-link">
-                <i class="fa fa-chevron-up"></i>
-              </a>
-              <a class="close-link">
-                <i class="fa fa-times"></i>
-              </a>
-            </div>
           </div>
           <div class="ibox-content">
             <table class="table table-hover no-margins">
@@ -42,60 +36,42 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-down text-danger"></i> Samantha López</td>
-                <td>10</td>
-                <td><i class="fa fa-clock-o"></i> 08:20</td>
-              </tr>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-down text-danger"></i> Monica Rdz</td>
-                <td>8</td>
-                <td><i class="fa fa-clock-o"></i> 09:10</td>
-              </tr>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-down text-danger"></i> Marco Calzada</td>
-                <td>3</td>
-                <td><i class="fa fa-clock-o"></i> 09:30</td>
-              </tr>
+              <% @top_delayed.each do |name, delays| %>
+                <tr>
+                  <td class="font-bold"><i class="fa fa-level-down text-danger"></i> <%= name %></td>
+                  <td><%= delays %></td>
+                  <td><i class="fa fa-clock-o"></i> -</td>
+                </tr>
+              <% end %>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
+            <span class="label label-success pull-right">Mensual (<%= @period.strftime('%d-%b') %>
+              - <%= Date.today.strftime('%d-%b') %>)</span>
             <h5>Top 10 Puntualidad</h5>
-            <div class="ibox-tools">
-              <a class="collapse-link">
-                <i class="fa fa-chevron-up"></i>
-              </a>
-              <a class="close-link">
-                <i class="fa fa-times"></i>
-              </a>
-            </div>
           </div>
           <div class="ibox-content">
             <table class="table table-hover no-margins">
               <thead>
               <tr>
                 <th>Empleado</th>
-                <th>Entrada Promedio</th>
+                <th>Entradas Puntuales</th>
+                <th>Horario Promedio</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-up text-navy"></i> Samantha López</td>
-                <td><i class="fa fa-clock-o"></i> 08:20</td>
-              </tr>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-up text-navy"></i> Monica Rdz</td>
-                <td><i class="fa fa-clock-o"></i> 09:10</td>
-              </tr>
-              <tr>
-                <td class="font-bold"><i class="fa fa-level-up text-navy"></i> Marco Calzada</td>
-                <td><i class="fa fa-clock-o"></i> 09:30</td>
-              </tr>
+              <% @top_punctual.each do |name, delays| %>
+                <tr>
+                  <td class="font-bold"><i class="fa fa-level-up text-navy"></i> <%= name %></td>
+                  <td><%= delays %></td>
+                  <td><i class="fa fa-clock-o"></i> -</td>
+                </tr>
+              <% end %>
               </tbody>
             </table>
           </div>
