@@ -15,7 +15,7 @@ class Read
       row_number = row_number.to_i + 1
 
       employer_name = file.cell(row_number, 'A')
-      employer_id = file.cell(row_number, 'B')
+      employer_id = file.cell(row_number, 'B').to_i
       registered_time = file.cell(row_number, 'C')
       description = file.cell(row_number, 'D')
 
@@ -55,7 +55,9 @@ class Read
       end
     end
 
-    AttendanceOverview.add_tracker file_init_date, file_end_date
+    unless file_init_date.nil? && file_end_date.nil?
+      AttendanceOverview.add_tracker file_init_date, file_end_date
+    end
   end
 
 end

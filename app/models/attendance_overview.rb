@@ -30,37 +30,52 @@ class AttendanceOverview < ApplicationRecord
     return overview
   end
 
+  def self.grouped_by_month(is_delayed, initial_date = Date.today.beginning_of_month.last_year)
+    formatted_hash = {}
+    attendance_overview = AttendanceOverview
+                              .where(:is_delayed => is_delayed)
+                              .where("date > ?", initial_date)
+                              .group("date_trunc('month', date)")
+                              .count
+
+    attendance_overview.each { |k, v| formatted_hash[k.strftime('%b %Y')] = v }
+    return add_months formatted_hash, initial_date
+  end
+
   def self.add_tracker(initial_date, end_date)
     query = "SELECT date_trunc('day', registered_datetime) \"day\", employer_id, count(*) \"moves\",
 min(registered_datetime) min_time, max(registered_datetime) max_time
 FROM attendance_trackers
-WHERE registered_datetime between '#{initial_date}' AND '#{end_date}'
+WHERE registered_datetime between '#{initial_date.to_time.strftime("%Y-%m-%d %H:%M:%S")}' AND '#{end_date.to_time.strftime("%Y-%m-%d %H:%M:%S")}'
 GROUP BY day, employer_id"
 
     results = ActiveRecord::Base.connection.execute(query)
 
 
     results.each do |result|
-      puts result
-      half_moves = (result["moves"] / 2).ceil
+      begin
+        half_moves = (result["moves"] / 2).ceil
 
-      formatted_entry_time = result["min_time"].to_time.strftime('%H:%M:%S')
-      formatted_exit_time = result["max_time"].to_time.strftime('%H:%M:%S')
+        formatted_entry_time = result["min_time"].to_time.strftime('%H:%M:%S')
+        formatted_exit_time = result["max_time"].to_time.strftime('%H:%M:%S')
 
-      attendance_overview = AttendanceOverview.new(
-          :date => result["day"],
-          :entrance_time => result["min_time"],
-          :exit_time => result["max_time"],
-          :is_delayed => (estimate_delay formatted_entry_time),
-          :worked_hours => (time_difference formatted_exit_time, formatted_entry_time),
-          :registered_entries => half_moves,
-          :registered_exits => half_moves,
-          :entry_time_difference => (time_difference formatted_entry_time, "09:00:00"),
-          :exit_time_difference => (time_difference formatted_exit_time, "18:00:00"),
-          :employer_id => result["employer_id"]
-      )
-      unless attendance_overview.save!
-        puts "Unable to save the attendance overview object #{attendance_overview}"
+        attendance_overview = AttendanceOverview.new(
+            :date => result["day"],
+            :entrance_time => result["min_time"],
+            :exit_time => result["max_time"],
+            :is_delayed => (estimate_delay formatted_entry_time),
+            :worked_hours => (time_difference formatted_exit_time, formatted_entry_time),
+            :registered_entries => half_moves,
+            :registered_exits => half_moves,
+            :entry_time_difference => (time_difference formatted_entry_time, "09:00:00"),
+            :exit_time_difference => (time_difference formatted_exit_time, "18:00:00"),
+            :employer_id => result["employer_id"]
+        )
+        unless attendance_overview.save!
+          puts "Unable to save the attendance overview object #{attendance_overview}"
+        end
+      rescue Exception => e
+        puts "Error trying to save #{attendance_overview} because of #{e}"
       end
     end
   end
@@ -84,5 +99,14 @@ GROUP BY day, employer_id"
     sign = seconds < 0 ? '-' : ''
 
     '%s%02d:%02d' % [sign, hour.to_i, minutes.to_i.abs]
+  end
+
+  private
+
+  def self.add_months(dates, initial_date)
+    min, max = dates.keys.map { |date| Date.parse(date) }.minmax
+    range = (initial_date..max).map { |date| date.strftime("%b %Y") }.uniq
+
+    range.each_with_object({}) { |date, result| result[date] = dates[date] || 0 }
   end
 end
