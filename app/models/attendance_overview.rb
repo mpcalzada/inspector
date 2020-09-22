@@ -39,7 +39,7 @@ class AttendanceOverview < ApplicationRecord
                               .count
 
     attendance_overview.each { |k, v| formatted_hash[k.strftime('%b %Y')] = v }
-    return add_months formatted_hash, initial_date
+    return add_months formatted_hash, initial_date, Date.today.end_of_month
   end
 
   def self.add_tracker(initial_date, end_date)
@@ -103,9 +103,8 @@ GROUP BY day, employer_id"
 
   private
 
-  def self.add_months(dates, initial_date)
-    min, max = dates.keys.map { |date| Date.parse(date) }.minmax
-    range = (initial_date..max).map { |date| date.strftime("%b %Y") }.uniq
+  def self.add_months(dates, initial_date, end_date)
+    range = (initial_date..end_date).map { |date| date.strftime("%b %Y") }.uniq
 
     range.each_with_object({}) { |date, result| result[date] = dates[date] || 0 }
   end

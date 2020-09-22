@@ -26,6 +26,10 @@
               Puntualidad vs Impuntualidad
             </h3>
             <small>Seguimiento histórico anual.</small>
+            <span class="  pull-right">
+              <i class="fa fa-clock-o"> </i>
+              <small>Datos desde: <%= @searched_months[0] %></small>
+            </span>
           </div>
 
           <div>
@@ -35,13 +39,6 @@
             <canvas id="lineChart" height="70"></canvas>
           </div>
 
-          <div class="m-t-md">
-            <small class="pull-right">
-              <i class="fa fa-clock-o"> </i>
-              Actualizado desde: <%= @searched_months[0] %>
-            </small>
-          </div>
-
         </div>
       </div>
     </div>
@@ -49,9 +46,9 @@
       <div class="col-lg-6">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
-            <span class="label label-danger pull-right">
+            <span class="  pull-right">
               <i class="fa fa-clock-o"> </i>
-              Actualizado desde: <%= @period.strftime('%d %B %y') %>
+              <small>Datos desde: <%= @period.strftime('%d %B %y') %></small>
             </span>
             <h5>Top 10 Impuntualidad</h5>
           </div>
@@ -81,8 +78,10 @@
       <div class="col-lg-6">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
-            <span class="label label-success pull-right">Mensual (<%= @period.strftime('%d-%b') %>
-              - <%= Date.today.strftime('%d-%b') %>)</span>
+            <span class="  pull-right">
+              <i class="fa fa-clock-o"> </i>
+              <small>Datos desde: <%= @period.strftime('%d %B %y') %></small>
+            </span>
             <h5>Top 10 Puntualidad</h5>
           </div>
           <div class="ibox-content">
