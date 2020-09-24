@@ -18,91 +18,103 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
   <div class="row">
 
-    <div class="col-lg-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-content">
-          <div>
-            <h3 class="font-bold no-margins">
-              Puntualidad vs Impuntualidad
-            </h3>
-            <small>Seguimiento histórico anual.</small>
-            <span class="  pull-right">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-content">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="font-bold no-margins">
+                  Mes en curso...
+                </h3>
+                <small>Seguimiento mensual.</small>
+                <span class="pull-right">
               <i class="fa fa-clock-o"> </i>
-              <small>Datos desde: <%= @searched_months[0] %></small>
+              <small>Datos desde: <%= @period.strftime('%d %B %y') %></small>
             </span>
-          </div>
+                <div class="dashboard-line"></div>
+              </div>
+              <div class="col-md-4">
+                <h5>Puntualidad vs Retardos</h5>
+                <canvas id="doughnutChart" height="140"></canvas>
+              </div>
 
-          <div>
-            <span id="months" style="display:none"><%= @searched_months %></span>
-            <span id="on-time-punctuations" style="display:none"><%= @on_time_punctuations %></span>
-            <span id="delayed-punctuations" style="display:none"><%= @delayed_punctuations %></span>
-            <canvas id="lineChart" height="70"></canvas>
-          </div>
+              <div class="col-lg-4">
+                <h5>Top 10 Impuntualidad</h5>
+                <table class="table table-hover no-margins">
+                  <thead>
+                  <tr>
+                    <th>Empleado</th>
+                    <th>Retrasos</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @top_delayed.each do |name, delays| %>
+                    <tr>
+                      <td class="font-bold"><i class="fa fa-level-down text-danger"></i> <%= name %></td>
+                      <td><%= delays %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
 
+              <div class="col-lg-4">
+                <h5>Top 10 Puntualidad</h5>
+
+                <table class="table table-hover no-margins">
+                  <thead>
+                  <tr>
+                    <th>Empleado</th>
+                    <th>Entradas Puntuales</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @top_punctual.each do |name, delays| %>
+                    <tr>
+                      <td class="font-bold"><i class="fa fa-level-up text-navy"></i> <%= name %></td>
+                      <td><%= delays %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-          <div class="ibox-title">
-            <span class="  pull-right">
-              <i class="fa fa-clock-o"> </i>
-              <small>Datos desde: <%= @period.strftime('%d %B %y') %></small>
-            </span>
-            <h5>Top 10 Impuntualidad</h5>
-          </div>
-          <div class="ibox-content">
-            <table class="table table-hover no-margins">
-              <thead>
-              <tr>
-                <th>Empleado</th>
-                <th>Retrasos</th>
-                <th>Entrada Promedio</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% @top_delayed.each do |name, delays| %>
-                <tr>
-                  <td class="font-bold"><i class="fa fa-level-down text-danger"></i> <%= name %></td>
-                  <td><%= delays %></td>
-                  <td><i class="fa fa-clock-o"></i> -</td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-6">
+    <div class="row">
+      <div class="col-lg-12">
         <div class="ibox float-e-margins">
-          <div class="ibox-title">
-            <span class="  pull-right">
-              <i class="fa fa-clock-o"> </i>
-              <small>Datos desde: <%= @period.strftime('%d %B %y') %></small>
-            </span>
-            <h5>Top 10 Puntualidad</h5>
-          </div>
           <div class="ibox-content">
-            <table class="table table-hover no-margins">
-              <thead>
-              <tr>
-                <th>Empleado</th>
-                <th>Entradas Puntuales</th>
-                <th>Horario Promedio</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% @top_punctual.each do |name, delays| %>
-                <tr>
-                  <td class="font-bold"><i class="fa fa-level-up text-navy"></i> <%= name %></td>
-                  <td><%= delays %></td>
-                  <td><i class="fa fa-clock-o"></i> -</td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="font-bold no-margins">
+                  A través del año...
+                </h3>
+                <small>Seguimiento histórico anual.</small>
+                <span class="  pull-right">
+              <i class="fa fa-clock-o"> </i>
+              <small>Datos desde: <%= @searched_months[0] %></small>
+            </span>
+                <div class="dashboard-line"></div>
+              </div>
+              <div class="col-md-10">
+
+                <span id="months" style="display:none"><%= @searched_months %></span>
+                <span id="on-time-punctuations" style="display:none"><%= @on_time_punctuations %></span>
+                <span id="delayed-punctuations" style="display:none"><%= @delayed_punctuations %></span>
+                <canvas id="lineChart" height="70"></canvas>
+              </div>
+              <div class="col-md-2">
+
+
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -157,6 +169,23 @@
           var ctx = document.getElementById("lineChart").getContext("2d");
           new Chart(ctx, {type: 'line', data: lineData, options: lineOptions});
 
+
+          var doughnutData = {
+              labels: ["Retardos", "Puntuales"],
+              datasets: [{
+                  data: [90, 10],
+                  backgroundColor: ["#57C8B1", "#D52F2F"]
+              }]
+          };
+
+
+          var doughnutOptions = {
+              responsive: true
+          };
+
+
+          var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+          new Chart(ctx4, {type: 'doughnut', data: doughnutData, options: doughnutOptions});
 
       });
 

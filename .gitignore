@@ -411,6 +411,6 @@ app.standard.yaml.env
 
 config/app_config.yml
 
-./.idea/
+.idea/
 
 config/database.yml.template
