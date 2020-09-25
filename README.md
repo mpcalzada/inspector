@@ -1,24 +1,15 @@
-# README
+#INSPECTOR
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Currently working on this project.
 
-Things you may want to cover:
+For now, the only modules fully working are:
 
-* Ruby version
+- Employers
+- Attendance Tracking (Uploads, reports and dashboard)
+- Loans (Management, report and dashboard)
+- Clients
+- Providers
+- Device user authentication and roles.
 
-* System dependencies
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Working Over GoogleCloudPlatform(Production) and Heroku (Dev)
